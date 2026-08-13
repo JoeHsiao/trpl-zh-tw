@@ -5,6 +5,9 @@ on:
       - 'tools/terms.dict'
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   rebuild:
     runs-on: ubuntu-latest
