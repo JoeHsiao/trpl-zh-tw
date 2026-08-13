@@ -1,7 +1,7 @@
 name: Daily sync with upstream
 on:
   schedule:
-    - cron: '0 21 * * *'  # UTC 21:00 = 美國中部時間凌晨 2 點
+    - cron: '0 07 * * *'  # UTC 07:00 = 美國中部時間凌晨 2 點
   workflow_dispatch:
 
 jobs:
