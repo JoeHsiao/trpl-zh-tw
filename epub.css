@@ -1,0 +1,108 @@
+/* epub.css - 微信读书专用排版优化 */
+
+/* 代码块：支持横向滚动，使用透明背景适配微信读书各种主题（白/黑/绿/纸张色） */
+pre {
+    background-color: rgba(128, 128, 128, 0.08) !important;
+    border-left: 4px solid rgba(128, 128, 128, 0.3) !important;
+    padding: 10px !important;
+    margin: 15px 0 !important;
+    border-radius: 4px !important;
+    white-space: pre-wrap !important;
+    word-wrap: break-word !important;
+    font-family: "Courier New", Courier, monospace !important;
+    font-size: 0.85em !important;
+}
+
+code {
+    font-family: "Courier New", Courier, monospace !important;
+    font-size: 0.9em !important;
+    background-color: rgba(128, 128, 128, 0.08) !important;
+    padding: 2px 4px !important;
+    border-radius: 3px !important;
+}
+
+/* 移除 pre block 内部 code 的背景和边距 */
+pre code {
+    background-color: transparent !important;
+    padding: 0 !important;
+    border-radius: 0 !important;
+    font-size: 1em !important;
+}
+
+/* 图片：限制最大宽度，居中显示 */
+img {
+    max-width: 100% !important;
+    height: auto !important;
+    display: block !important;
+    margin: 15px auto !important;
+}
+
+/* Ferris 螃蟹图标样式兼容：覆盖全局 img 的 block 和 margin 样式，复用并修正 ferris.css 的尺寸定义 */
+img.ferris,
+img.ferris-large,
+img.ferris-small,
+img.ferris-explain {
+    display: inline-block !important;
+    margin: 0 !important;
+    vertical-align: middle !important;
+}
+
+img.ferris-large {
+    width: 4.5em !important;
+}
+
+img.ferris-small {
+    width: 2.3em !important;
+}
+
+img.ferris-explain {
+    width: 100px !important;
+}
+
+
+/* 标题样式 */
+h1, h2, h3, h4, h5, h6 {
+    font-weight: bold !important;
+    line-height: 1.4 !important;
+    margin-top: 1.5em !important;
+    margin-bottom: 0.5em !important;
+    page-break-after: avoid !important;
+}
+
+h1 {
+    font-size: 1.6em !important;
+    text-align: center !important;
+    margin-top: 2em !important;
+    page-break-before: always !important; /* 每个大章节分页 */
+}
+
+h2 {
+    font-size: 1.35em !important;
+    border-bottom: 1px solid rgba(128, 128, 128, 0.2) !important;
+    padding-bottom: 5px !important;
+}
+
+h3 {
+    font-size: 1.15em !important;
+}
+
+/* 段落文字对齐与行高 */
+p {
+    line-height: 1.6 !important;
+    margin-bottom: 1em !important;
+    text-align: justify !important;
+}
+
+/* 隐藏网页专用元素（例如 Rust Playground 的运行和复制按钮） */
+.buttons, .play-button, .copy-button, .fa {
+    display: none !important;
+}
+
+/* 引用块样式 */
+blockquote {
+    margin: 15px 0 !important;
+    padding: 10px 15px !important;
+    border-left: 4px solid #1f80ed !important;
+    background-color: rgba(31, 128, 237, 0.05) !important;
+    color: inherit !important;
+}

@@ -1,0 +1,31 @@
+[book]
+title = "Rust 程式設計語言 繁體中文版"
+authors = [
+    "Steve Klabnik",
+    "Carol Nichols",
+    "Chris Krycho",
+    "來自 Rust 社群的貢獻（Rust 中文社群翻譯）",
+]
+
+[output.html]
+additional-css = [
+    "ferris.css",
+    "theme/2018-edition.css",
+    "theme/semantic-notes.css",
+    "theme/listing.css",
+]
+additional-js = ["ferris.js"]
+git-repository-url = "https://github.com/KaiserY/trpl-zh-cn/tree/main"
+
+[output.html.search]
+use-boolean-and = true
+
+[output.typst-pdf]
+custom-template = "custom-template.typ"
+pdf = true
+section-number = true
+rust-book = true
+optional = true
+
+[rust]
+edition = "2024"
