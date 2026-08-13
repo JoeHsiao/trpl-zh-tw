@@ -1,0 +1,40 @@
+name: Rebuild all on dictionary change
+on:
+  push:
+    paths:
+      - 'tools/terms.dict'
+  workflow_dispatch:
+
+jobs:
+  rebuild:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Install opencc CLI
+        run: sudo apt-get update && sudo apt-get install -y opencc
+
+      - name: Add upstream remote
+        run: git remote add upstream https://github.com/KaiserY/trpl-zh-cn.git || true
+
+      - name: Fetch upstream
+        run: git fetch upstream
+
+      - name: Build sync tool
+        run: cargo build --release --manifest-path tools/sync-trpl/Cargo.toml
+
+      - name: Rebuild all files with updated dictionary
+        run: ./tools/sync-trpl/target/release/sync-trpl --rebuild-all
+
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git diff --staged --quiet || git commit -m "rebuild: apply updated terms dictionary"
+          git push

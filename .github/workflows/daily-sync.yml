@@ -1,0 +1,36 @@
+name: Daily sync with upstream
+on:
+  schedule:
+    - cron: '0 21 * * *'  # UTC 21:00 = 美國中部時間凌晨 2 點
+  workflow_dispatch:
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Install opencc CLI
+        run: sudo apt-get update && sudo apt-get install -y opencc
+
+      - name: Add upstream remote
+        run: git remote add upstream https://github.com/KaiserY/trpl-zh-cn.git || true
+
+      - name: Build sync tool
+        run: cargo build --release --manifest-path tools/sync-trpl/Cargo.toml
+
+      - name: Run sync
+        run: ./tools/sync-trpl/target/release/sync-trpl
+
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git diff --staged --quiet || git commit -m "sync: auto update from upstream $(cat tools/.last_synced_commit)"
+          git push

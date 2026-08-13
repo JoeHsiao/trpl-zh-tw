@@ -1,0 +1,8 @@
+[package]
+name = "sync-trpl"
+version = "0.1.0"
+edition = "2024"
+
+[[bin]]
+name = "sync-trpl"
+path = "src/main.rs"
