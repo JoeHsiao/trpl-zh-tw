@@ -4,7 +4,7 @@
 
 在本附錄中，我們將討論 Rust 專案提供的一些有助於開發 Rust 程式碼的工具。我們將介紹自動格式化、快速應用警告修復、linter 以及與 IDE 的整合。
 
-### 透過 `rustfmt` 自動格式化
+### 通過 `rustfmt` 自動格式化
 
 `rustfmt` 工具根據社群程式碼風格格式化程式碼。很多專案使用 `rustfmt` 來避免編寫 Rust 程式碼風格的爭論：所有人都用這個工具格式化程式碼！
 
@@ -18,7 +18,7 @@ $ cargo fmt
 
 [rustfmt]: https://github.com/rust-lang/rustfmt
 
-### 透過 `rustfix` 修復程式碼
+### 通過 `rustfix` 修復程式碼
 
 `rustfix` 工具已隨 Rust 安裝一併提供，可以自動修復那些具有明確修復方式的編譯器警告，這通常正是你所需要的。你可能已經見過類似的編譯器警告。例如，考慮如下程式碼：
 
@@ -47,7 +47,7 @@ warning: variable does not need to be mutable
   = note: `#[warn(unused_mut)]` on by default
 ```
 
-警告中建議移除 `mut` 關鍵字。我們可以透過執行 `cargo fix` 命令使用 `rustfix` 工具來自動採用該建議：
+警告中建議移除 `mut` 關鍵字。我們可以通過執行 `cargo fix` 命令使用 `rustfix` 工具來自動採用該建議：
 
 ```console
 $ cargo fix

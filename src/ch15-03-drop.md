@@ -20,7 +20,7 @@
 
 <span class="caption">示例 15-14：結構體 `CustomSmartPointer`，其實現了放置清理程式碼的 `Drop` trait</span>
 
-`Drop` trait 包含在 prelude 中，因此無需將其引入作用域。我們在 `CustomSmartPointer` 上實現了 `Drop` trait，並提供了一個呼叫 `println!` 的 `drop` 方法實現。`drop` 函式體是放置任何當型別例項離開作用域時期望執行的邏輯的地方。這裡選擇列印一些文字以視覺化地展示 Rust 何時呼叫 `drop`。
+`Drop` trait 包含在 prelude 中，因此無需將其引入作用域。我們在 `CustomSmartPointer` 上實現了 `Drop` trait，並提供了一個呼叫 `println!` 的 `drop` 方法實現。`drop` 函式體是放置任何當型別例項離開作用域時期望執行的邏輯的地方。這裡選擇列印一些文本以視覺化地展示 Rust 何時呼叫 `drop`。
 
 在 `main` 中，我們新建了兩個 `CustomSmartPointer` 例項並打印出了 `CustomSmartPointer created.`。在 `main` 的結尾，`CustomSmartPointer` 的例項會離開作用域，而 Rust 會呼叫放置於 `drop` 方法中的程式碼，打印出最後的資訊。注意無需顯式呼叫 `drop` 方法：
 
@@ -56,7 +56,7 @@ Rust 不允許我們顯式呼叫 `drop`，因為 Rust 仍然會在 `main` 結束
 
 因為不能停用當值離開作用域時自動插入的 `drop`，並且不能顯式呼叫 `drop` 方法。如果我們需要強制提早清理值，可以使用 `std::mem::drop` 函式。
 
-`std::mem::drop` 函式與 `Drop` trait 中的 `drop` 方法不同。我們透過把想要強制提前丟棄的值作為引數傳給它來呼叫。這個函式位於 prelude 中，因此我們可以修改示例 15-15 裡的 `main`，改為呼叫 `drop` 函式，如示例 15-16 所示：
+`std::mem::drop` 函式與 `Drop` trait 中的 `drop` 方法不同。我們通過把想要強制提前丟棄的值作為引數傳給它來呼叫。這個函式位於 prelude 中，因此我們可以修改示例 15-15 裡的 `main`，改為呼叫 `drop` 函式，如示例 15-16 所示：
 
 <span class="filename">檔名：src/main.rs</span>
 
@@ -72,7 +72,7 @@ Rust 不允許我們顯式呼叫 `drop`，因為 Rust 仍然會在 `main` 結束
 {{#include ../listings/ch15-smart-pointers/listing-15-16/output.txt}}
 ```
 
-文字 ``Dropping CustomSmartPointer with data `some data`!`` 會出現在 `CustomSmartPointer created.` 和 `CustomSmartPointer dropped before the end of main.` 之間，這表明 `drop` 方法的程式碼在那個時刻被呼叫，以丟棄 `c`。
+文本 ``Dropping CustomSmartPointer with data `some data`!`` 會出現在 `CustomSmartPointer created.` 和 `CustomSmartPointer dropped before the end of main.` 之間，這表明 `drop` 方法的程式碼在那個時刻被呼叫，以丟棄 `c`。
 
 你可以以多種方式利用 `Drop` trait 實現裡指定的程式碼，讓清理既方便又安全。例如，你可以用它來建立自己的記憶體分配器！有了 `Drop` trait 和 Rust 的所有權系統，你就不必記住何時進行清理，因為 Rust 會自動替你完成這些工作。
 

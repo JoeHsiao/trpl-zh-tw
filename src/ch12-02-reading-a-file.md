@@ -2,7 +2,7 @@
 
 [ch12-02-reading-a-file.md](https://github.com/rust-lang/book/blob/d7c0e477a22bcb37fdb290c6046058565d6738c2/src/ch12-02-reading-a-file.md)
 
-現在我們要增加讀取由 `file_path` 命令列引數指定的檔案的功能。首先，需要一個用來測試的示例檔案：我們會用一個擁有多行少量文字且有一些重複單詞的檔案。示例 12-3 是一首艾米莉·狄金森（Emily Dickinson）的詩，它正適合這個工作！在專案根目錄建立一個檔案 *poem.txt*，並輸入詩 "I'm nobody! Who are you?"：
+現在我們要增加讀取由 `file_path` 命令列引數指定的檔案的功能。首先，需要一個用來測試的示例檔案：我們會用一個擁有多行少量文本且有一些重複單詞的檔案。示例 12-3 是一首艾米莉·狄金森（Emily Dickinson）的詩，它正適合這個工作！在專案根目錄建立一個檔案 *poem.txt*，並輸入詩 "I'm nobody! Who are you?"：
 
 <span class="filename">檔名：poem.txt</span>
 
@@ -12,7 +12,7 @@
 
 <span class="caption">示例 12-3：艾米莉·狄金森的詩 “I’m nobody! Who are you?”，一個好的測試用例</span>
 
-有了文字之後，編輯 *src/main.rs* 並新增讀取檔案的程式碼，如示例 12-4 所示：
+有了文本之後，編輯 *src/main.rs* 並新增讀取檔案的程式碼，如示例 12-4 所示：
 
 <span class="filename">檔名：src/main.rs</span>
 

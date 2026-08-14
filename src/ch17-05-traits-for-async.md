@@ -67,7 +67,7 @@ loop {
 
 但如果 Rust 真按這段程式碼精確地編譯，那麼每個 `await` 就都會變成阻塞式的，這恰恰和我們想要的效果相反！Rust 實際上會保證：這個迴圈能夠把控制權交給某個東西，由它暫停當前 future 的工作，去處理別的 future，然後稍後再回來重新檢查當前這個。正如我們已經見過的，這個“某個東西”就是非同步執行時，而排程和協調這些工作，正是執行時的核心職責之一。
 
-在[“透過訊息傳遞在兩個任務之間傳送資料”][message-passing]<!-- ignore -->一節中，我們描述過等待 `rx.recv` 的過程。`recv` 呼叫會返回一個 future，而等待這個 future 本質上就是在輪詢它。我們之前提到，執行時會暫停這個 future，直到它準備好，最終要麼得到 `Some(message)`，要麼在通道關閉時得到 `None`。現在，藉助對 `Future` trait，尤其是 `Future::poll` 的更深入理解，我們就能看清它的工作方式了：當返回 `Poll::Pending` 時，執行時知道這個 future 還沒準備好；反過來，當 `poll` 返回 `Poll::Ready(Some(message))` 或 `Poll::Ready(None)` 時，執行時就知道這個 future 已經準備好，可以繼續推進它。
+在[“通過訊息傳遞在兩個任務之間傳送資料”][message-passing]<!-- ignore -->一節中，我們描述過等待 `rx.recv` 的過程。`recv` 呼叫會返回一個 future，而等待這個 future 本質上就是在輪詢它。我們之前提到，執行時會暫停這個 future，直到它準備好，最終要麼得到 `Some(message)`，要麼在通道關閉時得到 `None`。現在，藉助對 `Future` trait，尤其是 `Future::poll` 的更深入理解，我們就能看清它的工作方式了：當返回 `Poll::Pending` 時，執行時知道這個 future 還沒準備好；反過來，當 `poll` 返回 `Poll::Ready(Some(message))` 或 `Poll::Ready(None)` 時，執行時就知道這個 future 已經準備好，可以繼續推進它。
 
 至於執行時具體是怎麼做到這一點的，已經超出了本書的範圍。不過關鍵是看清 future 的基本機制：執行時會去*輪詢*它所負責的每個 future，而當 future 還沒準備好時，就讓它重新休眠。
 
@@ -115,9 +115,9 @@ note: required by a bound in `futures_util::future::join_all::JoinAll`
 
 這段錯誤資訊裡的 note 告訴我們，應該使用 `pin!` 宏來 *pin* 這些值，也就是把它們放進 `Pin` 型別中，以保證這些值不會在記憶體中移動。報錯之所以說需要 pin，是因為 `dyn Future<Output = ()>` 需要實現 `Unpin` trait，而它當前並沒有實現。
 
-`trpl::join_all` 返回的是一個名為 `JoinAll` 的結構體。這個結構體在型別引數 `F` 上是泛型的，而 `F` 又被約束必須實現 `Future` trait。直接透過 `await` 去等待一個 future 時，Rust 會隱式地把它 pin 住。這也正是為什麼我們平常不需要在每個想等待 future 的地方都顯式寫 `pin!`。
+`trpl::join_all` 返回的是一個名為 `JoinAll` 的結構體。這個結構體在型別引數 `F` 上是泛型的，而 `F` 又被約束必須實現 `Future` trait。直接通過 `await` 去等待一個 future 時，Rust 會隱式地把它 pin 住。這也正是為什麼我們平常不需要在每個想等待 future 的地方都顯式寫 `pin!`。
 
-但這裡，我們並不是直接在等待某個 future。相反，我們是透過把一組 future 傳給 `join_all`，構造出了一個新的 future：`JoinAll`。而 `join_all` 的簽名要求集合中的元素型別都必須實現 `Future` trait。另一方面，`Box<T>` 只有在它包裹的 `T` 本身是 future 且實現了 `Unpin` trait 時，才會實現 `Future`。
+但這裡，我們並不是直接在等待某個 future。相反，我們是通過把一組 future 傳給 `join_all`，構造出了一個新的 future：`JoinAll`。而 `join_all` 的簽名要求集合中的元素型別都必須實現 `Future` trait。另一方面，`Box<T>` 只有在它包裹的 `T` 本身是 future 且實現了 `Unpin` trait 時，才會實現 `Future`。
 
 這一下資訊量很大！為了真正理解它，我們得再更深入一點，看清 `Future` trait 尤其是 pinning 這一部分到底是如何運作的。再看一遍 `Future` trait 的定義：
 
@@ -138,17 +138,17 @@ pub trait Future {
 - 它告訴 Rust：要呼叫這個方法，`self` 必須是什麼型別。
 - 它不能隨便寫成任意型別。它必須是方法所實現型別本身、該型別的引用或智慧指標，或者是一個包裹了該型別引用的 `Pin`。
 
-我們會在[第十八章][ch-18]<!-- ignore -->裡看到更多相關語法。眼下，只要知道：如果我們想透過輪詢 future 來檢查它到底是 `Pending` 還是 `Ready(Output)`，那麼就需要一個 `Pin` 包裹的、指向該型別的可變引用。
+我們會在[第十八章][ch-18]<!-- ignore -->裡看到更多相關語法。眼下，只要知道：如果我們想通過輪詢 future 來檢查它到底是 `Pending` 還是 `Ready(Output)`，那麼就需要一個 `Pin` 包裹的、指向該型別的可變引用。
 
 `Pin` 是一種針對指標類型別的包裝器，比如 `&`、`&mut`、`Box` 和 `Rc`。（嚴格來說，`Pin` 作用於實現了 `Deref` 或 `DerefMut` 的型別，但實際效果基本等同於“引用和智慧指標”。）`Pin` 本身並不是指標，也不像 `Rc` 或 `Arc` 那樣自帶引用計數之類的行為；它純粹是一個讓編譯器能夠對指標使用方式施加約束的工具。
 
-回憶一下：`await` 是透過呼叫 `poll` 實現的。理解這一點以後，前面的錯誤資訊就已經開始變得容易理解了，不過那個報錯說的是 `Unpin`，不是 `Pin`。那麼，`Pin` 和 `Unpin` 究竟是什麼關係？為什麼 `Future` 又要求 `self` 必須放在 `Pin` 裡才能呼叫 `poll` 呢？
+回憶一下：`await` 是通過呼叫 `poll` 實現的。理解這一點以後，前面的錯誤資訊就已經開始變得容易理解了，不過那個報錯說的是 `Unpin`，不是 `Pin`。那麼，`Pin` 和 `Unpin` 究竟是什麼關係？為什麼 `Future` 又要求 `self` 必須放在 `Pin` 裡才能呼叫 `poll` 呢？
 
 記住，我們在本章前面提過，一個 future 裡的多個 await 點會被編譯成一個狀態機，而編譯器會確保這個狀態機遵守 Rust 關於安全性的全部常規規則，包括借用和所有權。為了做到這一點，Rust 會分析：在某個 await 點和下一個 await 點之間，或者直到 async 程式碼塊結束之前，哪些資料是需要保留的。然後，它會在編譯出來的狀態機裡生成對應的變體。每個變體都會得到其對應原始碼片段所需的資料訪問許可權，這種訪問可能是獲得所有權，也可能是獲得可變或不可變引用。
 
 到這裡為止，一切都很好：如果你在某個 async 程式碼塊裡把所有權或引用關係寫錯了，借用檢查器會告訴你。但當我們想要移動這個程式碼塊對應的 future 時，比如把它放進 `Vec` 然後傳給 `join_all`，事情就開始變複雜了。
 
-當我們移動一個 future 時，無論是把它放進資料結構，以便透過 `join_all` 這種方式迭代處理，還是從函數里返回它，本質上都是在移動 Rust 為我們生成的那個狀態機。與 Rust 中大多數其他型別不同的是，Rust 為 async 程式碼塊生成的 future，可能會在某個狀態變體的欄位裡儲存指向它自身其他欄位的引用，就像圖 17-4 裡的簡化示意圖那樣。
+當我們移動一個 future 時，無論是把它放進資料結構，以便通過 `join_all` 這種方式迭代處理，還是從函數里返回它，本質上都是在移動 Rust 為我們生成的那個狀態機。與 Rust 中大多數其他型別不同的是，Rust 為 async 程式碼塊生成的 future，可能會在某個狀態變體的欄位裡儲存指向它自身其他欄位的引用，就像圖 17-4 裡的簡化示意圖那樣。
 
 <figure>
 
@@ -190,7 +190,7 @@ pub trait Future {
 
 </figure>
 
-不過，大多數型別即使碰巧放在 `Pin` 指標後面，也完全可以安全移動。只有當某個值內部真的包含引用時，我們才需要關心 pin。比如數字和布林值這類基本型別顯然沒有內部引用，所以當然是安全的。你平時在 Rust 裡處理的大多數型別也都是這樣。比如一個 `Vec` 就可以自由移動而不用擔心。考慮到目前為止我們看到的內容，如果你有一個 `Pin<Vec<String>>`，那理論上你必須透過 `Pin` 提供的那套安全但受限的 API 來操作它，哪怕 `Vec<String>` 在沒有其他引用存在時始終都是可以安全移動的。因此，我們需要一種機制來告訴編譯器：像這種情況，移動它完全沒問題。這正是 `Unpin` 的用途。
+不過，大多數型別即使碰巧放在 `Pin` 指標後面，也完全可以安全移動。只有當某個值內部真的包含引用時，我們才需要關心 pin。比如數字和布林值這類基本型別顯然沒有內部引用，所以當然是安全的。你平時在 Rust 裡處理的大多數型別也都是這樣。比如一個 `Vec` 就可以自由移動而不用擔心。考慮到目前為止我們看到的內容，如果你有一個 `Pin<Vec<String>>`，那理論上你必須通過 `Pin` 提供的那套安全但受限的 API 來操作它，哪怕 `Vec<String>` 在沒有其他引用存在時始終都是可以安全移動的。因此，我們需要一種機制來告訴編譯器：像這種情況，移動它完全沒問題。這正是 `Unpin` 的用途。
 
 `Unpin` 是一個標記 trait（marker trait），就像我們在第十六章見過的 `Send` 和 `Sync` 一樣，它本身沒有任何功能。marker trait 的存在，只是為了告訴編譯器：實現了該 trait 的型別，在某種特定上下文裡可以被安全使用。`Unpin` 告訴編譯器，某個型別*不需要*維護“這個值是否可以安全移動”方面的額外保證。
 
@@ -272,7 +272,7 @@ trait Stream {
 > fn next(&mut self) -> Next<'_, Self> where Self: Unpin;
 > ```
 >
-> 這裡的 `Next` 型別是一個實現了 `Future` 的 `struct`，它透過 `Next<'_, Self>` 的形式，把對 `self` 的引用生命週期顯式命名出來，這樣 `await` 才能和這個方法一起工作。
+> 這裡的 `Next` 型別是一個實現了 `Future` 的 `struct`，它通過 `Next<'_, Self>` 的形式，把對 `self` 的引用生命週期顯式命名出來，這樣 `await` 才能和這個方法一起工作。
 
 `StreamExt` trait 還是所有那些“用於 stream 的有趣方法”的所在地。任何實現了 `Stream` 的型別，都會自動獲得 `StreamExt` 的實現；不過這兩個 trait 之所以分開定義，是為了讓社群能夠在不影響底層基礎 trait 的前提下，不斷迭代那些更方便的高層 API。
 
@@ -280,7 +280,7 @@ trait Stream {
 
 關於這些 trait 的底層細節，我們就講到這裡。最後，讓我們來想一想：future（包括 stream）、任務和執行緒到底是如何一起協作的。
 
-[message-passing]: ch17-02-concurrency-with-async.html#透過訊息傳遞在兩個任務之間傳送資料
+[message-passing]: ch17-02-concurrency-with-async.html#通過訊息傳遞在兩個任務之間傳送資料
 [ch-18]: ch18-00-oop.html
 [async-book]: https://rust-lang.github.io/async-book/
 [under-the-hood]: https://rust-lang.github.io/async-book/02_execution/01_chapter.html

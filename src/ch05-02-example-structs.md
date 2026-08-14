@@ -12,7 +12,7 @@
 {{#rustdoc_include ../listings/ch05-using-structs-to-structure-related-data/listing-05-08/src/main.rs:all}}
 ```
 
-<span class="caption">示例 5-8：透過分別指定長方形的寬和高的變數來計算長方形面積</span>
+<span class="caption">示例 5-8：通過分別指定長方形的寬和高的變數來計算長方形面積</span>
 
 現在使用 `cargo run` 執行程式：
 
@@ -68,7 +68,7 @@
 
 <a id="adding-useful-functionality-with-derived-traits"></a>
 
-### 透過派生 trait 增加功能
+### 通過派生 trait 增加功能
 
 在除錯程式時打印出 `Rectangle` 例項來檢視其所有欄位的值非常有用。示例 5-11 像前面章節那樣嘗試使用 [`println!` 宏][println]。但這並不行。
 
@@ -94,7 +94,7 @@
 {{#include ../listings/ch05-using-structs-to-structure-related-data/listing-05-11/output.txt:12:13}}
 ```
 
-讓我們來試試！現在 `println!` 宏呼叫看起來會像 `println!("rect1 is {rect1:?}");`。在大括號中加入 `:?` 指示符，告訴 `println!` 我們想使用一種叫做 `Debug` 的輸出格式。`Debug` 是一個 trait，它允許我們以一種對開發者有幫助的方式列印結構體，這樣在除錯程式碼時就能看到它的值。
+讓我們來試試！現在 `println!` 巨集呼叫看起來會像 `println!("rect1 is {rect1:?}");`。在大括號中加入 `:?` 指示符，告訴 `println!` 我們想使用一種叫做 `Debug` 的輸出格式。`Debug` 是一個 trait，它允許我們以一種對開發者有幫助的方式列印結構體，這樣在除錯程式碼時就能看到它的值。
 
 這樣調整後再次執行程式。見鬼了！仍然能看到一個錯誤：
 
@@ -132,7 +132,7 @@ Rust **確實** 包含了打印出除錯資訊的功能，不過我們必須為�
 
 另一種使用 `Debug` 格式列印數值的方法是使用 [`dbg!` 宏][dbg]。`dbg!` 宏接收一個表示式的所有權（與 `println!` 宏相反，後者接收的是引用），打印出程式碼中呼叫 dbg! 宏時所在的檔案和行號，以及該表示式的結果值，並返回該值的所有權。
 
-> 注意：呼叫 `dbg!` 宏會列印到標準錯誤控制檯流（`stderr`），與 `println!` 不同，後者會列印到標準輸出控制檯流（`stdout`）。我們將在[第十二章 “將錯誤資訊寫入標準錯誤而不是標準輸出” 一節][err]中更多地討論 `stderr` 和 `stdout`。
+> 注意：呼叫 `dbg!` 宏會列印到標準錯誤控制台流（`stderr`），與 `println!` 不同，後者會列印到標準輸出控制台流（`stdout`）。我們將在[第十二章 “將錯誤資訊寫入標準錯誤而不是標準輸出” 一節][err]中更多地討論 `stderr` 和 `stdout`。
 
 下面是一個例子，我們對分配給 `width` 欄位的值以及 `rect1` 中整個結構的值感興趣。
 
@@ -148,7 +148,7 @@ Rust **確實** 包含了打印出除錯資訊的功能，不過我們必須為�
 
 我們可以看到第一點輸出來自 *src/main.rs* 第 10 行，我們正在調試表達式 `30 * scale`，其結果值是 `60`（為整數實現的 `Debug` 格式化是隻列印它們的值）。在 *src/main.rs* 第 14 行 的 `dbg!` 呼叫輸出 `&rect1` 的值，即 `Rectangle` 結構。這個輸出使用了更為易讀的 `Debug` 格式。當你試圖弄清楚你的程式碼在做什麼時，`dbg!` 宏可能真的很有幫助！
 
-除了 `Debug` trait，Rust 還為我們提供了很多可以透過 `derive` 屬性來使用的 trait，它們可以為我們的自定義型別增加實用的行為。[附錄 C][app-c] 中列出了這些 trait 和行為。第十章會介紹如何透過自定義行為來實現這些 trait，同時還有如何建立你自己的 trait。除了 `derive` 之外，還有很多屬性；更多資訊請參見 [Rust Reference][attributes] 的 Attributes 部分。
+除了 `Debug` trait，Rust 還為我們提供了很多可以通過 `derive` 屬性來使用的 trait，它們可以為我們的自定義型別增加實用的行為。[附錄 C][app-c] 中列出了這些 trait 和行為。第十章會介紹如何通過自定義行為來實現這些 trait，同時還有如何建立你自己的 trait。除了 `derive` 之外，還有很多屬性；更多資訊請參見 [Rust Reference][attributes] 的 Attributes 部分。
 
 我們的 `area` 函式用途非常專一：它僅計算長方形的面積。如果這個行為與 `Rectangle` 結構體再結合得更緊密一些就更好了，因為它不能用於其他型別。現在讓我們看看如何繼續重構這些程式碼，來將 `area` 函式協調進 `Rectangle` 型別定義的 `area` **方法** 中。
 

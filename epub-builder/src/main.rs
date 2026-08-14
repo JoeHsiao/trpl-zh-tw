@@ -327,7 +327,7 @@ fn main() {
             "--split-level=1",
             "--syntax-highlighting=pygments",
             "--css=epub.css",
-            "--metadata", "title=Rust 程式設計語言（繁體中文版）",
+            "--metadata", "title=Rust 程式設計語言（簡體中文版）",
             "--metadata", "author=KaiserY & Rust 團隊",
             "--metadata", "lang=zh-CN"
         ])

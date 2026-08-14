@@ -46,7 +46,7 @@
 
 - [常見集合](ch08-00-common-collections.md)
     - [使用 Vector 儲存列表](ch08-01-vectors.md)
-    - [使用字串儲存 UTF-8 編碼的文字](ch08-02-strings.md)
+    - [使用字串儲存 UTF-8 編碼的文本](ch08-02-strings.md)
     - [使用 Hash Map 儲存鍵值對](ch08-03-hash-maps.md)
 
 - [錯誤處理](ch09-00-error-handling.md)
@@ -101,10 +101,10 @@
     - [共享狀態併發](ch16-03-shared-state.md)
     - [使用 `Sync` 與 `Send` Traits 的可擴充套件併發：](ch16-04-extensible-concurrency-sync-and-send.md)
 
-- [Rust 的面向物件程式設計特性](ch17-00-oop.md)
-    - [面嚮物件語言的特徵](ch17-01-what-is-oo.md)
+- [Rust 的物件導向程式設計特性](ch17-00-oop.md)
+    - [物件導向語言的特徵](ch17-01-what-is-oo.md)
     - [顧及不同型別值的 trait 物件](ch17-02-trait-objects.md)
-    - [面向物件設計模式的實現](ch17-03-oo-design-patterns.md)
+    - [物件導向設計模式的實現](ch17-03-oo-design-patterns.md)
 
 ## 高階主題
 

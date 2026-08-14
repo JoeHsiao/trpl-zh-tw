@@ -36,7 +36,7 @@
 
 <span class="caption">示例 20-14: 一個使用泛型的 `Iterator` trait 假想定義</span>
 
-區別在於當如示例 20-14 那樣使用泛型時，則不得不在每一個實現中標註型別；這是因為我們也可以實現為 `Iterator<String> for Counter`，或任何其他型別，這樣就可以有多個針對 `Counter` 的 `Iterator` 的實現。換句話說，當 trait 有泛型引數時，可以多次實現這個 trait，每次都使用不同的具體泛型引數型別。當我們在 `Counter` 上呼叫 `next` 方法時，就必須透過型別註解來指明要使用哪一個 `Iterator` 的實現。
+區別在於當如示例 20-14 那樣使用泛型時，則不得不在每一個實現中標註型別；這是因為我們也可以實現為 `Iterator<String> for Counter`，或任何其他型別，這樣就可以有多個針對 `Counter` 的 `Iterator` 的實現。換句話說，當 trait 有泛型引數時，可以多次實現這個 trait，每次都使用不同的具體泛型引數型別。當我們在 `Counter` 上呼叫 `next` 方法時，就必須通過型別註解來指明要使用哪一個 `Iterator` 的實現。
 
 使用關聯型別後，則無需標註型別，因為不能對同一個型別多次實現該 trait。在示例 20-13 中使用關聯型別的定義裡，我們只能為 `Item` 選擇一次具體型別，因為只能有一個 `impl Iterator for Counter`。當呼叫 `Counter` 的 `next` 時不必每次指定我們需要 `u32` 值的迭代器。
 
@@ -48,7 +48,7 @@
 
 這種技術的一個很好的示例是 **運算子過載** (*operator overloading*)，即在特定情況下自定義運算子（比如 `+`）行為的操作。
 
-Rust 並不允許建立自定義運算子或過載任意運算子，但可以透過實現 `std::ops` 中列出的運算子相關 trait 來過載它們。例如，在示例 20-15 中我們過載 `+` 運算子來將兩個 `Point` 例項相加。我們透過在 `Point` 結構體上實現 `Add` trait 來實現這一點。
+Rust 並不允許建立自定義運算子或過載任意運算子，但可以通過實現 `std::ops` 中列出的運算子相關 trait 來過載它們。例如，在示例 20-15 中我們過載 `+` 運算子來將兩個 `Point` 例項相加。我們通過在 `Point` 結構體上實現 `Add` trait 來實現這一點。
 
 <span class="filename">檔名：src/main.rs</span>
 
@@ -213,7 +213,7 @@ Rust 既不能避免一個 trait 與另一個 trait 擁有相同名稱的方法�
 **********
 ```
 
-在 `outline_print` 的實現中，我們希望使用 `Display` trait 的功能。因此，需要說明 `OutlinePrint` trait 僅適用於那些同時實現了 `Display` 並提供 `OutlinePrint` 所需功能的型別。可以透過在 trait 定義中指定 `OutlinePrint: Display` 來做到這一點。這種技術類似於為 trait 增加 trait 約束。示例 20-23 展示了一個 `OutlinePrint` trait 的實現：
+在 `outline_print` 的實現中，我們希望使用 `Display` trait 的功能。因此，需要說明 `OutlinePrint` trait 僅適用於那些同時實現了 `Display` 並提供 `OutlinePrint` 所需功能的型別。可以通過在 trait 定義中指定 `OutlinePrint: Display` 來做到這一點。這種技術類似於為 trait 增加 trait 約束。示例 20-23 展示了一個 `OutlinePrint` trait 的實現：
 
 <span class="filename">檔名：src/main.rs</span>
 

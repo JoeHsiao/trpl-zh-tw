@@ -5,9 +5,9 @@
         "readme": "PREFACE.md"
     },
 
-    "title": "Rust 程式設計語言 繁體中文版",
+    "title": "Rust 程式設計語言 簡體中文版",
 
-    "description": "Rust 程式設計語言 繁體中文版",
+    "description": "Rust 程式設計語言 簡體中文版",
 
     "author": "Steve Klabnik 和 Carol Nichols，以及來自 Rust 社群的貢獻，KaiserY 以及 Rust 中文社群翻譯",
 

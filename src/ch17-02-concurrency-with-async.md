@@ -2,7 +2,7 @@
 
 [ch17-02-concurrency-with-async.md](https://github.com/rust-lang/book/blob/f78ab89d7545ac17780e6a367055cc089f4cd2ec/src/ch17-02-concurrency-with-async.md)
 
-在這一部分，我們將使用非同步來應對一些與第十六章中透過執行緒解決的相同的併發問題。因為之前我們已經討論了很多關鍵理念了，這一部分我們會專注於執行緒與 future 的區別。
+在這一部分，我們將使用非同步來應對一些與第十六章中通過執行緒解決的相同的併發問題。因為之前我們已經討論了很多關鍵理念了，這一部分我們會專注於執行緒與 future 的區別。
 
 在很多情況下，使用非同步處理併發的 API 與使用執行緒的非常相似。在其它的一些情況，它們則非常不同。即便執行緒與非同步的 API *看起來* 很類似，通常它們有著不同的行為，同時它們幾乎總是有著不同的效能特點。
 
@@ -137,9 +137,9 @@ hi number 9 from the first task!
 <a id="message-passing"></a>
 <a id="counting-up-on-two-tasks-using-message-passing"></a>
 
-### 透過訊息傳遞在兩個任務之間傳送資料
+### 通過訊息傳遞在兩個任務之間傳送資料
 
-在 future 之間共享資料的方式也會讓你感到熟悉：我們再次使用訊息傳遞，只不過這次使用的是非同步版本的型別和函式。為了展示基於執行緒的併發和基於 future 的併發之間的一些關鍵差別，我們會和第十六章[“透過訊息傳遞線上程間傳送資料”][message-passing-threads]一節稍微走一條不一樣的路線。在示例 17-9 中，我們先只使用一個 async 程式碼塊，而*不*像之前那樣顯式地建立一個獨立任務。
+在 future 之間共享資料的方式也會讓你感到熟悉：我們再次使用訊息傳遞，只不過這次使用的是非同步版本的型別和函式。為了展示基於執行緒的併發和基於 future 的併發之間的一些關鍵差別，我們會和第十六章[“通過訊息傳遞線上程間傳送資料”][message-passing-threads]一節稍微走一條不一樣的路線。在示例 17-9 中，我們先只使用一個 async 程式碼塊，而*不*像之前那樣顯式地建立一個獨立任務。
 
 <figure class="listing">
 
@@ -161,7 +161,7 @@ hi number 9 from the first task!
 
 請注意這個示例中的兩個地方：首先，訊息立刻就會到達！其次，雖然我們使用了 future，但是這裡還沒有併發。示例中的所有事情都是順序發生的，就像沒涉及到 future 時一樣。
 
-讓我們透過傳送一系列訊息並在之間休眠來解決第一個問題，如示例 17-10 所示：
+讓我們通過傳送一系列訊息並在之間休眠來解決第一個問題，如示例 17-10 所示：
 
 <figure class="listing">
 
@@ -171,7 +171,7 @@ hi number 9 from the first task!
 {{#rustdoc_include ../listings/ch17-async-await/listing-17-10/src/main.rs:many-messages}}
 ```
 
-<figcaption>示例 17-10：透過非同步通道傳送和接收多個訊息並在每個訊息之間透過 `await` 休眠</figcaption>
+<figcaption>示例 17-10：通過非同步通道傳送和接收多個訊息並在每個訊息之間通過 `await` 休眠</figcaption>
 
 </figure>
 

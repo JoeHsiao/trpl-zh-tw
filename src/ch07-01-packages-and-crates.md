@@ -30,7 +30,7 @@ main.rs
 
 運行了這條命令後，我們先用 `ls` （譯者注：此命令為 Linux 平臺的指令，Windows 下可用 dir）來看看 Cargo 給我們建立了什麼，Cargo 會給我們的包建立一個 *Cargo.toml* 檔案。檢視 *Cargo.toml* 的內容，會發現並沒有提到 *src/main.rs*，因為 Cargo 遵循的一個約定：*src/main.rs* 就是一個與包同名的二進位制 crate 的 crate 根。同樣的，Cargo 知道如果包目錄中包含 *src/lib.rs*，則包帶有與其同名的庫 crate，且 *src/lib.rs* 是 crate 根。crate 根檔案將由 Cargo 傳遞給 `rustc` 來實際構建庫或者二進位制專案。
 
-在此，我們有了一個只包含 *src/main.rs* 的包，意味著它只含有一個名為 `my-project` 的二進位制 crate。如果一個包同時含有 *src/main.rs* 和 *src/lib.rs*，則它有兩個 crate：一個二進位制的和一個庫的，且名字都與包相同。透過將檔案放在 *src/bin* 目錄下，一個包可以擁有多個二進位制 crate：每個 *src/bin* 下的檔案都會被編譯成一個獨立的二進位制 crate。
+在此，我們有了一個只包含 *src/main.rs* 的包，意味著它只含有一個名為 `my-project` 的二進位制 crate。如果一個包同時含有 *src/main.rs* 和 *src/lib.rs*，則它有兩個 crate：一個二進位制的和一個庫的，且名字都與包相同。通過將檔案放在 *src/bin* 目錄下，一個包可以擁有多個二進位制 crate：每個 *src/bin* 下的檔案都會被編譯成一個獨立的二進位制 crate。
 
 [basics]: ch01-02-hello-world.html#rust-程式基礎
 [modules]: ch07-02-defining-modules-to-control-scope-and-privacy.html

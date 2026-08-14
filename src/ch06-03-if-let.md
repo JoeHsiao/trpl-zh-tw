@@ -18,7 +18,7 @@
 {{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/no-listing-12-if-let/src/main.rs:here}}
 ```
 
-`if let` 語法獲取透過等號分隔的一個模式和一個表示式。它的工作方式與 `match` 相同，這裡的表示式對應 `match` 而模式則對應第一個分支。在這個例子中，模式是 `Some(max)`，`max` 繫結為 `Some` 中的值。接著可以在 `if let` 程式碼塊中使用 `max` 了，就跟在對應的 `match` 分支中一樣。只有當值匹配該模式時，`if let` 塊中的程式碼才會執行。
+`if let` 語法獲取通過等號分隔的一個模式和一個表示式。它的工作方式與 `match` 相同，這裡的表示式對應 `match` 而模式則對應第一個分支。在這個例子中，模式是 `Some(max)`，`max` 繫結為 `Some` 中的值。接著可以在 `if let` 程式碼塊中使用 `max` 了，就跟在對應的 `match` 分支中一樣。只有當值匹配該模式時，`if let` 塊中的程式碼才會執行。
 
 使用 `if let` 意味著更少的輸入、更少的縮排，也更少的樣板程式碼。然而，這樣也會失去 `match` 所強制的窮盡性檢查，也就無法確保你沒有遺漏某些情況。`match` 和 `if let` 之間的選擇依賴特定的環境以及增加簡潔度和失去窮盡性檢查的權衡取捨。
 

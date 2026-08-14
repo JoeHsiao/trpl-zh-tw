@@ -6,7 +6,7 @@
 
 這裡有一個程式設計小習題：編寫一個函式，接收一個由空格分隔單詞的字串，並返回它在該字串中找到的第一個單詞。如果函式在該字串中沒有找到空格，那麼整個字串就是一個單詞，因此應該返回整個字串。
 
-> 注意：為了介紹字串 slice，本小節假設只處理 ASCII；關於 UTF-8 處理的更完整討論，請見第八章的[“使用字串儲存 UTF-8 編碼的文字”][strings]一節。
+> 注意：為了介紹字串 slice，本小節假設只處理 ASCII；關於 UTF-8 處理的更完整討論，請見第八章的[“使用字串儲存 UTF-8 編碼的文本”][strings]一節。
 
 讓我們先想想，如果不用 slice，該怎樣寫這個函式的簽名，從而理解 slice 解決了什麼問題：
 
@@ -40,7 +40,7 @@ fn first_word(s: &String) -> ?
 
 因為 `enumerate` 方法返回的是元組，所以我們可以用模式來解構它；我們會在[第六章][ch6]進一步討論模式。因此，在 `for` 迴圈中，我們指定了一個模式，其中元組裡的 `i` 是索引，元組裡的 `&item` 是單個位元組。因為我們從 `.iter().enumerate()` 拿到的是元素的引用，所以模式中用了 `&`。
 
-在 `for` 迴圈中，我們透過位元組的字面值語法來尋找代表空格的位元組。如果找到了一個空格，返回它的位置。否則，使用 `s.len()` 返回字串的長度。
+在 `for` 迴圈中，我們通過位元組的字面值語法來尋找代表空格的位元組。如果找到了一個空格，返回它的位置。否則，使用 `s.len()` 返回字串的長度。
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch04-understanding-ownership/listing-04-07/src/main.rs:inside_for}}
@@ -129,7 +129,7 @@ let slice = &s[..];
 {{#rustdoc_include ../listings/ch04-understanding-ownership/no-listing-18-first-word-slice/src/main.rs:here}}
 ```
 
-我們使用跟示例 4-7 相同的方式獲取單詞結尾的索引，透過尋找第一個出現的空格。當找到一個空格，我們返回一個字串 slice，它使用字串的開始和空格的索引作為開始和結束的索引。
+我們使用跟示例 4-7 相同的方式獲取單詞結尾的索引，通過尋找第一個出現的空格。當找到一個空格，我們返回一個字串 slice，它使用字串的開始和空格的索引作為開始和結束的索引。
 
 現在呼叫 `first_word` 時，它會返回一個與底層資料繫結在一起的值。這個值由一個指向 slice 起始位置的引用和 slice 中元素的數量組成。
 
@@ -181,7 +181,7 @@ fn first_word(s: &String) -> &str {
 {{#rustdoc_include ../listings/ch04-understanding-ownership/listing-04-09/src/main.rs:here}}
 ```
 
-<span class="caption">示例 4-9: 透過將 `s` 引數的型別改為字串 slice 來改進 `first_word` 函式</span>
+<span class="caption">示例 4-9: 通過將 `s` 引數的型別改為字串 slice 來改進 `first_word` 函式</span>
 
 如果我們有一個字串 slice，就可以直接把它傳進去。如果我們有一個 `String`，也可以傳入整個 `String` 的 slice，或者傳入對 `String` 的引用。這種靈活性利用了 *deref coercions*，也就是我們會在[“在函式和方法中使用 Deref 強制轉換”][deref-coercions]一節中講到的特性。把函式引數定義為字串 slice，而不是 `String` 的引用，會讓我們的 API 更通用、更有用，而且不會損失任何功能：
 
@@ -193,7 +193,7 @@ fn first_word(s: &String) -> &str {
 
 ### 其他型別的 slice
 
-字串 slice，正如你想象的那樣，是針對字串的。不過也有更通用的 slice 型別。考慮一下這個陣列：
+字串 slice，正如你想像的那樣，是針對字串的。不過也有更通用的 slice 型別。考慮一下這個陣列：
 
 ```rust
 let a = [1, 2, 3, 4, 5];
@@ -209,7 +209,7 @@ let slice = &a[1..3];
 assert_eq!(slice, &[2, 3]);
 ```
 
-這個 slice 的型別是 `&[i32]`。它跟字串 slice 的工作方式一樣，透過儲存第一個集合元素的引用和一個集合總長度。你可以對其他所有集合使用這類 slice。第八章講到 vector 時會詳細討論這些集合。
+這個 slice 的型別是 `&[i32]`。它跟字串 slice 的工作方式一樣，通過儲存第一個集合元素的引用和一個集合總長度。你可以對其他所有集合使用這類 slice。第八章講到 vector 時會詳細討論這些集合。
 
 ## 總結
 
@@ -219,5 +219,5 @@ assert_eq!(slice, &[2, 3]);
 
 [ch13]: ch13-02-iterators.html
 [ch6]: ch06-02-match.html#繫結值的模式
-[strings]: ch08-02-strings.html#使用字串儲存-utf-8-編碼的文字
+[strings]: ch08-02-strings.html#使用字串儲存-utf-8-編碼的文本
 [deref-coercions]: ch15-02-deref.html#在函式和方法中使用-deref-強制轉換

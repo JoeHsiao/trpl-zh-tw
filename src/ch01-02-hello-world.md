@@ -99,7 +99,7 @@ fn main() {
 println!("Hello, world!");
 ```
 
-這行程式碼完成這個簡單程式的所有工作：在螢幕上列印文字。這裡有三個重要的細節需要注意。
+這行程式碼完成這個簡單程式的所有工作：在螢幕上列印文本。這裡有三個重要的細節需要注意。
 
 首先，`println!` 呼叫了一個 Rust 宏（macro）。如果呼叫的是函式，就應該寫成 `println`（不帶 `!`）。Rust 宏是一種用來編寫可生成程式碼的程式碼，從而擴充套件 Rust 語法的方式；我們將在[第二十章][ch20-macros]詳細討論宏。現在你只需要知道，看到 `!` 就意味著呼叫的是宏而不是普通函式，並且宏並不總是遵循與函式相同的規則。
 
@@ -119,9 +119,9 @@ println!("Hello, world!");
 $ rustc main.rs
 ```
 
-如果你有 C 或 C++ 背景，就會發現這與 `gcc` 和 `clang` 類似。編譯成功後，Rust 會輸出一個二進位制的可執行檔案。
+如果你有 C 或 C++ 背景，就會發現這與 `gcc` 和 `clang` 類似。編譯成功後，Rust 會輸出一個二進位制的執行檔。
 
-在 Linux、macOS，以及 Windows 的 PowerShell 上，你可以在 shell 中輸入 `ls` 命令來檢視這個可執行檔案。
+在 Linux、macOS，以及 Windows 的 PowerShell 上，你可以在 shell 中輸入 `ls` 命令來檢視這個執行檔。
 
 ```console
 $ ls
@@ -137,7 +137,7 @@ main.pdb
 main.rs
 ```
 
-這展示了帶有 *.rs* 副檔名的原始碼檔案、可執行檔案（Windows 上是 *main.exe*，其他平臺上則是 *main*），以及在 Windows 上一個帶有 *.pdb* 副檔名、包含除錯資訊的檔案。接下來，你可以執行 *main* 或 *main.exe*，如下所示：
+這展示了帶有 *.rs* 副檔名的原始碼檔案、執行檔（Windows 上是 *main.exe*，其他平臺上則是 *main*），以及在 Windows 上一個帶有 *.pdb* 副檔名、包含除錯資訊的檔案。接下來，你可以執行 *main* 或 *main.exe*，如下所示：
 
 ```console
 $ ./main # Windows 是 .\main.exe
@@ -145,7 +145,7 @@ $ ./main # Windows 是 .\main.exe
 
 如果這裡的 *main.rs* 是上文所述的 “Hello, world!” 程式，那麼在終端上就會打印出 `Hello, world!`。
 
-如果你更熟悉 Ruby、Python 或 JavaScript 這樣的動態語言，可能不太習慣把編譯和執行分成兩個獨立步驟。Rust 是一種 **預先編譯**（*ahead-of-time compiled*）語言，這意味著你可以先將程式編譯好，再把可執行檔案交給其他人；即使他們沒有安裝 Rust，也可以直接執行。如果你給別人的是一個 *.rb*、*.py* 或 *.js* 檔案，他們就需要分別安裝 Ruby、Python 或 JavaScript 的實現（執行時環境）。不過在這些語言中，編譯和執行程式通常只需要一條命令。語言設計中的一切都是權衡取捨。
+如果你更熟悉 Ruby、Python 或 JavaScript 這樣的動態語言，可能不太習慣把編譯和執行分成兩個獨立步驟。Rust 是一種 **預先編譯**（*ahead-of-time compiled*）語言，這意味著你可以先將程式編譯好，再把執行檔交給其他人；即使他們沒有安裝 Rust，也可以直接執行。如果你給別人的是一個 *.rb*、*.py* 或 *.js* 檔案，他們就需要分別安裝 Ruby、Python 或 JavaScript 的實現（執行時環境）。不過在這些語言中，編譯和執行程式通常只需要一條命令。語言設計中的一切都是權衡取捨。
 
 僅僅使用 `rustc` 編譯簡單程式是沒問題的，不過隨著專案的增長，你可能需要管理你專案的方方面面，並讓程式碼易於分享。接下來，我們要介紹一個叫做 Cargo 的工具，它會幫助你編寫真實世界中的 Rust 程式。
 

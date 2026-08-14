@@ -2,7 +2,7 @@
 
 [appendix-05-editions.md](https://github.com/rust-lang/book/blob/555182e7f27ffb9761e18455f4d7eb42443a2954/src/appendix-05-editions.md)
 
-早在第一章，我們見過 `cargo new` 在 *Cargo.toml* 中增加了一些有關 `edition` 的元資料。本附錄將解釋其意義！
+早在第一章，我們見過 `cargo new` 在 *Cargo.toml* 中增加了一些有關 `edition` 的後設資料。本附錄將解釋其意義！
 
 Rust 語言和編譯器有一個為期六週的釋出迴圈，這意味著使用者會穩定得到新功能的更新。其他程式語言釋出大更新但不甚頻繁；Rust 選擇更為頻繁的釋出小更新。一段時間之後，所有這些小更新會日積月累。不過隨著小更新逐次的釋出，或許很難回過頭來感嘆：“哇，從 Rust 1.10 到 Rust 1.31，Rust 的變化真大！”
 
@@ -24,6 +24,6 @@ Rust 語言和編譯器有一個為期六週的釋出迴圈，這意味著使用
 
 有一點需要明確：大部分功能在所有版本中都能使用。開發者使用任何 Rust 版本將能繼續接收最新穩定版的改進。然而在一些情況，主要是增加了新關鍵字的時候，則可能出現了只能用於新版本的功能。只需切換版本即可利用新版本的功能。
 
-更多細節請參見 [_Edition Guide_][edition-guide]。這是一本完整的指南，列舉了不同 edition 之間的差異，並說明了如何透過 `cargo fix` 自動將程式碼升級到新的 edition。
+更多細節請參見 [_Edition Guide_][edition-guide]。這是一本完整的指南，列舉了不同 edition 之間的差異，並說明了如何通過 `cargo fix` 自動將程式碼升級到新的 edition。
 
 [edition-guide]: https://doc.rust-lang.org/stable/edition-guide

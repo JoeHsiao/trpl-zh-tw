@@ -3,7 +3,7 @@
 
 ---
 
-# Rust 程式設計語言（2024 edition）繁體中文版
+# Rust 程式設計語言（2024 edition）簡體中文版
 
 ![Build Status](https://github.com/KaiserY/trpl-zh-cn/workflows/CI/badge.svg)
 

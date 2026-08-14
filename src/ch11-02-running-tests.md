@@ -24,9 +24,9 @@ $ cargo test -- --test-threads=1
 
 ### 顯示函式輸出
 
-預設情況下，當測試透過時，Rust 的測試庫會捕獲列印到標準輸出的所有內容。比如在測試中呼叫了 `println!` 而測試通過了，我們將不會在終端看到 `println!` 的輸出：只會看到說明測試透過的提示行。如果測試失敗了，則會看到所有標準輸出和其他錯誤資訊。
+預設情況下，當測試通過時，Rust 的測試庫會捕獲列印到標準輸出的所有內容。比如在測試中呼叫了 `println!` 而測試通過了，我們將不會在終端看到 `println!` 的輸出：只會看到說明測試通過的提示行。如果測試失敗了，則會看到所有標準輸出和其他錯誤資訊。
 
-例如，示例 11-10 有一個無意義的函式，它打印出其引數的值並接著返回 10。接著還有一個會透過的測試和一個會失敗的測試：
+例如，示例 11-10 有一個無意義的函式，它打印出其引數的值並接著返回 10。接著還有一個會通過的測試和一個會失敗的測試：
 
 <span class="filename">檔名：src/lib.rs</span>
 
@@ -42,9 +42,9 @@ $ cargo test -- --test-threads=1
 {{#include ../listings/ch11-writing-automated-tests/listing-11-10/output.txt}}
 ```
 
-注意輸出中不會出現測試透過時列印的內容，即 `I got the value 4`。因為當測試透過時，這些輸出會被截獲。失敗測試的輸出 `I got the value 8` ，則出現在輸出的測試摘要部分，同時也顯示了測試失敗的原因。
+注意輸出中不會出現測試通過時列印的內容，即 `I got the value 4`。因為當測試通過時，這些輸出會被截獲。失敗測試的輸出 `I got the value 8` ，則出現在輸出的測試摘要部分，同時也顯示了測試失敗的原因。
 
-如果你希望也能看到透過的測試中列印的值，也可以在結尾加上 `--show-output` 告訴 Rust 顯示成功測試的輸出。
+如果你希望也能看到通過的測試中列印的值，也可以在結尾加上 `--show-output` 告訴 Rust 顯示成功測試的輸出。
 
 ```console
 $ cargo test -- --show-output
@@ -56,7 +56,7 @@ $ cargo test -- --show-output
 {{#include ../listings/ch11-writing-automated-tests/output-only-01-show-output/output.txt}}
 ```
 
-### 透過名稱執行部分測試
+### 通過名稱執行部分測試
 
 有時執行整個測試集會耗費很長時間。如果你負責特定位置的程式碼，你可能會希望只執行與這些程式碼相關的測試。你可以向 `cargo test` 傳遞所希望執行的測試名稱的引數來選擇執行哪些測試。
 
@@ -90,19 +90,19 @@ $ cargo test -- --show-output
 
 #### 過濾執行多個測試
 
-我們可以指定部分測試的名稱，任何名稱匹配這個名稱的測試會被執行。例如，因為頭兩個測試的名稱包含 `add`，可以透過 `cargo test add` 來執行這兩個測試：
+我們可以指定部分測試的名稱，任何名稱匹配這個名稱的測試會被執行。例如，因為頭兩個測試的名稱包含 `add`，可以通過 `cargo test add` 來執行這兩個測試：
 
 ```console
 {{#include ../listings/ch11-writing-automated-tests/output-only-03-multiple-tests/output.txt}}
 ```
 
-這運行了所有名字中帶有 `add` 的測試，也過濾掉了名為 `one_hundred` 的測試。同時注意測試所在的模組也是測試名稱的一部分，所以可以透過過濾模組名來執行一個模組中的所有測試。
+這運行了所有名字中帶有 `add` 的測試，也過濾掉了名為 `one_hundred` 的測試。同時注意測試所在的模組也是測試名稱的一部分，所以可以通過過濾模組名來執行一個模組中的所有測試。
 
 <a id="ignoring-some-tests-unless-specifically-requested"></a>
 
 ### 除非特別指定否則忽略測試
 
-有時一些特定的測試執行起來是非常耗費時間的，所以在大多數執行 `cargo test` 的時候希望能排除它們。雖然可以透過引數列舉出所有希望執行的測試來做到，也可以使用 `ignore` 屬性來標記耗時的測試並排除它們，如下所示：
+有時一些特定的測試執行起來是非常耗費時間的，所以在大多數執行 `cargo test` 的時候希望能排除它們。雖然可以通過引數列舉出所有希望執行的測試來做到，也可以使用 `ignore` 屬性來標記耗時的測試並排除它們，如下所示：
 
 <span class="filename">檔名：src/lib.rs</span>
 
@@ -122,4 +122,4 @@ $ cargo test -- --show-output
 {{#include ../listings/ch11-writing-automated-tests/output-only-04-running-ignored/output.txt}}
 ```
 
-透過控制執行哪些測試，你可以確保 `cargo test` 的結果能夠快速返回。當你需要執行 `ignored` 的測試時，可以執行 `cargo test -- --ignored`。如果你希望不管是否忽略都要執行全部測試，可以執行 `cargo test -- --include-ignored`。
+通過控制執行哪些測試，你可以確保 `cargo test` 的結果能夠快速返回。當你需要執行 `ignored` 的測試時，可以執行 `cargo test -- --ignored`。如果你希望不管是否忽略都要執行全部測試，可以執行 `cargo test -- --include-ignored`。

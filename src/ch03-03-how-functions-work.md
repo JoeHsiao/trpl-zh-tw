@@ -12,7 +12,7 @@ Rust 程式碼中的函式名和變數名通常使用 *snake case* 風格。在 
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-16-functions/src/main.rs}}
 ```
 
-我們在 Rust 中透過輸入 `fn` 後面跟著函式名和一對圓括號來定義函式。大括號告訴編譯器哪裡是函式體的開始和結尾。
+我們在 Rust 中通過輸入 `fn` 後面跟著函式名和一對圓括號來定義函式。大括號告訴編譯器哪裡是函式體的開始和結尾。
 
 可以使用函式名後跟圓括號來呼叫我們定義過的任意函式。因為程式中已定義 `another_function` 函式，所以可以在 `main` 函式中呼叫它。注意，原始碼中 `another_function` 定義在 `main` 函式 **之後**；也可以定義在之前。Rust 不關心函式定義所在的位置，只要函式被呼叫時出現在呼叫之處可見的作用域內就行。
 
@@ -54,7 +54,7 @@ Rust 程式碼中的函式名和變數名通常使用 *snake case* 風格。在 
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-18-functions-with-multiple-parameters/src/main.rs}}
 ```
 
-這個例子建立了一個名為 `print_labeled_measurement` 的函式，它有兩個引數。第一個引數名為 `value`，型別是 `i32`。第二個引數是 `unit_label` ，型別是 `char`。然後，該函式列印包含 `value` 和 `unit_label` 的文字。
+這個例子建立了一個名為 `print_labeled_measurement` 的函式，它有兩個引數。第一個引數名為 `value`，型別是 `i32`。第二個引數是 `unit_label` ，型別是 `char`。然後，該函式列印包含 `value` 和 `unit_label` 的文本。
 
 嘗試執行程式碼。使用上面的例子替換當前 *functions* 專案的 *src/main.rs* 檔案，並用 `cargo run` 執行它：
 
@@ -101,7 +101,7 @@ Rust 程式碼中的函式名和變數名通常使用 *snake case* 風格。在 
 
 `let y = 6` 這條語句不會返回值，因此沒有什麼東西可以繫結到 `x` 上。這和一些其他語言不同，比如 C 和 Ruby，在那些語言裡，賦值語句會返回被賦的值。因此，在那些語言中你可以寫 `x = y = 6`，讓 `x` 和 `y` 都得到值 `6`；但 Rust 不是這樣。
 
-表示式會計算出一個值，並且你將編寫的大部分 Rust 程式碼是由表示式組成的。考慮一個數學運算，比如 `5 + 6`，這是一個表示式並計算出值 `11`。表示式可以是語句的一部分：在示例 3-1 中，語句 `let y = 6;` 中的 `6` 是一個表示式，它計算出的值是 `6`。函式呼叫是一個表示式。宏呼叫是一個表示式。用大括號建立的一個新的塊作用域也是一個表示式，例如：
+表示式會計算出一個值，並且你將編寫的大部分 Rust 程式碼是由表示式組成的。考慮一個數學運算，比如 `5 + 6`，這是一個表示式並計算出值 `11`。表示式可以是語句的一部分：在示例 3-1 中，語句 `let y = 6;` 中的 `6` 是一個表示式，它計算出的值是 `6`。函式呼叫是一個表示式。巨集呼叫是一個表示式。用大括號建立的一個新的塊作用域也是一個表示式，例如：
 
 <span class="filename">檔名：src/main.rs</span>
 

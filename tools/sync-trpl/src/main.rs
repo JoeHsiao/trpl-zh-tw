@@ -13,7 +13,7 @@ const README_HEADER: &str = "\
 
 ";
 // 這些字串在套用術語詞典時完全跳過,不會被任何規則替換
-const PROTECTED_STRINGS: &[&str] = &["簡體中文版.pdf", "簡體中文譯本", "簡體中文："];
+const PROTECTED_STRINGS: &[&str] = &[];
 
 const UPSTREAM: &str = "upstream/main";
 const LAST_SYNCED_FILE: &str = "tools/.last_synced_commit";

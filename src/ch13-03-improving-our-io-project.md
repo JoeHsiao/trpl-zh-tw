@@ -60,7 +60,7 @@
 
 我們已經更新了 `Config::build` 函式的簽名，因此引數 `args` 有一個帶有 trait 約束 `impl Iterator<Item = String>` 的泛型型別，而不是 `&[String]`。這裡用到了第十章[“trait 作為引數”][impl-trait]部分討論過的 `impl Trait` 語法，這意味著 `args` 可以是任何實現了 `Iterator` trait 並返回 `String` 項（item）的型別。
 
-由於我們獲取了 `args` 的所有權，並且將透過迭代來修改 `args`，因此我們可以在 `args` 引數的宣告中新增 `mut` 關鍵字，使其可變。
+由於我們獲取了 `args` 的所有權，並且將通過迭代來修改 `args`，因此我們可以在 `args` 引數的宣告中新增 `mut` 關鍵字，使其可變。
 
 <a id="using-iterator-trait-methods-instead-of-indexing"></a>
 
@@ -76,7 +76,7 @@
 
 <span class="caption">示例 13-20：修改 `Config::build` 的函式體來使用迭代器方法</span>
 
-請記住 `env::args` 返回值的第一個值是程式的名稱。我們希望忽略它並獲取下一個值，所以首先呼叫 `next` 且不對其返回值做任何操作。然後，我們再次呼叫 `next` 來獲取要放入 `Config` 結構體的 `query` 欄位的值。如果 `next` 返回 `Some`，使用 `match` 來提取其值。如果它返回 `None`，則意味著沒有提供足夠的引數並透過 `Err` 值提早返回。我們對 `file_path` 的值也進行同樣的操作。
+請記住 `env::args` 返回值的第一個值是程式的名稱。我們希望忽略它並獲取下一個值，所以首先呼叫 `next` 且不對其返回值做任何操作。然後，我們再次呼叫 `next` 來獲取要放入 `Config` 結構體的 `query` 欄位的值。如果 `next` 返回 `Some`，使用 `match` 來提取其值。如果它返回 `None`，則意味著沒有提供足夠的引數並通過 `Err` 值提早返回。我們對 `file_path` 的值也進行同樣的操作。
 
 <a id="making-code-clearer-with-iterator-adapters"></a>
 
@@ -92,7 +92,7 @@ I/O 專案中其他可以利用迭代器的地方是 `search` 函式，示例 13
 
 <span class="caption">示例 13-21：示例 12-19 中 `search` 函式的定義</span>
 
-可以透過使用迭代器介面卡方法來編寫更簡明的程式碼。這樣做還可以避免使用一個可變的中間 `results` vector。函數語言程式設計風格傾向於最小化可變狀態的數量來使程式碼更清晰。去除可變狀態可能會使未來的並行搜尋最佳化變得更容易，因為我們不必管理對 `results` vector 的併發訪問。示例 13-22 展示了這一變化：
+可以通過使用迭代器介面卡方法來編寫更簡明的程式碼。這樣做還可以避免使用一個可變的中間 `results` vector。函數語言程式設計風格傾向於最小化可變狀態的數量來使程式碼更清晰。去除可變狀態可能會使未來的並行搜尋最佳化變得更容易，因為我們不必管理對 `results` vector 的併發訪問。示例 13-22 展示了這一變化：
 
 <span class="filename">檔名：src/lib.rs</span>
 

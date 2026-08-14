@@ -6,7 +6,7 @@ Cargo 是 Rust 的構建系統和包管理器。大多數 Rustaceans 都使用 C
 
 最簡單的 Rust 程式，比如我們剛剛編寫的那個，沒有任何依賴。如果使用 Cargo 來構建 “Hello, world!” 專案，那麼只會用到 Cargo 中負責構建程式碼的那部分功能。隨著你編寫更復雜的 Rust 程式，就會加入依賴項；如果專案一開始就是用 Cargo 建立的，那麼新增依賴項會容易得多。
 
-由於絕大多數 Rust 專案都使用 Cargo，本書接下來的部分也假設你會使用 Cargo。如果你使用的是 [“安裝”][installation] 部分介紹的官方安裝方式，那麼 Cargo 會隨 Rust 一起安裝。如果你透過其他方式安裝 Rust，可以在終端輸入如下命令檢查是否安裝了 Cargo：
+由於絕大多數 Rust 專案都使用 Cargo，本書接下來的部分也假設你會使用 Cargo。如果你使用的是 [“安裝”][installation] 部分介紹的官方安裝方式，那麼 Cargo 會隨 Rust 一起安裝。如果你通過其他方式安裝 Rust，可以在終端輸入如下命令檢查是否安裝了 Cargo：
 
 ```console
 $ cargo --version
@@ -27,11 +27,11 @@ $ cd hello_cargo
 
 進入 *hello_cargo* 目錄並列出文件。你會看到 Cargo 為我們生成了兩個檔案和一個目錄：一個 *Cargo.toml* 檔案、一個 *src* 目錄，以及位於 *src* 目錄中的 *main.rs* 檔案。
 
-它還會在 *hello_cargo* 目錄中初始化一個 Git 倉庫，並生成一個 *.gitignore* 檔案。如果在一個已經存在的 Git 倉庫中執行 `cargo new`，這些 Git 相關檔案就不會再生成；你可以透過執行 `cargo new --vcs=git` 來覆蓋這個行為。
+它還會在 *hello_cargo* 目錄中初始化一個 Git 倉庫，並生成一個 *.gitignore* 檔案。如果在一個已經存在的 Git 倉庫中執行 `cargo new`，這些 Git 相關檔案就不會再生成；你可以通過執行 `cargo new --vcs=git` 來覆蓋這個行為。
 
-> 注意：Git 是一種常見的版本控制系統（version control system，VCS）。你可以透過 `--vcs` 引數讓 `cargo new` 使用其他版本控制系統，或者不使用 VCS。執行 `cargo new --help` 可以檢視可用選項。
+> 注意：Git 是一種常見的版本控制系統（version control system，VCS）。你可以通過 `--vcs` 引數讓 `cargo new` 使用其他版本控制系統，或者不使用 VCS。執行 `cargo new --help` 可以檢視可用選項。
 
-請自行選用文字編輯器開啟 *Cargo.toml* 檔案。它應該看起來與示例 1-2 中程式碼類似：
+請自行選用文本編輯器開啟 *Cargo.toml* 檔案。它應該看起來與示例 1-2 中程式碼類似：
 
 <figure class="listing">
 
@@ -84,7 +84,7 @@ $ cargo build
     Finished dev [unoptimized + debuginfo] target(s) in 2.85 secs
 ```
 
-這條命令會在 *target/debug/hello_cargo* 生成一個可執行檔案（Windows 上是 *target\debug\hello_cargo.exe*），而不是放在當前目錄下。因為預設構建方式是除錯構建（debug build），Cargo 會把可執行檔案放在名為 *debug* 的目錄中。你可以用下面的命令執行這個可執行檔案：
+這條命令會在 *target/debug/hello_cargo* 生成一個執行檔（Windows 上是 *target\debug\hello_cargo.exe*），而不是放在當前目錄下。因為預設構建方式是除錯構建（debug build），Cargo 會把執行檔放在名為 *debug* 的目錄中。你可以用下面的命令執行這個執行檔：
 
 ```console
 $ ./target/debug/hello_cargo # 或者在 Windows 下為 .\target\debug\hello_cargo.exe
@@ -93,7 +93,7 @@ Hello, world!
 
 如果一切順利，終端上應該會打印出 `Hello, world!`。第一次執行 `cargo build` 時，Cargo 還會在專案根目錄建立一個新檔案：*Cargo.lock*。這個檔案會記錄專案依賴的精確版本。由於這個專案沒有依賴，所以檔案內容比較少。你永遠都不需要手動修改這個檔案；Cargo 會替你管理它的內容。
 
-我們剛剛使用 `cargo build` 構建了專案，並使用 `./target/debug/hello_cargo` 運行了程式；也可以使用 `cargo run`，在一條命令中完成編譯並執行生成的可執行檔案：
+我們剛剛使用 `cargo build` 構建了專案，並使用 `./target/debug/hello_cargo` 運行了程式；也可以使用 `cargo run`，在一條命令中完成編譯並執行生成的執行檔：
 
 ```console
 $ cargo run
@@ -102,7 +102,7 @@ $ cargo run
 Hello, world!
 ```
 
-比起必須先執行 `cargo build` 再用可執行檔案的完整路徑來執行程式，使用 `cargo run` 更方便，所以大多數開發者會選擇 `cargo run`。
+比起必須先執行 `cargo build` 再用執行檔的完整路徑來執行程式，使用 `cargo run` 更方便，所以大多數開發者會選擇 `cargo run`。
 
 注意，這一次並沒有出現表明 Cargo 正在編譯 `hello_cargo` 的輸出。Cargo 發現檔案沒有發生變化，所以它沒有重新構建，而是直接運行了二進位制檔案。如果你修改了原始檔，Cargo 就會在執行之前重新構建專案，並會出現像這樣的輸出：
 
@@ -114,7 +114,7 @@ $ cargo run
 Hello, world!
 ```
 
-Cargo 還提供了一個叫 `cargo check` 的命令。該命令快速檢查程式碼確保其可以編譯，但並不產生可執行檔案：
+Cargo 還提供了一個叫 `cargo check` 的命令。該命令快速檢查程式碼確保其可以編譯，但並不產生執行檔：
 
 ```console
 $ cargo check
@@ -122,7 +122,7 @@ $ cargo check
     Finished dev [unoptimized + debuginfo] target(s) in 0.32 secs
 ```
 
-為什麼你會不需要可執行檔案呢？通常 `cargo check` 比 `cargo build` 快得多，因為它省略了生成可執行檔案這一步。如果你在編寫程式碼時持續檢查，`cargo check` 可以讓你更快知道當前程式碼是否還能正常編譯！因此，很多 Rustaceans 都會在編寫程式時定期執行 `cargo check` 來確保程式碼可以編譯；等到準備好使用可執行檔案時，再執行 `cargo build`。
+為什麼你會不需要執行檔呢？通常 `cargo check` 比 `cargo build` 快得多，因為它省略了生成執行檔這一步。如果你在編寫程式碼時持續檢查，`cargo check` 可以讓你更快知道當前程式碼是否還能正常編譯！因此，很多 Rustaceans 都會在編寫程式時定期執行 `cargo check` 來確保程式碼可以編譯；等到準備好使用執行檔時，再執行 `cargo build`。
 
 我們回顧下已學習的 Cargo 內容：
 
@@ -136,7 +136,7 @@ $ cargo check
 
 ### 釋出（release）構建
 
-當專案最終準備好釋出時，可以使用 `cargo build --release` 以啟用最佳化方式編譯專案。這會在 *target/release* 而不是 *target/debug* 下生成可執行檔案。這些最佳化會讓 Rust 程式碼執行得更快，不過開啟最佳化也會延長編譯時間。這就是為什麼會有兩種不同的 profile：一種用於開發，你會希望它能快速且頻繁地重新構建；另一種用於構建最終交付給使用者的程式，這種程式不會頻繁重新構建，但會希望它執行得儘可能快。如果你在做程式碼執行時間的基準測試，請務必執行 `cargo build --release`，並使用 *target/release* 下的可執行檔案進行測試。
+當專案最終準備好釋出時，可以使用 `cargo build --release` 以啟用最佳化方式編譯專案。這會在 *target/release* 而不是 *target/debug* 下生成執行檔。這些最佳化會讓 Rust 程式碼執行得更快，不過開啟最佳化也會延長編譯時間。這就是為什麼會有兩種不同的 profile：一種用於開發，你會希望它能快速且頻繁地重新構建；另一種用於構建最終交付給使用者的程式，這種程式不會頻繁重新構建，但會希望它執行得儘可能快。如果你在做程式碼執行時間的基準測試，請務必執行 `cargo build --release`，並使用 *target/release* 下的執行檔進行測試。
 
 <a id="cargo-as-convention"></a>
 
@@ -144,7 +144,7 @@ $ cargo check
 
 對於簡單專案，Cargo 相比直接使用 `rustc` 並不會帶來太多額外價值，但隨著程式變得更復雜，它的價值就會逐漸顯現。一旦程式增長到由多個檔案組成，或者需要其他依賴，讓 Cargo 來協調構建過程就會容易得多。
 
-儘管 `hello_cargo` 專案很簡單，但它已經用上了許多你在後續 Rust 開發中會經常使用的真實工具。實際上，當你在任何已有專案上工作時，都可以使用如下命令，透過 Git 檢出程式碼、進入專案目錄並構建它：
+儘管 `hello_cargo` 專案很簡單，但它已經用上了許多你在後續 Rust 開發中會經常使用的真實工具。實際上，當你在任何已有專案上工作時，都可以使用如下命令，通過 Git 檢出程式碼、進入專案目錄並構建它：
 
 ```console
 $ git clone example.org/someproject
@@ -161,10 +161,10 @@ $ cargo build
 - 使用 `rustup` 安裝最新穩定版 Rust
 - 更新到較新的 Rust 版本
 - 開啟本地安裝的文件
-- 直接透過 `rustc` 編寫並執行 Hello, world! 程式
+- 直接通過 `rustc` 編寫並執行 Hello, world! 程式
 - 使用 Cargo 建立並執行新專案
 
-現在正是透過構建一個更實在的程式來熟悉 Rust 程式碼讀寫的好時機。因此，在第二章中我們會構建一個猜數字遊戲程式。如果你更想先學習 Rust 中常見的程式設計概念，請先閱讀第三章，然後再回到第二章。
+現在正是通過構建一個更實在的程式來熟悉 Rust 程式碼讀寫的好時機。因此，在第二章中我們會構建一個猜數字遊戲程式。如果你更想先學習 Rust 中常見的程式設計概念，請先閱讀第三章，然後再回到第二章。
 
 [installation]: ch01-01-installation.html#安裝
 [toml]: https://toml.io
