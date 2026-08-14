@@ -2,7 +2,7 @@
 
 [ch14-02-publishing-to-crates-io.md](https://github.com/rust-lang/book/blob/43b9ad334aaf7353e5708dba49f84f941b50ec4b/src/ch14-02-publishing-to-crates-io.md)
 
-我們曾經在專案中使用 [crates.io](https://crates.io)<!-- ignore --> 上的包作為依賴，不過你也可以通過釋出自己的包來向他人分享程式碼。[crates.io](https://crates.io)<!-- ignore --> 上的 crate 登錄檔會分發你包的原始碼，因此它主要託管開原始碼。
+我們曾經在專案中使用 [crates.io](https://crates.io)<!-- ignore --> 上的包作為依賴，不過你也可以透過釋出自己的包來向他人分享程式碼。[crates.io](https://crates.io)<!-- ignore --> 上的 crate 登錄檔會分發你包的原始碼，因此它主要託管開原始碼。
 
 Rust 和 Cargo 提供了一些功能，讓你釋出的包更容易被他人找到和使用。接下來我們會介紹其中一些功能，然後說明如何釋出包。
 
@@ -10,7 +10,7 @@ Rust 和 Cargo 提供了一些功能，讓你釋出的包更容易被他人找�
 
 準確的包文件有助於其他使用者理解如何以及何時使用它們，所以花一些時間編寫文件是值得的。第三章中我們討論瞭如何使用雙斜槓 `//` 註釋 Rust 程式碼。Rust 也有特定的用於文件的註釋型別，通常被稱為**文件註釋**（*documentation comments*），它們會生成 HTML 文件。這些 HTML 展示公有 API 文件註釋的內容，它們意在讓對庫感興趣的程式設計師理解如何**使用**這個 crate，而不是它是如何被**實現**的。
 
-文件註釋使用三條斜槓 `///`，而不是兩條斜槓，並且支援使用 Markdown 標記來格式化文本。將文件註釋放在它所說明的項之前。示例 14-1 展示了名為 `my_crate` 的 crate 中一個 `add_one` 函式的文件註釋。
+文件註釋使用三條斜槓 `///`，而不是兩條斜槓，並且支援使用 Markdown 標記來格式化文字。將文件註釋放在它所說明的項之前。示例 14-1 展示了名為 `my_crate` 的 crate 中一個 `add_one` 函式的文件註釋。
 
 <span class="filename">檔名：src/lib.rs</span>
 
@@ -22,7 +22,7 @@ Rust 和 Cargo 提供了一些功能，讓你釋出的包更容易被他人找�
 
 這裡，我們描述了 `add_one` 函式的功能，接著以 `Examples` 為標題開始了一個小節，並給出了展示如何使用 `add_one` 函式的程式碼。可以執行 `cargo doc` 來根據這些文件註釋生成 HTML 文件。這個命令會執行 Rust 自帶的 `rustdoc` 工具，並將生成的 HTML 文件放到 *target/doc* 目錄中。
 
-為了方便起見，執行 `cargo doc --open` 會為當前 crate 的文件構建 HTML（以及它所有依賴的文件），並在瀏覽器中開啟結果。定位到 `add_one` 函式時，你會看到文件註釋中的文本是如何被渲染的，如圖 14-1 所示：
+為了方便起見，執行 `cargo doc --open` 會為當前 crate 的文件構建 HTML（以及它所有依賴的文件），並在瀏覽器中開啟結果。定位到 `add_one` 函式時，你會看到文件註釋中的文字是如何被渲染的，如圖 14-1 所示：
 
 <img alt="Rendered HTML documentation for the `add_one` function of `my_crate`" src="img/trpl14-01.png" class="center" />
 
@@ -111,7 +111,7 @@ test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; fini
 {{#rustdoc_include ../listings/ch14-more-about-cargo/listing-14-04/src/main.rs}}
 ```
 
-<span class="caption">示例 14-4：一個通過匯出內部結構使用 `art` crate 中項的 crate</span>
+<span class="caption">示例 14-4：一個透過匯出內部結構使用 `art` crate 中項的 crate</span>
 
 示例 14-4 中這段程式碼的作者，必須先弄清楚 `PrimaryColor` 在 `kinds` 模組中，而 `mix` 在 `utils` 模組中。`art` crate 的模組結構，對開發 `art` crate 的人來說比對使用它的人更有意義。這種內部結構並沒有給想理解如何使用 `art` crate 的人提供有價值的資訊，反而會帶來困惑，因為使用者必須先搞清楚該去哪裡找需要的內容，還要在 `use` 語句中寫出模組名。
 
@@ -147,7 +147,7 @@ test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; fini
 
 ### 建立 Crates.io 賬號
 
-在釋出任何 crate 之前，你需要在 [crates.io](https://crates.io)<!-- ignore --> 上建立賬號並獲取一個 API token。為此，請訪問 [crates.io](https://crates.io)<!-- ignore --> 首頁，並通過 GitHub 賬號登入。（目前 GitHub 賬號仍然是必需的，不過未來這個網站可能會支援其他註冊方式。）登入之後，前往 [https://crates.io/me/](https://crates.io/me/)<!-- ignore --> 的賬戶設定頁面獲取 API key。然後執行 `cargo login` 命令，並在提示時貼上你的 API key，如下所示：
+在釋出任何 crate 之前，你需要在 [crates.io](https://crates.io)<!-- ignore --> 上建立賬號並獲取一個 API token。為此，請訪問 [crates.io](https://crates.io)<!-- ignore --> 首頁，並透過 GitHub 賬號登入。（目前 GitHub 賬號仍然是必需的，不過未來這個網站可能會支援其他註冊方式。）登入之後，前往 [https://crates.io/me/](https://crates.io/me/)<!-- ignore --> 的賬戶設定頁面獲取 API key。然後執行 `cargo login` 命令，並在提示時貼上你的 API key，如下所示：
 
 ```console
 $ cargo login
@@ -156,9 +156,9 @@ abcdefghijklmnopqrstuvwxyz012345
 
 這個命令會把你的 API token 告訴 Cargo，並將其儲存在本地的 *~/.cargo/credentials* 檔案中。注意，這個 token 是一個**秘密**，不應該與任何人共享。如果你因為任何原因洩露了它，應立即到 [crates.io](https://crates.io)<!-- ignore --> 撤銷並重新生成一個 token。
 
-### 向新 crate 新增後設資料
+### 向新 crate 新增元資料
 
-比如說你已經有一個希望釋出的 crate。在釋出之前，你需要在 crate 的 *Cargo.toml* 檔案的 `[package]` 部分增加一些本 crate 的後設資料（metadata）。
+比如說你已經有一個希望釋出的 crate。在釋出之前，你需要在 crate 的 *Cargo.toml* 檔案的 `[package]` 部分增加一些本 crate 的元資料（metadata）。
 
 首先，crate 需要一個唯一的名稱。雖然在本地開發 crate 時，你可以隨意命名，但 [crates.io](https://crates.io)<!-- ignore --> 上的 crate 名稱遵循先到先得的原則。一旦某個 crate 名稱已經被佔用，就沒有其他人能再用這個名稱釋出 crate。請搜尋你想使用的名稱，確認它是否已被佔用。如果沒有，就把 _Cargo.toml_ 中 `[package]` 裡的 `name` 欄位改成你想釋出時使用的名稱，如下所示：
 
@@ -193,7 +193,7 @@ name = "guessing_game"
 license = "MIT"
 ```
 
-如果你想使用 SPDX 中不存在的許可證，就需要把許可證文本放入一個檔案中，將該檔案包含到專案裡，然後使用 `license-file` 指定該檔名，而不是使用 `license` 欄位。
+如果你想使用 SPDX 中不存在的許可證，就需要把許可證文字放入一個檔案中，將該檔案包含到專案裡，然後使用 `license-file` 指定該檔名，而不是使用 `license` 欄位。
 
 關於專案應採用何種許可證的建議超出了本書的範圍。很多 Rust 社群成員選擇與 Rust 本身相同的許可證，也就是雙許可證 `MIT OR Apache-2.0`。這個例子也說明了，你可以用 `OR` 分隔多個許可證識別符號，來為專案指定多個許可證。
 
@@ -212,11 +212,11 @@ license = "MIT OR Apache-2.0"
 [dependencies]
 ```
 
-[Cargo 文件](https://doc.rust-lang.org/cargo/) 還描述了其他可指定的後設資料，它們可以幫助你的 crate 更容易被發現和使用！
+[Cargo 文件](https://doc.rust-lang.org/cargo/) 還描述了其他可指定的元資料，它們可以幫助你的 crate 更容易被發現和使用！
 
 ### 釋出到 Crates.io
 
-現在，我們已經建立了賬號、儲存了 API token、為 crate 選好了名字，並填入了所需的後設資料，你就可以釋出了！釋出 crate 會將該 crate 的某個特定版本上傳到 [crates.io](https://crates.io)<!-- ignore --> 供他人使用。
+現在，我們已經建立了賬號、儲存了 API token、為 crate 選好了名字，並填入了所需的元資料，你就可以釋出了！釋出 crate 會將該 crate 的某個特定版本上傳到 [crates.io](https://crates.io)<!-- ignore --> 供他人使用。
 
 釋出 crate 時務必小心，因為釋出是**永久性的**。對應版本無法被覆蓋，其程式碼也無法被刪除。[crates.io](https://crates.io)<!-- ignore --> 的一個主要目標，是充當程式碼的永久歸檔伺服器，這樣所有依賴 [crates.io](https://crates.io)<!-- ignore --> 上 crate 的專案都能一直正常工作。而如果允許刪除版本，就無法實現這一目標。不過，可釋出的版本號數量並沒有限制。
 

@@ -2,7 +2,7 @@
 pub fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
     for line in contents.lines() {
         if line.contains(query) {
-            // 對文本行進行操作
+            // 對文字行進行操作
         }
     }
 }

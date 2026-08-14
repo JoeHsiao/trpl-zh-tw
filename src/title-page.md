@@ -2,9 +2,9 @@
 
 [title-page.md](https://github.com/rust-lang/book/blob/f660f341887c8bbcd6c24fbfdf5d2a262f523965/src/title-page.md)
 
-**本書的英文原版作者為 Steve Klabnik 和 Carol Nichols，並由 Rust 社群補充完善。本繁體中文譯本由 Rust 中文社群翻譯。**
+**本書的英文原版作者為 Steve Klabnik 和 Carol Nichols，並由 Rust 社群補充完善。本簡體中文譯本由 Rust 中文社群翻譯。**
 
-本書假設你使用的是 Rust 1.90.0（2025-09-18 釋出）或更高版本，並在所有專案的 Cargo.toml 檔案中通過 `edition = "2024"`將其配置為使用 Rust 2024 Edition 慣用法。請檢視[第一章的 “安裝” 部分][install]瞭解如何安裝和升級 Rust，並檢視[附錄 E][appendix-e]瞭解版本相關的資訊。
+本書假設你使用的是 Rust 1.90.0（2025-09-18 釋出）或更高版本，並在所有專案的 Cargo.toml 檔案中透過 `edition = "2024"`將其配置為使用 Rust 2024 Edition 慣用法。請檢視[第一章的 “安裝” 部分][install]瞭解如何安裝和升級 Rust，並檢視[附錄 E][appendix-e]瞭解版本相關的資訊。
 
 本書的英文原版 HTML 格式可以在 [https://doc.rust-lang.org/stable/book/](https://doc.rust-lang.org/stable/book/) 線上閱讀；使用 `rustup` 安裝的 Rust 也包含一份英文離線版，執行 `rustup docs --book` 即可開啟。
 

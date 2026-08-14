@@ -14,7 +14,7 @@
 
 <span class="caption">示例 7-11: 使用 `use` 將模組引入作用域</span>
 
-在作用域中增加 `use` 和路徑類似於在檔案系統中建立軟連線（符號連線，symbolic link）。通過在 crate 根增加 `use crate::front_of_house::hosting`，現在 `hosting` 在作用域中就是有效的名稱了，如同 `hosting` 模組被定義於 crate 根一樣。通過 `use` 引入作用域的路徑也會檢查私有性，同其它路徑一樣。
+在作用域中增加 `use` 和路徑類似於在檔案系統中建立軟連線（符號連線，symbolic link）。透過在 crate 根增加 `use crate::front_of_house::hosting`，現在 `hosting` 在作用域中就是有效的名稱了，如同 `hosting` 模組被定義於 crate 根一樣。透過 `use` 引入作用域的路徑也會檢查私有性，同其它路徑一樣。
 
 注意 `use` 只能建立 `use` 所在的特定作用域內的捷徑。示例 7-12 將 `eat_at_restaurant` 函式移動到了一個叫 `customer` 的子模組，這又是一個不同於 `use` 語句的作用域，所以函式體不能編譯。
 
@@ -32,11 +32,11 @@
 {{#include ../listings/ch07-managing-growing-projects/listing-07-12/output.txt}}
 ```
 
-注意這裡還有一個警告說 `use` 在其作用域內不再被使用！為了修復這個問題，可以將 `use` 移動到 `customer` 模組內，或者在子模組 `customer` 內通過 `super::hosting` 引用父模組中的這個捷徑。
+注意這裡還有一個警告說 `use` 在其作用域內不再被使用！為了修復這個問題，可以將 `use` 移動到 `customer` 模組內，或者在子模組 `customer` 內透過 `super::hosting` 引用父模組中的這個捷徑。
 
 ### 建立慣用的 `use` 路徑
 
-在示例 7-11 中，你可能會比較疑惑，為什麼我們是指定 `use crate::front_of_house::hosting`，然後在 `eat_at_restaurant` 中呼叫 `hosting::add_to_waitlist` ，而不是通過指定一直到 `add_to_waitlist` 函式的 `use` 路徑來得到相同的結果，如示例 7-13 所示。
+在示例 7-11 中，你可能會比較疑惑，為什麼我們是指定 `use crate::front_of_house::hosting`，然後在 `eat_at_restaurant` 中呼叫 `hosting::add_to_waitlist` ，而不是透過指定一直到 `add_to_waitlist` 函式的 `use` 路徑來得到相同的結果，如示例 7-13 所示。
 
 <span class="filename">檔名：src/lib.rs</span>
 
@@ -74,7 +74,7 @@
 
 ### 使用 `as` 關鍵字提供新的名稱
 
-使用 `use` 將兩個同名型別引入同一作用域這個問題還有另一個解決辦法：在這個型別的路徑後面，我們使用 `as` 指定一個新的本地名稱或者**別名**。示例 7-16 展示了另一個編寫示例 7-15 中程式碼的方法，通過 `as` 重新命名其中一個 `Result` 型別。
+使用 `use` 將兩個同名型別引入同一作用域這個問題還有另一個解決辦法：在這個型別的路徑後面，我們使用 `as` 指定一個新的本地名稱或者**別名**。示例 7-16 展示了另一個編寫示例 7-15 中程式碼的方法，透過 `as` 重新命名其中一個 `Result` 型別。
 
 <span class="filename">檔名：src/lib.rs</span>
 
@@ -98,11 +98,11 @@
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-17/src/lib.rs}}
 ```
 
-<span class="caption">示例 7-17: 通過 `pub use` 使名稱可從新作用域中被匯入至任何程式碼</span>
+<span class="caption">示例 7-17: 透過 `pub use` 使名稱可從新作用域中被匯入至任何程式碼</span>
 
 在這個修改之前，外部程式碼需要使用路徑 `restaurant::front_of_house::hosting::add_to_waitlist()` 來呼叫 `add_to_waitlist` 函式，並且還需要將 `front_of_house` 模組標記為 `pub`。現在這個 `pub use` 從根模組重匯出了 `hosting` 模組，外部程式碼現在可以使用路徑 `restaurant::hosting::add_to_waitlist`。
 
-當你程式碼的內部結構與呼叫你程式碼的程式設計師所想像的結構不同時，重匯出會很有用。例如，在這個餐館的比喻中，經營餐館的人會想到“前臺”和“後臺”。但顧客在光顧一家餐館時，可能不會以這些術語來考慮餐館的各個部分。使用 `pub use`，我們可以使用一種結構編寫程式碼，卻將不同的結構形式暴露出來。這樣做使我們的庫井井有條，也使開發這個庫的程式設計師和呼叫這個庫的程式設計師都更加方便。在[“匯出實用的公有 API”][ch14-pub-use]部分讓我們再看另一個 `pub use` 的例子來了解這如何影響 crate 的文件。
+當你程式碼的內部結構與呼叫你程式碼的程式設計師所想象的結構不同時，重匯出會很有用。例如，在這個餐館的比喻中，經營餐館的人會想到“前臺”和“後臺”。但顧客在光顧一家餐館時，可能不會以這些術語來考慮餐館的各個部分。使用 `pub use`，我們可以使用一種結構編寫程式碼，卻將不同的結構形式暴露出來。這樣做使我們的庫井井有條，也使開發這個庫的程式設計師和呼叫這個庫的程式設計師都更加方便。在[“匯出實用的公有 API”][ch14-pub-use]部分讓我們再看另一個 `pub use` 的例子來了解這如何影響 crate 的文件。
 
 ### 使用外部包
 
@@ -122,9 +122,9 @@
 {{#rustdoc_include ../listings/ch02-guessing-game-tutorial/listing-02-03/src/main.rs:ch07-04}}
 ```
 
-[crates.io](https://crates.io) 上有很多 Rust 社群成員釋出的包，將其引入你自己的專案都需要一道相同的步驟：在 *Cargo.toml* 列出它們並通過 `use` 將其中定義的項引入專案包的作用域中。
+[crates.io](https://crates.io) 上有很多 Rust 社群成員釋出的包，將其引入你自己的專案都需要一道相同的步驟：在 *Cargo.toml* 列出它們並透過 `use` 將其中定義的項引入專案包的作用域中。
 
-注意 `std` 標準庫對於你的包來說也是外部 crate。因為標準庫隨 Rust 語言一同分發，無需修改 *Cargo.toml* 來引入 `std`，不過需要通過 `use` 將標準庫中定義的項引入專案包的作用域中來引用它們。例如，對於 `HashMap`，我們會使用以下語句：
+注意 `std` 標準庫對於你的包來說也是外部 crate。因為標準庫隨 Rust 語言一同分發，無需修改 *Cargo.toml* 來引入 `std`，不過需要透過 `use` 將標準庫中定義的項引入專案包的作用域中來引用它們。例如，對於 `HashMap`，我們會使用以下語句：
 
 ```rust
 use std::collections::HashMap;
@@ -164,7 +164,7 @@ use std::collections::HashMap;
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-19/src/lib.rs}}
 ```
 
-<span class="caption">示例 7-19: 通過兩行 `use` 語句引入兩個路徑，其中一個是另一個的子路徑</span>
+<span class="caption">示例 7-19: 透過兩行 `use` 語句引入兩個路徑，其中一個是另一個的子路徑</span>
 
 兩個路徑的相同部分是 `std::io`，這正是第一個路徑。為了在一行 `use` 語句中引入這兩個路徑，可以在巢狀路徑中使用 `self`，如示例 7-20 所示。
 
@@ -180,7 +180,7 @@ use std::collections::HashMap;
 
 <a id="the-glob-operator"></a>
 
-### 通過 glob 運算子匯入項
+### 透過 glob 運算子匯入項
 
 如果希望將一個路徑下**所有**公有項引入作用域，可以指定路徑後跟 `*` glob 運算子：
 

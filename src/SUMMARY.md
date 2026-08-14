@@ -46,7 +46,7 @@
 
 - [常見集合](ch08-00-common-collections.md)
   - [使用 Vector 儲存列表](ch08-01-vectors.md)
-  - [使用字串儲存 UTF-8 編碼的文本](ch08-02-strings.md)
+  - [使用字串儲存 UTF-8 編碼的文字](ch08-02-strings.md)
   - [使用 Hash Map 儲存鍵值對](ch08-03-hash-maps.md)
 
 - [錯誤處理](ch09-00-error-handling.md)
@@ -109,10 +109,10 @@
   - [深入理解 async 相關的 traits](ch17-05-traits-for-async.md)
   - [future、任務和執行緒](ch17-06-futures-tasks-threads.md)
 
-- [物件導向程式設計特性](ch18-00-oop.md)
-  - [物件導向語言的特徵](ch18-01-what-is-oo.md)
+- [面向物件程式設計特性](ch18-00-oop.md)
+  - [面嚮物件語言的特徵](ch18-01-what-is-oo.md)
   - [使用 trait object 來抽象出共享行為](ch18-02-trait-objects.md)
-  - [物件導向設計模式的實現](ch18-03-oo-design-patterns.md)
+  - [面向物件設計模式的實現](ch18-03-oo-design-patterns.md)
 
 ## 高階主題
 

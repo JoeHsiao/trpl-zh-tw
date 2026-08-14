@@ -32,7 +32,7 @@ $ cargo add trpl
 
 ### 定義 page_title 函式
 
-讓我們開始編寫一個函式，它獲取一個網頁 URL 作為引數，請求該 URL 並返回標題元素的文本（見示例 17-1）。
+讓我們開始編寫一個函式，它獲取一個網頁 URL 作為引數，請求該 URL 並返回標題元素的文字（見示例 17-1）。
 
 <figure class="listing">
 
@@ -46,9 +46,9 @@ $ cargo add trpl
 
 </figure>
 
-首先，我們定義了一個名為 `page_title` 的函式，並用 `async` 關鍵字標記它。然後使用 `trpl::get` 函式抓取傳入的 URL，再用 `await` 關鍵字等待響應。為了得到 `response` 的文本，我們呼叫它的 `text` 方法，並再次使用 `await` 進行等待。這兩個步驟都是非同步的。對於 `get` 函式來說，我們必須等待伺服器先把響應的第一部分發回來，其中包括 HTTP headers、cookies 等，這些內容可以和響應體分開發送。尤其當響應體很大時，全部資料到達可能要花上一些時間。由於我們必須等待響應*完整*到達，`text` 方法自然也是 async 的。
+首先，我們定義了一個名為 `page_title` 的函式，並用 `async` 關鍵字標記它。然後使用 `trpl::get` 函式抓取傳入的 URL，再用 `await` 關鍵字等待響應。為了得到 `response` 的文字，我們呼叫它的 `text` 方法，並再次使用 `await` 進行等待。這兩個步驟都是非同步的。對於 `get` 函式來說，我們必須等待伺服器先把響應的第一部分發回來，其中包括 HTTP headers、cookies 等，這些內容可以和響應體分開發送。尤其當響應體很大時，全部資料到達可能要花上一些時間。由於我們必須等待響應*完整*到達，`text` 方法自然也是 async 的。
 
-我們必須顯式地等待這兩個 future，因為 Rust 中的 future 是 *lazy* 的：在你用 `await` 請求它之前，它什麼都不會做。（實際上，如果你建立了 future 卻不使用它，Rust 還會給出編譯器警告。）這大概會讓你想起第十三章[“使用迭代器處理元素序列”][iterators-lazy]中的討論。迭代器只有在你呼叫 `next` 方法時才會工作，無論是直接呼叫，還是通過 `for` 迴圈，或者藉助像 `map` 這樣底層會呼叫 `next` 的方法。future 也是一樣，只有你顯式要求它執行時，它才會開始工作。這種惰性讓 Rust 能夠避免在真正需要之前就執行非同步程式碼。
+我們必須顯式地等待這兩個 future，因為 Rust 中的 future 是 *lazy* 的：在你用 `await` 請求它之前，它什麼都不會做。（實際上，如果你建立了 future 卻不使用它，Rust 還會給出編譯器警告。）這大概會讓你想起第十三章[“使用迭代器處理元素序列”][iterators-lazy]中的討論。迭代器只有在你呼叫 `next` 方法時才會工作，無論是直接呼叫，還是透過 `for` 迴圈，或者藉助像 `map` 這樣底層會呼叫 `next` 的方法。future 也是一樣，只有你顯式要求它執行時，它才會開始工作。這種惰性讓 Rust 能夠避免在真正需要之前就執行非同步程式碼。
 
 > 注意：這和我們在第十六章[“使用 spawn 建立新執行緒”][thread-spawn]裡看到的 `thread::spawn` 的行為不同，在那裡我們傳給新執行緒的閉包會立刻開始執行。它也和許多其他語言處理 async 的方式不同。但這對於 Rust 提供它一貫的效能保證很重要，正如迭代器也是如此。
 
@@ -111,7 +111,7 @@ fn page_title(url: &str) -> impl Future<Output = Option<String>> {
 {{#rustdoc_include ../listings/ch17-async-await/listing-17-03/src/main.rs:main}}
 ```
 
-<figcaption>示例 17-3：在 `main` 中通過一個使用者提供的引數呼叫 `page_title` 函式</figcaption>
+<figcaption>示例 17-3：在 `main` 中透過一個使用者提供的引數呼叫 `page_title` 函式</figcaption>
 
 </figure>
 
@@ -165,7 +165,7 @@ The title for https://www.rust-lang.org was
 
 我們終於有了一些可以正常工作的非同步程式碼！不過在我們新增程式碼讓兩個網址進行競爭之前，讓我們簡要地回顧一下 future 是如何工作的。
 
-每一個 *await point*，也就是程式碼使用 `await` 關鍵字的地方，代表將控制權交還給執行時的地方。為此 Rust 需要記錄非同步程式碼塊中涉及的狀態，這樣執行時可以去執行其他工作，並在準備好時回來繼續推進當前的任務。這就像你通過編寫一個列舉來儲存每一個 `await` point 的狀態一樣：
+每一個 *await point*，也就是程式碼使用 `await` 關鍵字的地方，代表將控制權交還給執行時的地方。為此 Rust 需要記錄非同步程式碼塊中涉及的狀態，這樣執行時可以去執行其他工作，並在準備好時回來繼續推進當前的任務。這就像你透過編寫一個列舉來儲存每一個 `await` point 的狀態一樣：
 
 ```rust
 {{#rustdoc_include ../listings/ch17-async-await/no-listing-state-machine/src/lib.rs:enum}}

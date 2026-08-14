@@ -65,7 +65,7 @@ enum Result<T, E> {
 
 `File::open` 返回的 `Err` 變體中的值型別 `io::Error`，它是一個標準庫中提供的結構體。這個結構體有一個返回 `io::ErrorKind` 值的 `kind` 方法可供呼叫。`io::ErrorKind` 是一個標準庫提供的列舉，它的變體對應 `io` 操作可能導致的不同錯誤型別。我們感興趣的變體是 `ErrorKind::NotFound`，它代表嘗試開啟的檔案並不存在。這樣，`match` 就匹配完 `greeting_file_result` 了，不過對於 `error.kind()` 還有一個內層 `match`。
 
-我們希望在內層 `match` 中檢查的條件是 `error.kind()` 的返回值是否為 `ErrorKind`的 `NotFound` 變體。如果是，則通過 `File::create` 嘗試建立該檔案。然而因為 `File::create` 也可能會失敗，還需要在內層 `match` 表示式中增加了第二個分支。當檔案不能被建立，會打印出一個不同的錯誤資訊。外層 `match` 的最後一個分支保持不變，這樣對任何除了檔案不存在的錯誤會使程式 panic。
+我們希望在內層 `match` 中檢查的條件是 `error.kind()` 的返回值是否為 `ErrorKind`的 `NotFound` 變體。如果是，則透過 `File::create` 嘗試建立該檔案。然而因為 `File::create` 也可能會失敗，還需要在內層 `match` 表示式中增加了第二個分支。當檔案不能被建立，會打印出一個不同的錯誤資訊。外層 `match` 的最後一個分支保持不變，這樣對任何除了檔案不存在的錯誤會使程式 panic。
 
 > #### 使用 `match` 處理 `Result<T, E>` 的替代方案
 >
@@ -227,7 +227,7 @@ hello.txt should be included in this project: Os { code: 2, kind: NotFound, mess
 
 為了修復這個錯誤，有兩個選擇。一個是，如果沒有限制的話將函式的返回值改為與你在 `?` 運算子所作用的值相容的型別。另一個是使用 `match` 或者 `Result<T, E>` 型別的方法，以適當的方式處理 `Result<T, E>`。
 
-錯誤資訊也提到 `?` 也可用於 `Option<T>` 值。如同對 `Result` 使用 `?` 一樣，只能在返回 `Option` 的函式中對 `Option` 使用 `?`。在 `Option<T>` 上呼叫 `?` 運算子的行為與 `Result<T, E>` 類似：如果值是 `None`，此時 `None` 會從函式中提前返回。如果值是 `Some`，`Some` 中的值作為表示式的返回值同時函式繼續。示例 9-11 中有一個從給定文本中返回第一行最後一個字元的函式的例子：
+錯誤資訊也提到 `?` 也可用於 `Option<T>` 值。如同對 `Result` 使用 `?` 一樣，只能在返回 `Option` 的函式中對 `Option` 使用 `?`。在 `Option<T>` 上呼叫 `?` 運算子的行為與 `Result<T, E>` 類似：如果值是 `None`，此時 `None` 會從函式中提前返回。如果值是 `Some`，`Some` 中的值作為表示式的返回值同時函式繼續。示例 9-11 中有一個從給定文字中返回第一行最後一個字元的函式的例子：
 
 ```rust
 {{#rustdoc_include ../listings/ch09-error-handling/listing-09-11/src/main.rs:here}}
@@ -237,7 +237,7 @@ hello.txt should be included in this project: Os { code: 2, kind: NotFound, mess
 
 這個函式返回 `Option<char>` 因為它可能會在這個位置找到一個字元，也可能沒有字元。這段程式碼獲取 `text` 字串 slice 作為引數並呼叫其 `lines` 方法，這會返回一個字串中每一行的迭代器。因為函式希望檢查第一行，所以呼叫了迭代器 `next` 來獲取迭代器中第一個值。如果 `text` 是空字串，`next` 呼叫會返回 `None`，此時我們可以使用 `?` 來停止並從 `last_char_of_first_line` 返回 `None`。如果 `text` 不是空字串，`next` 會返回一個包含 `text` 中第一行的字串 slice 的 `Some` 值。
 
-`?` 會提取這個字串 slice，然後可以在字串 slice 上呼叫 `chars` 來獲取字元的迭代器。我們感興趣的是第一行的最後一個字元，所以可以呼叫 `last` 來返回迭代器的最後一項。這是一個 `Option`，因為有可能第一行是一個空字串；例如 `text` 以一個空行開頭而後面的行有文本，像是 `"\nhi"`。不過，如果第一行有最後一個字元，它會返回在一個 `Some` 變體中。`?` 運算子作用於其中給了我們一個簡潔的表達這種邏輯的方式。如果我們不能在 `Option` 上使用 `?` 運算子，則不得不使用更多的方法呼叫或者 `match` 表示式來實現這些邏輯。
+`?` 會提取這個字串 slice，然後可以在字串 slice 上呼叫 `chars` 來獲取字元的迭代器。我們感興趣的是第一行的最後一個字元，所以可以呼叫 `last` 來返回迭代器的最後一項。這是一個 `Option`，因為有可能第一行是一個空字串；例如 `text` 以一個空行開頭而後面的行有文字，像是 `"\nhi"`。不過，如果第一行有最後一個字元，它會返回在一個 `Some` 變體中。`?` 運算子作用於其中給了我們一個簡潔的表達這種邏輯的方式。如果我們不能在 `Option` 上使用 `?` 運算子，則不得不使用更多的方法呼叫或者 `match` 表示式來實現這些邏輯。
 
 注意你可以在返回 `Result` 的函式中對 `Result` 使用 `?` 運算子，可以在返回 `Option` 的函式中對 `Option` 使用 `?` 運算子，但是不可以混合搭配。`?` 運算子不會自動將 `Result` 轉化為 `Option`，反之亦然；在這些情況下，可以使用類似 `Result` 的 `ok` 方法或者 `Option` 的 `ok_or` 方法來顯式轉換。
 
@@ -251,7 +251,7 @@ hello.txt should be included in this project: Os { code: 2, kind: NotFound, mess
 
 <span class="caption">示例 9-12: 修改 `main` 返回 `Result<(), E>` 允許對 `Result` 值使用 `?` 運算子</span>
 
-`Box<dyn Error>` 型別是一個**trait 物件**（*trait object*），第十八章的[“使用 trait object 來抽象出共享行為”][trait-objects]部分會介紹它。現在可以把 `Box<dyn Error>` 理解為“任何型別的錯誤”。在返回錯誤型別 `Box<dyn Error>` 的 `main` 函式中，對 `Result` 使用 `?` 是被允許的，因為它允許任何 `Err` 值提前返回。即便 `main` 函式體現在只會返回 `std::io::Error` 錯誤型別，通過指定 `Box<dyn Error>`，這個簽名仍然是正確的；即使以後在 `main` 函式體中加入返回其他錯誤型別的程式碼，這個函式簽名依然保持正確。
+`Box<dyn Error>` 型別是一個**trait 物件**（*trait object*），第十八章的[“使用 trait object 來抽象出共享行為”][trait-objects]部分會介紹它。現在可以把 `Box<dyn Error>` 理解為“任何型別的錯誤”。在返回錯誤型別 `Box<dyn Error>` 的 `main` 函式中，對 `Result` 使用 `?` 是被允許的，因為它允許任何 `Err` 值提前返回。即便 `main` 函式體現在只會返回 `std::io::Error` 錯誤型別，透過指定 `Box<dyn Error>`，這個簽名仍然是正確的；即使以後在 `main` 函式體中加入返回其他錯誤型別的程式碼，這個函式簽名依然保持正確。
 
 當 `main` 函式返回 `Result<(), E>`，如果 `main` 返回 `Ok(())` 可執行程式會以 `0` 值退出，而如果 `main` 返回 `Err` 值則會以非零值退出；成功退出的程式會返回整數 `0`，執行錯誤的程式會返回非 `0` 的整數。Rust 也會從二進位制程式中返回與這個慣例相相容的整數。
 

@@ -76,7 +76,7 @@
 {{#rustdoc_include ../listings/ch21-web-server/listing-21-25/src/main.rs:here}}
 ```
 
-<span class="caption">示例 21-25: 在處理兩個請求之後通過退出迴圈來停止服務端</span>
+<span class="caption">示例 21-25: 在處理兩個請求之後透過退出迴圈來停止服務端</span>
 
 你不會希望真實世界的 web 服務端只處理兩次請求就停機了，這只是為了展示優雅停機和清理處於正常工作狀態。
 

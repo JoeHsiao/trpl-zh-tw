@@ -1,10 +1,10 @@
-## 使用字串儲存 UTF-8 編碼的文本
+## 使用字串儲存 UTF-8 編碼的文字
 
 [ch08-02-strings.md](https://github.com/rust-lang/book/blob/2581c23b669eff30c26e036a13475ec5cf70c1b8/src/ch08-02-strings.md)
 
-第四章已經講過一些字串的內容，不過現在讓我們更深入地瞭解它。字串是新晉 Rustacean 們通常會被困住的領域，這是由於三方面理由的結合：Rust 傾向於確保暴露出可能的錯誤，字串是比很多程式設計師所想像的要更為複雜的資料結構，以及 UTF-8。所有這些要素結合起來對於來自其他語言背景的程式設計師就可能顯得很困難了。
+第四章已經講過一些字串的內容，不過現在讓我們更深入地瞭解它。字串是新晉 Rustacean 們通常會被困住的領域，這是由於三方面理由的結合：Rust 傾向於確保暴露出可能的錯誤，字串是比很多程式設計師所想象的要更為複雜的資料結構，以及 UTF-8。所有這些要素結合起來對於來自其他語言背景的程式設計師就可能顯得很困難了。
 
-在集合章節中討論字串的原因是，字串就是作為位元組的集合外加一些方法實現的，當這些位元組被解釋為文本時，這些方法提供了實用的功能。在本小節中，我們會講到 `String` 中那些任何集合型別都有的操作，比如建立、更新和讀取。也會討論 `String` 與其他集合不一樣的地方，例如索引 `String` 是很複雜的，由於人和計算機理解 `String` 資料方式的不同。
+在集合章節中討論字串的原因是，字串就是作為位元組的集合外加一些方法實現的，當這些位元組被解釋為文字時，這些方法提供了實用的功能。在本小節中，我們會講到 `String` 中那些任何集合型別都有的操作，比如建立、更新和讀取。也會討論 `String` 與其他集合不一樣的地方，例如索引 `String` 是很複雜的，由於人和計算機理解 `String` 資料方式的不同。
 
 <a id="what-is-a-string"></a>
 
@@ -62,7 +62,7 @@
 
 #### 使用 `push_str` 和 `push` 追加字串
 
-可以通過 `push_str` 方法來附加字串 slice，從而使 `String` 變長，如示例 8-15 所示。
+可以透過 `push_str` 方法來附加字串 slice，從而使 `String` 變長，如示例 8-15 所示。
 
 ```rust
 {{#rustdoc_include ../listings/ch08-common-collections/listing-08-15/src/main.rs:here}}
@@ -132,7 +132,7 @@ fn add(self, s: &str) -> String {
 
 ### 索引字串
 
-在很多語言中，通過索引來引用字串中的單獨字元是有效且常見的操作。然而在 Rust 中，如果你嘗試使用索引語法訪問 `String` 的一部分，會出現一個錯誤。考慮一下如示例 8-19 中所示的無效程式碼。
+在很多語言中，透過索引來引用字串中的單獨字元是有效且常見的操作。然而在 Rust 中，如果你嘗試使用索引語法訪問 `String` 的一部分，會出現一個錯誤。考慮一下如示例 8-19 中所示的無效程式碼。
 
 ```rust,ignore,does_not_compile
 {{#rustdoc_include ../listings/ch08-common-collections/listing-08-19/src/main.rs:here}}
@@ -156,7 +156,7 @@ fn add(self, s: &str) -> String {
 {{#rustdoc_include ../listings/ch08-common-collections/listing-08-14/src/main.rs:spanish}}
 ```
 
-在這裡，`len` 的值是 `4`，這意味著儲存字串 `"Hola"` 的 vector 的長度是四個位元組：這裡每一個字母的 UTF-8 編碼都佔用一個位元組。下面這一行可能會讓你感到意外（注意這個字串中的首字母是西里爾字母的 *Ze* 而不是數字 3。）：
+在這裡，`len` 的值是 `4`，這意味著儲存字串 `"Hola"` 的 vector 的長度是四個位元組：這裡每一個字母的 UTF-8 編碼都佔用一個位元組。下面這一行可能會讓你感到意外（注意這個字串中的首字母是西裡爾字母的 *Ze* 而不是數字 3。）：
 
 ```rust
 {{#rustdoc_include ../listings/ch08-common-collections/listing-08-14/src/main.rs:russian}}

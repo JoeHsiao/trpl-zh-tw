@@ -115,7 +115,7 @@ Rust 的 `char` 型別是語言中最原始的字母型別。下面是一些宣�
 {{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-09-char/src/main.rs}}
 ```
 
-注意，我們使用單引號來表示 `char` 字面值，而字串字面值使用的是雙引號。Rust 的 `char` 型別大小為 4 個位元組，並表示一個 Unicode 標量值（Unicode Scalar Value），這意味著它所能表示的內容遠不止 ASCII。帶重音符號的字母，中文、日文、韓文字元，emoji，以及零寬空格，都是 Rust 中合法的 `char` 值。Unicode 標量值的範圍包括 `U+0000` 到 `U+D7FF`，以及 `U+E000` 到 `U+10FFFF`。不過，“字元”並不是 Unicode 中一個嚴格對應的概念，因此你直覺上認為的“字元”未必和 Rust 中的 `char` 一一對應。我們會在第八章[“使用字串儲存 UTF-8 編碼的文本”][strings]中更詳細地討論這個主題。
+注意，我們使用單引號來表示 `char` 字面值，而字串字面值使用的是雙引號。Rust 的 `char` 型別大小為 4 個位元組，並表示一個 Unicode 標量值（Unicode Scalar Value），這意味著它所能表示的內容遠不止 ASCII。帶重音符號的字母，中文、日文、韓文字元，emoji，以及零寬空格，都是 Rust 中合法的 `char` 值。Unicode 標量值的範圍包括 `U+0000` 到 `U+D7FF`，以及 `U+E000` 到 `U+10FFFF`。不過，“字元”並不是 Unicode 中一個嚴格對應的概念，因此你直覺上認為的“字元”未必和 Rust 中的 `char` 一一對應。我們會在第八章[“使用字串儲存 UTF-8 編碼的文字”][strings]中更詳細地討論這個主題。
 
 ### 複合型別
 
@@ -125,7 +125,7 @@ Rust 的 `char` 型別是語言中最原始的字母型別。下面是一些宣�
 
 元組是一種將多個不同型別的值組合成一個複合型別的通用方式。元組長度固定：一旦宣告，它的大小就不能增長或縮小。
 
-我們通過在圓括號中寫一組由逗號分隔的值來建立元組。元組中的每個位置都有一個型別，而且這些不同位置上的值型別不必相同。下面這個例子中加入了可選的型別註解：
+我們透過在圓括號中寫一組由逗號分隔的值來建立元組。元組中的每個位置都有一個型別，而且這些不同位置上的值型別不必相同。下面這個例子中加入了可選的型別註解：
 
 <span class="filename">檔名：src/main.rs</span>
 
@@ -184,7 +184,7 @@ let a: [i32; 5] = [1, 2, 3, 4, 5];
 
 這裡，`i32` 是每個元素的型別。分號之後，數字 `5` 表明該陣列包含五個元素。
 
-你還可以通過在方括號中指定初始值加分號再加元素個數的方式來建立一個每個元素都為相同值的陣列：
+你還可以透過在方括號中指定初始值加分號再加元素個數的方式來建立一個每個元素都為相同值的陣列：
 
 ```rust
 let a = [3; 5];
@@ -224,15 +224,15 @@ index out of bounds: the len is 5 but the index is 10
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 ```
 
-程式在索引操作中使用了無效值，因此產生了一個 **執行時** 錯誤。程式帶著錯誤資訊退出，並且沒有執行最後那條 `println!` 語句。當你嘗試通過索引訪問元素時，Rust 會檢查你指定的索引是否小於陣列長度。如果索引大於或等於陣列長度，Rust 就會 *panic*。這種檢查必須在執行時完成，尤其是在這種場景下，因為編譯器不可能知道使用者之後執行程式碼時會輸入什麼值。
+程式在索引操作中使用了無效值，因此產生了一個 **執行時** 錯誤。程式帶著錯誤資訊退出，並且沒有執行最後那條 `println!` 語句。當你嘗試透過索引訪問元素時，Rust 會檢查你指定的索引是否小於陣列長度。如果索引大於或等於陣列長度，Rust 就會 *panic*。這種檢查必須在執行時完成，尤其是在這種場景下，因為編譯器不可能知道使用者之後執行程式碼時會輸入什麼值。
 
-這是 Rust 記憶體安全原則在實踐中的一個例子。在許多底層語言中，不會進行這種檢查，因此如果你提供了錯誤的索引，就可能訪問到無效記憶體。Rust 通過立即退出，而不是允許這次記憶體訪問繼續發生並讓程式往下執行，來保護你免受這類錯誤的影響。第九章會更詳細地討論 Rust 的錯誤處理機制，以及如何編寫既可讀又安全的程式碼，讓程式既不會 panic，也不會發生非法記憶體訪問。
+這是 Rust 記憶體安全原則在實踐中的一個例子。在許多底層語言中，不會進行這種檢查，因此如果你提供了錯誤的索引，就可能訪問到無效記憶體。Rust 透過立即退出，而不是允許這次記憶體訪問繼續發生並讓程式往下執行，來保護你免受這類錯誤的影響。第九章會更詳細地討論 Rust 的錯誤處理機制，以及如何編寫既可讀又安全的程式碼，讓程式既不會 panic，也不會發生非法記憶體訪問。
 
 [comparing-the-guess-to-the-secret-number]:
 ch02-00-guessing-game-tutorial.html#比較猜測的數字和秘密數字
 [twos-complement]: https://en.wikipedia.org/wiki/Two%27s_complement
 [control-flow]: ch03-05-control-flow.html#控制流
-[strings]: ch08-02-strings.html#使用字串儲存-utf-8-編碼的文本
+[strings]: ch08-02-strings.html#使用字串儲存-utf-8-編碼的文字
 [stack-and-heap]: ch04-01-what-is-ownership.html#棧stack與堆heap
 [vectors]: ch08-01-vectors.html
 [unrecoverable-errors-with-panic]: ch09-01-unrecoverable-errors-with-panic.html

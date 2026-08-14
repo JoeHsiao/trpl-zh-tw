@@ -2,7 +2,7 @@
 
 [ch01-01-installation.md](https://github.com/rust-lang/book/blob/369386fefd1138cbdf50ae628bae1ffc4ffce669/src/ch01-01-installation.md)
 
-第一步是安裝 Rust。我們會通過 `rustup` 下載 Rust，這是一個管理 Rust 版本和相關工具的命令列工具。下載時需要聯網。
+第一步是安裝 Rust。我們會透過 `rustup` 下載 Rust，這是一個管理 Rust 版本和相關工具的命令列工具。下載時需要聯網。
 
 > 注意：如果你出於某些理由傾向於不使用 `rustup`，請到 [Rust 的其他安裝方法頁面][otherinstall] 檢視其它安裝選項。
 
@@ -28,7 +28,7 @@ Rust is installed now. Great!
 
 另外，你還需要一個 *連結器（linker）*，它是 Rust 用來將編譯輸出連線成單個檔案的程式。你很可能已經安裝了它。如果遇到連結器錯誤，你應該安裝一個 C 編譯器，其中通常會包含連結器。C 編譯器本身也很有用，因為一些常見的 Rust 包依賴 C 程式碼，因此需要 C 編譯器。
 
-在 macOS 上，你可以通過執行以下命令獲得 C 語言編譯器：
+在 macOS 上，你可以透過執行以下命令獲得 C 語言編譯器：
 
 ```console
 $ xcode-select --install
@@ -80,7 +80,7 @@ $ echo $PATH
 
 ## 更新與解除安裝
 
-通過 `rustup` 安裝 Rust 之後，更新到新發布的版本很簡單。只需要在 shell 中執行下面的更新指令碼：
+透過 `rustup` 安裝 Rust 之後，更新到新發布的版本很簡單。只需要在 shell 中執行下面的更新指令碼：
 
 ```console
 $ rustup update
@@ -102,9 +102,9 @@ $ rustup self uninstall
 
 <a id="text-editors-and-integrated-development-environments"></a>
 
-### 文本編輯器和整合開發環境（Integrated Development Environments, IDE）
+### 文字編輯器和整合開發環境（Integrated Development Environments, IDE）
 
-本書不假設你使用什麼工具來編寫 Rust 程式碼。幾乎任何文本編輯器都能勝任！不過，許多文本編輯器和整合開發環境（IDE）都內建了對 Rust 的支援。你總是可以在 Rust 官網的[工具頁面][tools]找到一個相對較新的常見編輯器和 IDE 列表。
+本書不假設你使用什麼工具來編寫 Rust 程式碼。幾乎任何文字編輯器都能勝任！不過，許多文字編輯器和整合開發環境（IDE）都內建了對 Rust 的支援。你總是可以在 Rust 官網的[工具頁面][tools]找到一個相對較新的常見編輯器和 IDE 列表。
 
 ### 離線使用本書
 

@@ -4,7 +4,7 @@
 
 [ch10-02-traits.md](https://github.com/rust-lang/book/blob/3986f214fd82427b4401adf4d7dc0911c917e1e8/src/ch10-02-traits.md)
 
-*trait* 定義了某個特定型別擁有可能與其他型別共享的功能。可以通過 trait 以一種抽象的方式定義共同行為。可以使用 **trait 約束**（*trait bounds*）指定泛型是任何擁有特定行為的型別。
+*trait* 定義了某個特定型別擁有可能與其他型別共享的功能。可以透過 trait 以一種抽象的方式定義共同行為。可以使用 **trait 約束**（*trait bounds*）指定泛型是任何擁有特定行為的型別。
 
 > 注意：*trait* 類似於其他語言中的常被稱為 **介面**（*interfaces*）的功能，雖然有一些不同。
 
@@ -12,7 +12,7 @@
 
 一個型別的行為由其可供呼叫的方法構成。如果可以對不同型別呼叫相同的方法的話，這些型別就可以共享相同的行為了。trait 定義是一種將方法簽名組合起來的方法，目的是定義一個實現某些目的所必需的行為的集合。
 
-例如，這裡有多個存放了不同型別和屬性文本的結構體：結構體 `NewsArticle` 用於存放發生於世界各地的新聞故事，而結構體 `SocialPost` 最多隻能存放 280 個字元的內容，以及指示該帖子是新發布的、轉發的還是對另一條帖子的回覆的後設資料。
+例如，這裡有多個存放了不同型別和屬性文字的結構體：結構體 `NewsArticle` 用於存放發生於世界各地的新聞故事，而結構體 `SocialPost` 最多隻能存放 280 個字元的內容，以及指示該帖子是新發布的、轉發的還是對另一條帖子的回覆的元資料。
 
 我們想要建立一個名為 `aggregator` 的多媒體聚合庫用來顯示可能儲存在 `NewsArticle` 或 `SocialPost` 例項中的資料摘要。為了實現功能，每個結構體都要能夠獲取摘要，這樣的話就可以呼叫例項的 `summarize` 方法來請求摘要。示例 10-12 中展示了一個表現這個概念的公有 `Summary` trait 的定義：
 
@@ -72,7 +72,7 @@ trait 體中可以有多個方法：一行一個方法簽名且都以分號結�
 
 <span class="caption">示例 10-14：`Summary` trait 的定義，帶有一個 `summarize` 方法的預設實現</span>
 
-如果想要對 `NewsArticle` 例項使用這個預設實現，可以通過 `impl Summary for NewsArticle {}` 指定一個空的 `impl` 塊。
+如果想要對 `NewsArticle` 例項使用這個預設實現，可以透過 `impl Summary for NewsArticle {}` 指定一個空的 `impl` 塊。
 
 雖然我們不再直接為 `NewsArticle` 定義 `summarize` 方法了，但是我們提供了一個預設實現並且指定 `NewsArticle` 實現 `Summary` trait。因此，我們仍然可以對 `NewsArticle` 例項呼叫 `summarize` 方法，如下所示：
 
@@ -148,9 +148,9 @@ pub fn notify<T: Summary>(item1: &T, item2: &T) {
 
 <a id="specifying-multiple-trait-bounds-with-the--syntax"></a>
 
-#### 通過 `+` 語法指定多個 trait 約束
+#### 透過 `+` 語法指定多個 trait 約束
 
-我們也可以指定多個 trait 約束 `notify` 在 `item` 上既能使用格式化顯示，又能使用 `summarize` 方法：在 `notify` 的定義中，指定 `item` 必須同時實現 `Display` 和 `Summary` 兩個 trait。這可以通過 `+` 語法實現：
+我們也可以指定多個 trait 約束 `notify` 在 `item` 上既能使用格式化顯示，又能使用 `summarize` 方法：在 `notify` 的定義中，指定 `item` 必須同時實現 `Display` 和 `Summary` 兩個 trait。這可以透過 `+` 語法實現：
 
 ```rust,ignore
 pub fn notify(item: &(impl Summary + Display)) {
@@ -162,9 +162,9 @@ pub fn notify(item: &(impl Summary + Display)) {
 pub fn notify<T: Summary + Display>(item: &T) {
 ```
 
-通過指定這兩個 trait 約束，`notify` 的函式體可以呼叫 `summarize` 並使用 `{}` 來格式化 `item`。
+透過指定這兩個 trait 約束，`notify` 的函式體可以呼叫 `summarize` 並使用 `{}` 來格式化 `item`。
 
-#### 通過 `where` 簡化 trait 約束
+#### 透過 `where` 簡化 trait 約束
 
 然而，使用過多的 trait 約束 也有缺點。每個泛型有其自己的 trait 約束，所以有多個泛型引數的函式在名稱和引數列表之間會有很長的 trait 約束 資訊，這使得函式簽名難以閱讀。為此，Rust 有另一個在函式簽名之後的 `where` 從句中指定 trait 約束的語法。所以除了這麼寫：
 
@@ -188,7 +188,7 @@ fn some_function<T: Display + Clone, U: Clone + Debug>(t: &T, u: &U) -> i32 {
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/no-listing-05-returning-impl-trait/src/lib.rs:here}}
 ```
 
-通過使用 `impl Summary` 作為返回值型別，我們指定了 `returns_summarizable` 函式返回某個實現了 `Summary` trait 的型別，但是不確定其具體的型別。在這個例子中 `returns_summarizable` 返回了一個 `SocialPost`，不過呼叫方並不知情。
+透過使用 `impl Summary` 作為返回值型別，我們指定了 `returns_summarizable` 函式返回某個實現了 `Summary` trait 的型別，但是不確定其具體的型別。在這個例子中 `returns_summarizable` 返回了一個 `SocialPost`，不過呼叫方並不知情。
 
 返回一個只是指定了需要實現的 trait 的型別的能力在閉包和迭代器場景十分的有用，第十三章會介紹它們。閉包和迭代器建立只有編譯器知道的型別，或者是非常非常長的型別。`impl Trait` 允許你簡單的指定函式返回一個 `Iterator` 而無需寫出實際的冗長的型別。
 
@@ -202,7 +202,7 @@ fn some_function<T: Display + Clone, U: Clone + Debug>(t: &T, u: &U) -> i32 {
 
 ### 使用 trait 約束有條件地實現方法
 
-通過使用帶有 trait 約束的泛型引數的 `impl` 塊，可以有條件地只為那些實現了特定 trait 的型別實現方法。例如，示例 10-15 中的型別 `Pair<T>` 總是實現了 `new` 方法並返回一個 `Pair<T>` 的例項（回憶一下第五章的 [“方法語法”][methods] 部分，`Self` 是一個 `impl` 塊型別的類型別名（type alias），在這裡是 `Pair<T>`）。不過在下一個 `impl` 塊中，只有那些為 `T` 型別實現了 `PartialOrd` trait（來允許比較） **和** `Display` trait（來啟用列印）的 `Pair<T>` 才會實現 `cmp_display` 方法：
+透過使用帶有 trait 約束的泛型引數的 `impl` 塊，可以有條件地只為那些實現了特定 trait 的型別實現方法。例如，示例 10-15 中的型別 `Pair<T>` 總是實現了 `new` 方法並返回一個 `Pair<T>` 的例項（回憶一下第五章的 [“方法語法”][methods] 部分，`Self` 是一個 `impl` 塊型別的類型別名（type alias），在這裡是 `Pair<T>`）。不過在下一個 `impl` 塊中，只有那些為 `T` 型別實現了 `PartialOrd` trait（來允許比較） **和** `Display` trait（來啟用列印）的 `Pair<T>` 才會實現 `cmp_display` 方法：
 
 ```rust,noplayground
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-15/src/lib.rs}}

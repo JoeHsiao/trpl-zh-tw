@@ -2,7 +2,7 @@
 
 [ch15-06-reference-cycles.md](https://github.com/rust-lang/book/blob/ecef81cbc6f0c2d1c8a67409329b0641258c04c2/src/ch15-06-reference-cycles.md)
 
-Rust 的記憶體安全性保證使其難以意外地製造永遠也不會被清理的記憶體（被稱為 **記憶體洩漏**，_memory leak_），但並非不可能。Rust 並不保證完全防止記憶體洩漏，這意味著記憶體洩漏在 Rust 中被認為是記憶體安全的。這一點可以通過 `Rc<T>` 和 `RefCell<T>` 看出 Rust 允許出現記憶體洩漏：建立引用迴圈的可能性是存在的。這會造成記憶體洩漏，因為每一項的引用計數永遠也到不了 0，持有的資料也就永遠不會被釋放。
+Rust 的記憶體安全性保證使其難以意外地製造永遠也不會被清理的記憶體（被稱為 **記憶體洩漏**，_memory leak_），但並非不可能。Rust 並不保證完全防止記憶體洩漏，這意味著記憶體洩漏在 Rust 中被認為是記憶體安全的。這一點可以透過 `Rc<T>` 和 `RefCell<T>` 看出 Rust 允許出現記憶體洩漏：建立引用迴圈的可能性是存在的。這會造成記憶體洩漏，因為每一項的引用計數永遠也到不了 0，持有的資料也就永遠不會被釋放。
 
 ### 製造引用迴圈
 
@@ -54,7 +54,7 @@ Rust 的記憶體安全性保證使其難以意外地製造永遠也不會被清
 
 ### 使用 `Weak<T>` 防止引用迴圈
 
-到目前為止，我們已經展示了呼叫 `Rc::clone` 會增加 `Rc<T>` 例項的 `strong_count`，和只在其 `strong_count` 為 0 時 `Rc<T>` 例項才會被清理。你也可以通過呼叫 `Rc::downgrade` 並傳遞 `Rc<T>` 例項的引用來建立其值的**弱引用**（_weak reference_）。強引用代表如何共享 `Rc<T>` 例項的所有權；弱引用不表達所有權關係，當 `Rc<T>` 例項被清理時其計數沒有影響。它們不會造成引用迴圈，因為任何涉及弱引用的迴圈會在其相關的值的強引用計數為 0 時被打斷。
+到目前為止，我們已經展示了呼叫 `Rc::clone` 會增加 `Rc<T>` 例項的 `strong_count`，和只在其 `strong_count` 為 0 時 `Rc<T>` 例項才會被清理。你也可以透過呼叫 `Rc::downgrade` 並傳遞 `Rc<T>` 例項的引用來建立其值的**弱引用**（_weak reference_）。強引用代表如何共享 `Rc<T>` 例項的所有權；弱引用不表達所有權關係，當 `Rc<T>` 例項被清理時其計數沒有影響。它們不會造成引用迴圈，因為任何涉及弱引用的迴圈會在其相關的值的強引用計數為 0 時被打斷。
 
 呼叫 `Rc::downgrade` 時會得到 `Weak<T>` 型別的智慧指標。不同於將 `Rc<T>` 例項的 `strong_count` 加 1，呼叫 `Rc::downgrade` 會將 `weak_count` 加 1。`Rc<T>` 型別使用 `weak_count` 來記錄其存在多少個 `Weak<T>` 引用，類似於 `strong_count`。其區別在於 `weak_count` 無需計數為 0 就能使 `Rc<T>` 例項被清理。
 
@@ -84,7 +84,7 @@ Rust 的記憶體安全性保證使其難以意外地製造永遠也不會被清
 
 <span class="caption">示例 15-27：建立沒有子節點的 `leaf` 節點和以 `leaf` 作為子節點的 `branch` 節點</span>
 
-這裡克隆了 `leaf` 中的 `Rc<Node>` 並儲存在 `branch` 中，這意味著 `leaf` 中的 `Node` 現在有兩個所有者：`leaf` 和 `branch`。可以通過 `branch.children` 從 `branch` 中獲得 `leaf`，不過無法從 `leaf` 得到 `branch`。`leaf` 沒有到 `branch` 的引用且並不知道它們相互關聯。我們希望 `leaf` 知道 `branch` 是其父節點。接下來我們會這麼做。
+這裡克隆了 `leaf` 中的 `Rc<Node>` 並儲存在 `branch` 中，這意味著 `leaf` 中的 `Node` 現在有兩個所有者：`leaf` 和 `branch`。可以透過 `branch.children` 從 `branch` 中獲得 `leaf`，不過無法從 `leaf` 得到 `branch`。`leaf` 沒有到 `branch` 的引用且並不知道它們相互關聯。我們希望 `leaf` 知道 `branch` 是其父節點。接下來我們會這麼做。
 
 #### 增加從子到父的引用
 
@@ -100,7 +100,7 @@ Rust 的記憶體安全性保證使其難以意外地製造永遠也不會被清
 {{#rustdoc_include ../listings/ch15-smart-pointers/listing-15-28/src/main.rs:here}}
 ```
 
-這樣，一個節點就能夠引用其父節點，但不擁有其父節點。在示例 15-28 中，我們更新 `main` 來使用新定義以便 `leaf` 節點可以通過 `branch` 引用其父節點：
+這樣，一個節點就能夠引用其父節點，但不擁有其父節點。在示例 15-28 中，我們更新 `main` 來使用新定義以便 `leaf` 節點可以透過 `branch` 引用其父節點：
 
 <span class="filename">檔名：src/main.rs</span>
 
@@ -132,7 +132,7 @@ children: RefCell { value: [] } }] } })
 
 #### 視覺化 `strong_count` 和 `weak_count` 的變化
 
-讓我們通過建立了一個新的內部作用域並將 `branch` 的建立放入其中，來觀察 `Rc<Node>` 例項的 `strong_count` 和 `weak_count` 值的變化。這會展示當 `branch` 建立和離開作用域被丟棄時會發生什麼。這些修改如示例 15-29 所示：
+讓我們透過建立了一個新的內部作用域並將 `branch` 的建立放入其中，來觀察 `Rc<Node>` 例項的 `strong_count` 和 `weak_count` 值的變化。這會展示當 `branch` 建立和離開作用域被丟棄時會發生什麼。這些修改如示例 15-29 所示：
 
 <span class="filename">檔名：src/main.rs</span>
 
@@ -142,13 +142,13 @@ children: RefCell { value: [] } }] } })
 
 <span class="caption">示例 15-29：在內部作用域建立 `branch` 並檢查其強弱引用計數</span>
 
-一旦建立了 `leaf`，其 `Rc<Node>` 的強引用計數為 1，弱引用計數為 0。在內部作用域中建立了 `branch` 並與 `leaf` 相關聯，此時 `branch` 中 `Rc<Node>` 的強引用計數為 1，弱引用計數為 1（因為 `leaf.parent` 通過 `Weak<Node>` 指向 `branch`）。這裡 `leaf` 的強引用計數為 2，因為現在 `branch` 的 `branch.children` 中儲存了 `leaf` 的 `Rc<Node>` 的複製，不過弱引用計數仍然為 0。
+一旦建立了 `leaf`，其 `Rc<Node>` 的強引用計數為 1，弱引用計數為 0。在內部作用域中建立了 `branch` 並與 `leaf` 相關聯，此時 `branch` 中 `Rc<Node>` 的強引用計數為 1，弱引用計數為 1（因為 `leaf.parent` 透過 `Weak<Node>` 指向 `branch`）。這裡 `leaf` 的強引用計數為 2，因為現在 `branch` 的 `branch.children` 中儲存了 `leaf` 的 `Rc<Node>` 的複製，不過弱引用計數仍然為 0。
 
 當內部作用域結束時，`branch` 離開作用域，`Rc<Node>` 的強引用計數減少為 0，所以其 `Node` 被丟棄。來自 `leaf.parent` 的弱引用計數 1 與 `Node` 是否被丟棄無關，所以並沒有產生任何記憶體洩漏！
 
 如果在內部作用域結束後嘗試訪問 `leaf` 的父節點，會再次得到 `None`。在程式的結尾，`leaf` 中 `Rc<Node>` 的強引用計數為 1，弱引用計數為 0，因為現在 `leaf` 又是 `Rc<Node>` 唯一的引用了。
 
-所有這些管理計數和值的邏輯都內建於 `Rc<T>` 和 `Weak<T>` 以及它們的 `Drop` trait 實現中。通過在 `Node` 定義中指定從子節點到父節點的關係為一個 `Weak<T>` 引用，就能夠擁有父節點和子節點之間的雙向引用而不會造成引用迴圈和記憶體洩漏。
+所有這些管理計數和值的邏輯都內建於 `Rc<T>` 和 `Weak<T>` 以及它們的 `Drop` trait 實現中。透過在 `Node` 定義中指定從子節點到父節點的關係為一個 `Weak<T>` 引用，就能夠擁有父節點和子節點之間的雙向引用而不會造成引用迴圈和記憶體洩漏。
 
 ## 總結
 

@@ -120,7 +120,7 @@ $ cargo build
     Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.22s
 ```
 
-要從 *add* 目錄執行這個二進位制 crate，可以在 `cargo run` 時通過 `-p` 引數加上包名，指定要執行工作空間中的哪個包：
+要從 *add* 目錄執行這個二進位制 crate，可以在 `cargo run` 時透過 `-p` 引數加上包名，指定要執行工作空間中的哪個包：
 
 ```console
 $ cargo run -p adder
@@ -241,7 +241,7 @@ test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; fini
 
 輸出表明，`cargo test` 只運行了 `add_one` crate 的測試，而沒有執行 `adder` crate 的測試。
 
-如果你打算把工作空間中的 crate 釋出到 [crates.io](https://crates.io/) 上，那麼工作空間中的每個 crate 都需要單獨釋出。和 `cargo test` 一樣，你可以通過 `-p` 引數並指定要釋出的 crate 名稱，來發布工作空間中的某個特定 crate。
+如果你打算把工作空間中的 crate 釋出到 [crates.io](https://crates.io/) 上，那麼工作空間中的每個 crate 都需要單獨釋出。和 `cargo test` 一樣，你可以透過 `-p` 引數並指定要釋出的 crate 名稱，來發布工作空間中的某個特定 crate。
 
 現在，試著仿照 `add_one` crate 的方式，把 `add_two` crate 也加入工作空間，作為額外練習吧！
 

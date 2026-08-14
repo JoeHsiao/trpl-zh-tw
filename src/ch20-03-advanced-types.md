@@ -28,7 +28,7 @@ Rust 提供了宣告 **類型別名**（*type alias*）的能力，使用 `type`
 {{#rustdoc_include ../listings/ch20-advanced-features/no-listing-04-kilometers-alias/src/main.rs:there}}
 ```
 
-因為 `Kilometers` 是 `i32` 的別名，它們是同一型別，可以將 `i32` 與 `Kilometers` 相加，也可以將 `Kilometers` 傳遞給獲取 `i32` 引數的函式。但通過這種手段無法獲得上一部分討論的 newtype 模式所提供的型別檢查的好處。換句話說，如果在某處混用 `Kilometers` 和 `i32` 的值，編譯器也不會給出一個錯誤。
+因為 `Kilometers` 是 `i32` 的別名，它們是同一型別，可以將 `i32` 與 `Kilometers` 相加，也可以將 `Kilometers` 傳遞給獲取 `i32` 引數的函式。但透過這種手段無法獲得上一部分討論的 newtype 模式所提供的型別檢查的好處。換句話說，如果在某處混用 `Kilometers` 和 `i32` 的值，編譯器也不會給出一個錯誤。
 
 類型別名的主要用途是減少重複。例如，可能會有這樣很長的型別：
 
@@ -36,7 +36,7 @@ Rust 提供了宣告 **類型別名**（*type alias*）的能力，使用 `type`
 Box<dyn Fn() + Send + 'static>
 ```
 
-在函式簽名和型別註解中到處書寫這個冗長的型別既乏味又容易出錯。想像一下有一個專案，到處都是像 Listing 20-25 那樣的程式碼。
+在函式簽名和型別註解中到處書寫這個冗長的型別既乏味又容易出錯。想象一下有一個專案，到處都是像 Listing 20-25 那樣的程式碼。
 
 ```rust
 {{#rustdoc_include ../listings/ch20-advanced-features/listing-20-25/src/main.rs:here}}
@@ -44,7 +44,7 @@ Box<dyn Fn() + Send + 'static>
 
 <span class="caption">示例 20-25: 在很多地方使用名稱很長的型別</span>
 
-類型別名通過減少重複使程式碼更易於管理。在示例 20-26 中，我們為這個冗長的型別引入了名為 `Thunk` 的別名，並可以使用更簡潔的 `Thunk` 來替換所有使用該型別的地方。
+類型別名透過減少重複使程式碼更易於管理。在示例 20-26 中，我們為這個冗長的型別引入了名為 `Thunk` 的別名，並可以使用更簡潔的 `Thunk` 來替換所有使用該型別的地方。
 
 ```rust
 {{#rustdoc_include ../listings/ch20-advanced-features/listing-20-26/src/main.rs:here}}
@@ -134,7 +134,7 @@ Rust 需要知道應該為特定型別的值分配多少記憶體，同時所有
 
 那麼該怎麼辦呢？在這種情況下，你已經知道答案：`s1` 和 `s2` 的型別是 `&str` 而不是 `str`。如果你回想第四章 [“字串 slice”][string-slices] 中提到，slice 資料結構僅僅儲存了開始位置和 slice 的長度。所以雖然 `&T` 是一個儲存了 `T` 所在的記憶體位置的單個值，`&str` 則是**兩個**值：`str` 的地址和其長度。這樣，`&str` 就有了一個在編譯時可以知道的大小：它是 `usize` 長度的兩倍。也就是說，無論所引用的字串多長，我們總是知道 `&str` 的大小。一般來說，這就是 Rust 使用動態大小型別的方式：它們有一些額外的元資訊來儲存動態資訊的大小。這引出了動態大小型別的黃金法則：必須將動態大小型別的值置於某種指標之後。
 
-可以將 `str` 與各種指標型別組合使用：例如 `Box<str>` 或 `Rc<str>`。事實上，你以前已經見過這種做法，不過物件換成了另一種動態大小型別：trait。每個 trait 本身也是一種動態大小型別，我們可以通過 trait 的名字來引用它。在第十八章 [“使用 trait object 來抽象出共享行為”][using-trait-objects-to-abstract-over-shared-behavior] 一節中，我們提到過：為了把 trait 用作 trait 物件，必須把它放在某種指標之後，比如 `&dyn Trait` 或 `Box<dyn Trait>`（`Rc<dyn Trait>` 也可以）。
+可以將 `str` 與各種指標型別組合使用：例如 `Box<str>` 或 `Rc<str>`。事實上，你以前已經見過這種做法，不過物件換成了另一種動態大小型別：trait。每個 trait 本身也是一種動態大小型別，我們可以透過 trait 的名字來引用它。在第十八章 [“使用 trait object 來抽象出共享行為”][using-trait-objects-to-abstract-over-shared-behavior] 一節中，我們提到過：為了把 trait 用作 trait 物件，必須把它放在某種指標之後，比如 `&dyn Trait` 或 `Box<dyn Trait>`（`Rc<dyn Trait>` 也可以）。
 
 為了處理 DST，Rust 提供了 `Sized` trait 來決定一個型別的大小是否在編譯時可知。該 trait 會自動為所有在編譯時大小已知的型別實現。此外，Rust 隱式地為每一個泛型函式增加了 `Sized` 約束。也就是說，對於如下泛型函式定義：
 
