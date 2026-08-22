@@ -1,6 +1,7 @@
 _book/
 mdbook/
 book/
+**/target/
 dist
 .DS_Store
 .idea
