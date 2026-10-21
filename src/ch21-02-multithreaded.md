@@ -1,6 +1,6 @@
 ## 將單執行緒 server 變為多執行緒 server
 
-[ch21-02-multithreaded.md](https://github.com/rust-lang/book/blob/8aa0d003e6499d733d639de32d70f590efa48657/src/ch21-02-multithreaded.md)
+[ch21-02-multithreaded.md](https://github.com/rust-lang/book/blob/1500248d8f230566e4ec9f27fcbb8fe9e2898ab1/src/ch21-02-multithreaded.md)
 
 目前服務端會依次處理每一個請求，意味著它在完成第一個連線的處理之前不會處理第二個連線。如果服務端正接收越來越多的請求，這類序列操作會使效能越來越差。如果一個請求花費很長時間來處理，隨後而來的請求則不得不等待這個長請求結束，即便這些新請求可以很快就處理完。我們需要修復這種情況，不過首先讓我們實際嘗試一下這個問題。
 
@@ -395,6 +395,6 @@ Worker 2 got a job; executing.
 
 [type-aliases]: ch20-03-advanced-types.html#型別同義詞與類型別名
 [integer-types]: ch03-02-data-types.html#整型
-[fn-traits]: ch13-01-closures.html#將捕獲的值移出閉包
+[moving-out-of-closures]: ch13-01-closures.html#將捕獲的值移出閉包
 [builder]: https://doc.rust-lang.org/std/thread/struct.Builder.html
 [builder-spawn]: https://doc.rust-lang.org/std/thread/struct.Builder.html#method.spawn

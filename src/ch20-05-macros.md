@@ -1,6 +1,6 @@
 ## 宏
 
-[ch20-05-macros.md](https://github.com/rust-lang/book/blob/57ff62db22b006e6b319e2e35c9364d932a8b4e5/src/ch20-05-macros.md)
+[ch20-05-macros.md](https://github.com/rust-lang/book/blob/1500248d8f230566e4ec9f27fcbb8fe9e2898ab1/src/ch20-05-macros.md)
 
 我們已經在本書中使用過像 `println!` 這樣的宏了，不過尚未深入探討什麼是宏以及它是如何工作的。**宏**（*Macro*）指的是 Rust 中一系列的功能：使用 `macro_rules!` 的 **宣告宏**（*declarative macro*），和三種 **過程宏**（*procedural macro*）：
 
@@ -227,7 +227,7 @@ DeriveInput {
 此時，`cargo build` 應該都能成功編譯 `hello_macro` 和 `hello_macro_derive` 。我們將這些 crate 連線到示例 20-31 的程式碼中來看看過程宏的行為！在 *projects* 目錄下用 `cargo new pancakes` 命令新建一個二進位制專案。需要將 `hello_macro` 和 `hello_macro_derive` 作為依賴加到 `pancakes` 包的 *Cargo.toml* 檔案中去。如果你正將 `hello_macro` 和 `hello_macro_derive` 的版本釋出到 [crates.io](https://crates.io/) 上，它們將是常規依賴；否則，則可以像下面這樣將其指定為 `path` 依賴：
 
 ```toml
-{{#include ../listings/ch20-advanced-features/no-listing-21-pancakes/pancakes/Cargo.toml:7:9}}
+{{#include ../listings/ch20-advanced-features/no-listing-21-pancakes/pancakes/Cargo.toml:6:8}}
 ```
 
 把示例 20-37 中的程式碼放在 *src/main.rs* ，然後執行 `cargo run`：其應該列印 `Hello, Macro! My name is Pancakes!`。其包含了該過程宏中 `HelloMacro` trait 的實現，而無需 `pancakes` crate 實現它；`#[derive(HelloMacro)]` 增加了該 trait 實現。

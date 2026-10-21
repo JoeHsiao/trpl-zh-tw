@@ -1,6 +1,6 @@
 ## 如何編寫測試
 
-[ch11-01-writing-tests.md](https://github.com/rust-lang/book/blob/99071589c5358114de6324d9aa2643caeee305bd/src/ch11-01-writing-tests.md)
+[ch11-01-writing-tests.md](https://github.com/rust-lang/book/blob/1500248d8f230566e4ec9f27fcbb8fe9e2898ab1/src/ch11-01-writing-tests.md)
 
 Rust 中的測試函式是用來驗證非測試程式碼是否按照期望的方式執行的。測試函式體通常執行如下三種操作：
 
@@ -94,7 +94,7 @@ Cargo 編譯並運行了測試。可以看到 `running 1 test` 這一行。下�
 
 <span class="caption">示例 11-4：一個測試透過和一個測試失敗的測試結果</span>
 
-`test tests::another` 這一行是 `FAILED` 而不是 `ok` 了。在單獨測試結果和摘要之間多了兩個新的部分：第一個部分顯示了測試失敗的詳細原因。在這個例子中，我們看到 `another` 因為在 _src/lib.rs_ 的第 17 行 `panicked at 'Make this test fail'` 而失敗的詳細資訊。下一部分列出了所有失敗的測試，這在有很多測試和很多失敗測試的詳細輸出時很有幫助。我們可以透過使用失敗測試的名稱來只執行這個測試，以便除錯；下一部分 [“控制測試如何執行”][controlling-how-tests-are-run] 會講到更多執行測試的方法。
+`test tests::another` 這一行是 `FAILED` 而不是 `ok` 了。在單獨測試結果和摘要之間多了兩個新的部分：第一個部分顯示了測試失敗的詳細原因。在這個例子中，詳細資訊表明 `tests::another` 在 *src/lib.rs* 的第 17 行以 `Make this test fail` 訊息觸發 panic，因此測試失敗。下一部分列出了所有失敗的測試，這在有很多測試和很多失敗測試的詳細輸出時很有幫助。我們可以透過使用失敗測試的名稱來只執行這個測試，以便除錯；下一部分 [“控制測試如何執行”][controlling-how-tests-are-run] 會講到更多執行測試的方法。
 
 最後是摘要行：總體上講，測試結果是 `FAILED`。有一個測試透過和一個測試失敗。
 
@@ -200,7 +200,7 @@ Cargo 編譯並運行了測試。可以看到 `running 1 test` 這一行。下�
 
 測試捕獲到了 bug！`it_adds_two` 測試失敗，錯誤資訊告訴我們斷言失敗了，它告訴我們 ``assertion `left == right` failed`` 以及 `left` 和 `right` 的值是什麼。這個錯誤資訊有助於我們開始除錯：它說 `assert_eq!` 的 `left` 引數（也就是 `add_two(2)` 的結果）是 `5`，而 `right` 引數是 `4`。可以想象當有很多測試在執行時這些資訊是多麼的有用。
 
-需要注意的是，在一些語言和測試框架中，斷言兩個值相等的函式的引數被稱為 `expected` 和 `actual`，而且指定引數的順序非常重要。然而在 Rust 中，它們則叫做 `left` 和 `right`，同時指定期望的值和被測試程式碼產生的值的順序並不重要。這個測試中的斷言也可以寫成 `assert_eq!(add_two(2), result)`，這時失敗資訊仍同樣是 `` assertion failed: `(left == right)` ``。
+需要注意的是，在一些語言和測試框架中，斷言兩個值相等的函式的引數被稱為 `expected` 和 `actual`，而且指定引數的順序非常重要。然而在 Rust 中，它們則叫做 `left` 和 `right`，同時指定期望的值和被測試程式碼產生的值的順序並不重要。這個測試中的斷言也可以寫成 `assert_eq!(4, result)`，這時失敗資訊仍同樣是 `` assertion `left == right` failed ``。
 
 `assert_ne!` 宏在傳遞給它的兩個值不相等時透過，而在相等時失敗。當我們不確定值**會**是什麼，不過能確定值絕對**不會**是什麼的時候，這個宏最有用處。例如，如果一個函式保證會以某種方式改變其輸入，不過這種改變方式是由執行測試時是星期幾來決定的，這時最好的斷言可能就是函式的輸出不等於其輸入。
 
@@ -306,7 +306,7 @@ Cargo 編譯並運行了測試。可以看到 `running 1 test` 這一行。下�
 {{#include ../listings/ch11-writing-automated-tests/no-listing-09-guess-with-panic-msg-bug/output.txt}}
 ```
 
-失敗資訊表明測試確實如期望 panic 了，不過 panic 資訊中並沒有包含期望的資訊 `less than or equal to 100`。而我們得到的 panic 資訊是 `Guess value must be greater than or equal to 1, got 200.`。這樣就可以開始尋找 bug 在哪了！
+失敗資訊表明測試確實如期望 panic 了，不過 panic 資訊中並沒有包含期望的資訊 `less than or equal to 100`。而我們得到的 panic 資訊是 `Guess value must be greater than or equal to 1, got 200`。這樣就可以開始尋找 bug 在哪了！
 
 ### 在測試中使用 `Result<T, E>`
 

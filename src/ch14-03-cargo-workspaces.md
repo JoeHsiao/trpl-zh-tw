@@ -1,6 +1,6 @@
 ## Cargo 工作空間
 
-[ch14-03-cargo-workspaces.md](https://github.com/rust-lang/book/blob/43b9ad334aaf7353e5708dba49f84f941b50ec4b/src/ch14-03-cargo-workspaces.md)
+[ch14-03-cargo-workspaces.md](https://github.com/rust-lang/book/blob/1500248d8f230566e4ec9f27fcbb8fe9e2898ab1/src/ch14-03-cargo-workspaces.md)
 
 第十二章中，我們構建了一個同時包含二進位制 crate 和庫 crate 的包。隨著專案不斷發展，你可能會發現庫 crate 變得越來越大，並希望進一步將這個包拆分為多個庫 crate。Cargo 提供了一項叫作**工作空間**（*workspace*）的功能，可以幫助管理多個彼此相關、並行開發的包。
 
@@ -147,9 +147,9 @@ Hello, world! 10 plus one is 11!
 ```console
 $ cargo build
     Updating crates.io index
-  Downloaded rand v0.8.5
+  Downloaded rand v0.10.1
    --snip--
-   Compiling rand v0.8.5
+   Compiling rand v0.10.1
    Compiling add_one v0.1.0 (file:///projects/add/add_one)
 warning: unused import: `rand`
  --> add_one/src/lib.rs:1:5
@@ -157,7 +157,7 @@ warning: unused import: `rand`
 1 | use rand;
   |     ^^^^
   |
-  = note: `#[warn(unused_imports)]` on by default
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
 
 warning: `add_one` (lib) generated 1 warning (run `cargo fix --lib -p add_one` to apply 1 suggestion)
    Compiling adder v0.1.0 (file:///projects/add/adder)

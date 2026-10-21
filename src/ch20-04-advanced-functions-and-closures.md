@@ -1,6 +1,6 @@
 ## 高階函式與閉包
 
-[ch20-04-advanced-functions-and-closures.md](https://github.com/rust-lang/book/blob/57ff62db22b006e6b319e2e35c9364d932a8b4e5/src/ch20-04-advanced-functions-and-closures.md)
+[ch20-04-advanced-functions-and-closures.md](https://github.com/rust-lang/book/blob/1500248d8f230566e4ec9f27fcbb8fe9e2898ab1/src/ch20-04-advanced-functions-and-closures.md)
 
 本部分將探索一些有關函式和閉包的高階特性，這包括函式指標以及返回閉包。
 
@@ -93,7 +93,7 @@
 {{#rustdoc_include ../listings/ch20-advanced-features/listing-20-33/src/main.rs}}
 ```
 
-示例 20-33：建立一個由返回 `impl Fn` 的函式定義的閉包的 `Vec<T>`
+<figcaption>示例 20-33：建立一個由返回 <code>impl Fn</code> 的函式定義的閉包的 <code>Vec&lt;T&gt;</code></figcaption>
 
 </figure>
 
@@ -111,7 +111,7 @@
 {{#rustdoc_include ../listings/ch20-advanced-features/listing-20-34/src/main.rs:here}}
 ```
 
-示例 20-34：建立一個由返回 `Box<dyn Fn>` 的函式定義的閉包的 `Vec<T>` 以便它們有相同的型別
+<figcaption>示例 20-34：建立一個由返回 <code>Box&lt;dyn Fn&gt;</code> 的函式定義的閉包的 <code>Vec&lt;T&gt;</code> 以便它們有相同的型別</figcaption>
 
 </figure>
 

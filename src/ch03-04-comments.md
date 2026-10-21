@@ -1,6 +1,6 @@
 ## 註釋
 
-[ch03-04-comments.md](https://github.com/rust-lang/book/blob/9cc190796f28505c7a9a9cacea42f50d895ff3bd/src/ch03-04-comments.md)
+[ch03-04-comments.md](https://github.com/rust-lang/book/blob/1500248d8f230566e4ec9f27fcbb8fe9e2898ab1/src/ch03-04-comments.md)
 
 所有程式設計師都努力讓自己的程式碼易於理解，不過有時仍然需要額外的解釋。在這種情況下，程式設計師會在原始碼中留下 **註釋**（*comments*），編譯器會忽略它們，但閱讀原始碼的人可能會覺得這些註釋很有幫助。
 

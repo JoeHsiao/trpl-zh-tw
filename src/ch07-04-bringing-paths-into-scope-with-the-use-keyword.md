@@ -1,6 +1,6 @@
 ## 使用 `use` 關鍵字將路徑引入作用域
 
-[ch07-04-bringing-paths-into-scope-with-the-use-keyword.md](https://github.com/rust-lang/book/blob/79b9d15410a7b15a65cb86bcb40cbea99198a9e4/src/ch07-04-bringing-paths-into-scope-with-the-use-keyword.md)
+[ch07-04-bringing-paths-into-scope-with-the-use-keyword.md](https://github.com/rust-lang/book/blob/1500248d8f230566e4ec9f27fcbb8fe9e2898ab1/src/ch07-04-bringing-paths-into-scope-with-the-use-keyword.md)
 
 不得不編寫路徑來呼叫函式顯得繁瑣且重複。在示例 7-7 中，無論我們選擇 `add_to_waitlist` 函式的絕對路徑還是相對路徑，每次我們想要呼叫 `add_to_waitlist` 時，都必須指定`front_of_house` 和 `hosting`。幸運的是，有一種方法可以簡化這個過程。我們可以使用 `use` 關鍵字建立一個捷徑，然後就可以在作用域中的任何地方使用這個更短的名字。
 
@@ -100,7 +100,7 @@
 
 <span class="caption">示例 7-17: 透過 `pub use` 使名稱可從新作用域中被匯入至任何程式碼</span>
 
-在這個修改之前，外部程式碼需要使用路徑 `restaurant::front_of_house::hosting::add_to_waitlist()` 來呼叫 `add_to_waitlist` 函式，並且還需要將 `front_of_house` 模組標記為 `pub`。現在這個 `pub use` 從根模組重匯出了 `hosting` 模組，外部程式碼現在可以使用路徑 `restaurant::hosting::add_to_waitlist`。
+在這個修改之前，外部程式碼需要使用路徑 `restaurant::front_of_house::hosting::add_to_waitlist()` 來呼叫 `add_to_waitlist` 函式，並且還需要將 `front_of_house` 模組標記為 `pub`。現在這個 `pub use` 從根模組重匯出了 `hosting` 模組，外部程式碼現在可以使用路徑 `restaurant::hosting::add_to_waitlist()`。
 
 當你程式碼的內部結構與呼叫你程式碼的程式設計師所想象的結構不同時，重匯出會很有用。例如，在這個餐館的比喻中，經營餐館的人會想到“前臺”和“後臺”。但顧客在光顧一家餐館時，可能不會以這些術語來考慮餐館的各個部分。使用 `pub use`，我們可以使用一種結構編寫程式碼，卻將不同的結構形式暴露出來。這樣做使我們的庫井井有條，也使開發這個庫的程式設計師和呼叫這個庫的程式設計師都更加方便。在[“匯出實用的公有 API”][ch14-pub-use]部分讓我們再看另一個 `pub use` 的例子來了解這如何影響 crate 的文件。
 
@@ -116,7 +116,7 @@
 
 在 *Cargo.toml* 中加入 `rand` 依賴告訴了 Cargo 要從 [crates.io](https://crates.io) 下載 `rand` 和其依賴，並使其可在專案程式碼中使用。
 
-接著，為了將 `rand` 定義引入專案包的作用域，我們加入一行 `use` 起始的包名，它以 `rand` 包名開頭並列出了需要引入作用域的項。回憶一下第二章的“生成一個隨機數”部分，我們曾將 `Rng` trait 引入作用域並呼叫了 `rand::thread_rng` 函式：
+接著，為了將 `rand` 定義引入專案包的作用域，我們加入一行 `use` 起始的包名，它以 `rand` 包名開頭並列出了需要引入作用域的項。回憶一下第二章的“生成一個隨機數”部分，我們曾將 `rand::prelude` 模組中的項引入作用域並呼叫了 `rand::rng` 函式：
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch02-guessing-game-tutorial/listing-02-03/src/main.rs:ch07-04}}

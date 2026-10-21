@@ -1,6 +1,6 @@
 ## 函式
 
-[ch03-03-how-functions-work.md](https://github.com/rust-lang/book/blob/9cc190796f28505c7a9a9cacea42f50d895ff3bd/src/ch03-03-how-functions-work.md)
+[ch03-03-how-functions-work.md](https://github.com/rust-lang/book/blob/1500248d8f230566e4ec9f27fcbb8fe9e2898ab1/src/ch03-03-how-functions-work.md)
 
 函式在 Rust 程式碼中非常普遍。你已經見過語言中最重要的函式之一：`main` 函式，它是很多程式的入口點。你也見過 `fn` 關鍵字，它用來宣告新函式。
 
@@ -62,7 +62,7 @@ Rust 程式碼中的函式名和變數名通常使用 *snake case* 風格。在 
 {{#include ../listings/ch03-common-programming-concepts/no-listing-18-functions-with-multiple-parameters/output.txt}}
 ```
 
-因為我們使用 `5` 作為 `value` 的值，`h` 作為 `unit_label` 的值來呼叫函式，所以程式輸出包含這些值。
+因為我們使用 `5` 作為 `value` 的值，`'h'` 作為 `unit_label` 的值來呼叫函式，所以程式輸出包含這些值。
 
 ### 語句和表示式
 

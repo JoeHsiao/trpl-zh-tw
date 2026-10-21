@@ -1,6 +1,6 @@
 ## 深入理解 async 相關的 trait
 
-[ch17-05-traits-for-async.md](https://github.com/rust-lang/book/blob/9fc2a4e8e478ee1388c2b9ba55e3f12e89808bc2/src/ch17-05-traits-for-async.md)
+[ch17-05-traits-for-async.md](https://github.com/rust-lang/book/blob/1500248d8f230566e4ec9f27fcbb8fe9e2898ab1/src/ch17-05-traits-for-async.md)
 
 貫穿本章，我們以各種方式使用了 `Future`、`Stream` 和 `StreamExt` trait。不過到目前為止，我們一直刻意沒有太深入它們究竟是如何工作的、又是如何彼此配合的。對日常 Rust 程式設計來說，這通常完全沒問題。不過有時你會遇到一些場景，在那裡你需要額外理解這些 trait 的更多細節，以及 `Pin` 型別和 `Unpin` trait。在這一節裡，我們會適度深入，足夠幫助你應對這些情況，但把*真正*深入的內容留給其他文件。
 
@@ -287,3 +287,4 @@ trait Stream {
 [pinning]: https://rust-lang.github.io/async-book/04_pinning/01_chapter.html
 [first-async]: ch17-01-futures-and-syntax.html#第一個非同步程式
 [any-number-futures]: ch17-03-more-futures.html#使用任意數量的-futures
+[streams]: ch17-04-streams.html

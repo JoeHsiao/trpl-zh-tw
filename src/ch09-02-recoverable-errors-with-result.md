@@ -1,6 +1,6 @@
 ## 用 `Result` 處理可恢復的錯誤
 
-[ch09-02-recoverable-errors-with-result.md](https://github.com/rust-lang/book/blob/13e27c4a35705c4bd473bd90a3d3a8f87ef9ae58/src/ch09-02-recoverable-errors-with-result.md)
+[ch09-02-recoverable-errors-with-result.md](https://github.com/rust-lang/book/blob/1500248d8f230566e4ec9f27fcbb8fe9e2898ab1/src/ch09-02-recoverable-errors-with-result.md)
 
 大部分錯誤並沒有嚴重到需要程式完全停止執行。有時函式失敗的原因很容易理解並加以處理。例如，如果因為開啟一個並不存在的檔案而失敗，此時我們可能想要建立這個檔案，而不是終止程序。
 
@@ -107,9 +107,8 @@ enum Result<T, E> {
 如果呼叫這段程式碼時不存在 *hello.txt* 檔案，我們將會看到一個 `unwrap` 呼叫 `panic!` 時提供的錯誤資訊：
 
 ```text
-thread 'main' panicked at 'called `Result::unwrap()` on an `Err` value: Os {
-code: 2, kind: NotFound, message: "No such file or directory" }',
-src/main.rs:4:49
+thread 'main' panicked at src/main.rs:4:49:
+called `Result::unwrap()` on an `Err` value: Os { code: 2, kind: NotFound, message: "No such file or directory" }
 ```
 
 同樣，`expect` 方法也允許我們自定義 `panic!` 的錯誤資訊。使用 `expect` 而不是 `unwrap` 並提供一個好的錯誤資訊可以表明你的意圖並更易於追蹤 panic 的根源。`expect` 的語法看起來像這樣：

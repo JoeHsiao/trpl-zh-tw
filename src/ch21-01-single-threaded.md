@@ -1,6 +1,6 @@
 ## 構建單執行緒 web server
 
-[ch21-01-single-threaded.md](https://github.com/rust-lang/book/blob/8aa0d003e6499d733d639de32d70f590efa48657/src/ch21-01-single-threaded.md)
+[ch21-01-single-threaded.md](https://github.com/rust-lang/book/blob/1500248d8f230566e4ec9f27fcbb8fe9e2898ab1/src/ch21-01-single-threaded.md)
 
 首先讓我們建立一個可執行的單執行緒 web server。在開始之前，我們將快速瞭解一下構建 web server 所涉及到的協議。這些協議的細節超出了本書的範疇，不過一個簡單的概括會提供我們所需的資訊。
 
@@ -84,7 +84,7 @@ Connection established!
 ```console
 $ cargo run
    Compiling hello v0.1.0 (file:///projects/hello)
-    Finished dev [unoptimized + debuginfo] target(s) in 0.42s
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.42s
      Running `target/debug/hello`
 Request: [
     "GET / HTTP/1.1",

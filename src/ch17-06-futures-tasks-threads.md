@@ -1,6 +1,6 @@
 ## 結合起來看：Future、任務與執行緒
 
-[ch17-06-futures-tasks-threads.md](https://github.com/rust-lang/book/blob/0d5a0dd395aba1f82d7e5aaf6dbb59b2b843ad2c/src/ch17-06-futures-tasks-threads.md)
+[ch17-06-futures-tasks-threads.md](https://github.com/rust-lang/book/blob/1500248d8f230566e4ec9f27fcbb8fe9e2898ab1/src/ch17-06-futures-tasks-threads.md)
 
 正如我們在[第十六章][ch16]中看到的那樣，執行緒提供了一種實現併發的方式。而在本章裡，我們又看到了另一種方式：使用基於 future 和 stream 的 async。如果你想知道應該在什麼時候選哪一種，答案是：這取決於具體情況！而且在很多情況下，真正的選擇並不是執行緒*或* async，而是執行緒*和* async 一起用。
 

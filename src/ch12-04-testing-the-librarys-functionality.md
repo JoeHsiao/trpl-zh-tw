@@ -2,7 +2,7 @@
 
 ## 採用測試驅動開發增加功能
 
-[ch12-04-testing-the-librarys-functionality.md](https://github.com/rust-lang/book/blob/d7c0e477a22bcb37fdb290c6046058565d6738c2/src/ch12-04-testing-the-librarys-functionality.md)
+[ch12-04-testing-the-librarys-functionality.md](https://github.com/rust-lang/book/blob/1500248d8f230566e4ec9f27fcbb8fe9e2898ab1/src/ch12-04-testing-the-librarys-functionality.md)
 
 現在我們將邏輯提取到了 *src/lib.rs* 並將所有的引數解析和錯誤處理留在了 *src/main.rs* 中，為程式碼的核心功能編寫測試將更加容易。我們可以直接使用多種引數呼叫函式並檢查返回值而無需從命令列執行二進位制檔案了。
 
@@ -19,7 +19,7 @@
 
 ### 編寫失敗測試
 
-去掉 *src/lib.rs* 和 *src/main.rs* 中用於檢查程式行為的 `println!` 語句，因為不再真正需要它們了。接著我們會像[第十一章][ch11-anatomy]那樣增加一個 `test` 模組和一個測試函式。測試函式指定了 `search` 函式期望擁有的行為：它會獲取一個需要查詢的字串和用來查詢的文字，並只會返回包含請求的文字行。示例 12-15 展示了這個測試，它還不能編譯：
+我們會像[第十一章][ch11-anatomy]那樣，在 *src/lib.rs* 中增加一個 `tests` 模組和一個測試函式。測試函式指定了 `search` 函式期望擁有的行為：它會獲取一個需要查詢的字串和用來查詢的文字，並只會返回包含請求的文字行。示例 12-15 展示了這個測試：
 
 <span class="filename">檔名：src/lib.rs</span>
 
@@ -31,7 +31,7 @@
 
 這裡選擇使用 `"duct"` 作為這個測試中需要搜尋的字串。用來搜尋的文字有三行，其中只有一行包含 `"duct"`。（注意雙引號之後的反斜槓，這告訴 Rust 不要在字串字面值內容的開頭加入換行符）我們斷言 `search` 函式的返回值只包含期望的那一行。
 
-我們還不能執行這個測試並看到它失敗，因為它甚至都還不能編譯：`search` 函式還不存在呢！根據 TDD 的原則，我們將增加足夠的程式碼來使其能夠編譯：一個總是會返回空 vector 的 `search` 函式定義，如示例 12-16 所示。然後這個測試應該能夠編譯並因為空 vector 並不匹配一個包含一行 `"safe, fast, productive."` 的 vector 而失敗。
+現在執行這個測試，它會失敗，因為 `unimplemented!` 宏會以“not implemented”訊息觸發 panic。根據 TDD 的原則，我們先邁出一小步，加入剛好足夠的程式碼，讓函式呼叫不再 panic：把 `search` 函式定義為總是返回一個空 vector，如示例 12-16 所示。然後這個測試應該能夠編譯，並因為空 vector 與包含 `"safe, fast, productive."` 這一行的 vector 不匹配而失敗。
 
 <span class="filename">檔名：src/lib.rs</span>
 
@@ -39,7 +39,7 @@
 {{#rustdoc_include ../listings/ch12-an-io-project/listing-12-16/src/lib.rs:here}}
 ```
 
-<span class="caption">示例 12-16：剛好足夠使測試透過編譯的 `search` 函式定義</span>
+<span class="caption">示例 12-16：為 `search` 函式新增剛好足夠的定義，使呼叫它時不會 panic</span>
 
 注意需要在 `search` 的簽名中定義一個顯式生命週期 `'a` 並用於 `contents` 引數和返回值。回憶一下[第十章][ch10-lifetimes]中講到生命週期引數指定哪個引數的生命週期與返回值的生命週期相關聯。在這個例子中，我們表明返回的 vector 中應該包含引用引數 `contents`（而不是引數`query`）slice 的字串 slice。
 
@@ -51,17 +51,9 @@
 {{#include ../listings/ch12-an-io-project/output-only-02-missing-lifetimes/output.txt}}
 ```
 
-Rust 不可能知道我們需要的是哪一個引數，所以需要顯式地告訴它。因為引數 `contents` 包含了所有的文字而且我們希望返回匹配的那部分文字，所以我們知道 `contents` 是應該要使用生命週期語法來與返回值相關聯的引數。
+Rust 不可能知道輸出需要使用哪一個引數，所以需要顯式地告訴它。注意，幫助資訊建議為所有引數和輸出型別指定相同的生命週期引數，這並不符合我們的意圖！因為引數 `contents` 包含了所有的文字而且我們希望返回匹配的那部分文字，所以我們知道 `contents` 是應該要使用生命週期語法來與返回值相關聯的引數。
 
 其他語言中並不需要你在函式簽名中將引數與返回值相關聯。所以這麼做可能仍然感覺有些陌生，隨著時間的推移這將會變得越來越容易。你可能想要將這個例子與第十章中[“生命週期確保引用有效”][validating-references-with-lifetimes]部分做對比。
-
-現在執行測試：
-
-```console
-{{#include ../listings/ch12-an-io-project/listing-12-16/output.txt}}
-```
-
-很好，測試失敗了，這正是我們所期望的。修改程式碼來讓測試透過吧！
 
 ### 編寫使測試透過的程式碼
 
@@ -124,18 +116,6 @@ Rust 有一個有助於一行一行遍歷字串的方法，出於方便它被命
 測試通過了，我們知道它可以工作了！
 
 現在正是可以考慮重構的時機，在保證測試透過，保持功能不變的前提下重構 `search` 函式。`search` 函式中的程式碼並不壞，不過並沒有利用迭代器的一些實用功能。第十三章將回到這個例子並深入探索迭代器並看看如何改進程式碼。
-
-#### 在 `run` 函式中使用 `search` 函式
-
-現在 `search` 函式是可以工作並測試通過了的，我們需要實際在 `run` 函式中呼叫 `search`。需要將 `config.query` 值和 `run` 從檔案中讀取的 `contents` 傳遞給 `search` 函式。接著 `run` 會打印出 `search` 返回的每一行：
-
-<span class="filename">檔名：src/lib.rs</span>
-
-```rust,ignore
-{{#rustdoc_include ../listings/ch12-an-io-project/no-listing-02-using-search-in-run/src/lib.rs:here}}
-```
-
-這裡仍然使用了 `for` 迴圈獲取了 `search` 返回的每一行並打印出來。
 
 現在整個程式應該可以工作了！讓我們試一試，首先使用一個只會在艾米莉·狄金森的詩中返回一行的單詞 “frog”：
 

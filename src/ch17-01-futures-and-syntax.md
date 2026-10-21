@@ -1,6 +1,6 @@
 ## Future 與 async 語法
 
-[ch17-01-futures-and-syntax.md](https://github.com/rust-lang/book/blob/0d5a0dd395aba1f82d7e5aaf6dbb59b2b843ad2c/src/ch17-01-futures-and-syntax.md)
+[ch17-01-futures-and-syntax.md](https://github.com/rust-lang/book/blob/1500248d8f230566e4ec9f27fcbb8fe9e2898ab1/src/ch17-01-futures-and-syntax.md)
 
 Rust 非同步程式設計的關鍵元素是 *futures* 和 Rust 的 `async` 與 `await` 關鍵字。
 
@@ -156,7 +156,7 @@ error[E0752]: `main` function is not allowed to be `async`
 當我們執行這段程式碼時，就會得到一開始期待的行為：
 
 ```console
-$ cargo run -- https://www.rust-lang.org
+$ cargo run -- "https://www.rust-lang.org"
     Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.05s
      Running `target/debug/async_await 'https://www.rust-lang.org'`
 The title for https://www.rust-lang.org was

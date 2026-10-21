@@ -1,6 +1,6 @@
 ## 模式語法
 
-[ch19-03-pattern-syntax.md](https://github.com/rust-lang/book/blob/3e7aac1d7bc4de520b7040d4ef0f50c937468bd0/src/ch19-03-pattern-syntax.md)
+[ch19-03-pattern-syntax.md](https://github.com/rust-lang/book/blob/1500248d8f230566e4ec9f27fcbb8fe9e2898ab1/src/ch19-03-pattern-syntax.md)
 
 在本節中，我們收集了模式中所有有效的語法，並討論為什麼以及何時你可能要使用這些語法。
 
@@ -112,7 +112,7 @@ Rust 知道 `'c'` 位於第一個模式的範圍內，並會打印出 `early ASC
 
 在這個例子中，值 `p` 因為其 `x` 包含 `0` 而匹配第二個分支，因此會打印出 `On the y axis at 7`。
 
-記住 `match` 表示式一旦找到一個匹配的模式就會停止檢查其它分支，所以即使 `Point { x: 0, y: 0}` 在 `x` 軸上也在 `y` 軸上，這些程式碼也只會列印 `On the x axis at 0`。
+記住 `match` 表示式一旦找到一個匹配的模式就會停止檢查其它分支，所以即使 `Point { x: 0, y: 0 }` 在 `x` 軸上也在 `y` 軸上，這些程式碼也只會列印 `On the x axis at 0`。
 
 #### 列舉
 
@@ -126,7 +126,7 @@ Rust 知道 `'c'` 位於第一個模式的範圍內，並會打印出 `early ASC
 
 <span class="caption">示例 19-15: 解構包含不同型別值變體的列舉</span>
 
-這段程式碼會打印出 `Change the color to red 0, green 160, and blue 255`。嘗試改變 `msg` 的值來觀察其他分支程式碼的執行。
+這段程式碼會打印出 `Change color to red 0, green 160, and blue 255`。嘗試改變 `msg` 的值來觀察其他分支程式碼的執行。
 
 對於像 `Message::Quit` 這樣沒有任何資料的列舉變體，不能進一步解構其值。只能匹配其字面值 `Message::Quit`，因此模式中沒有任何變數。
 
@@ -332,7 +332,7 @@ Rust 不可能決定在元組中匹配 `second` 值之前應該忽略多少個�
 
 ### 使用 `@` 繫結
 
-_at_ 運算子（`@`）允許我們在建立一個存放值的變數的同時測試其值是否匹配模式。示例 19-29 展示了一個例子，這裡我們希望測試 `Message::Hello` 的 `id` 欄位是否位於 `3..=7` 範圍內，同時也希望能將其值繫結到 `id_variable` 變數中以便此分支相關聯的程式碼可以使用它。可以將 `id_variable` 命名為 `id`，與欄位同名，不過出於示例的目的這裡選擇了不同的名稱。
+_at_ 運算子（`@`）允許我們在建立一個存放值的變數的同時測試其值是否匹配模式。示例 19-29 展示了一個例子，這裡我們希望測試 `Message::Hello` 的 `id` 欄位是否位於 `3..=7` 範圍內，同時也希望能將其值繫結到 `id` 變數中，以便此分支相關聯的程式碼可以使用它。
 
 ```rust
 {{#rustdoc_include ../listings/ch19-patterns-and-matching/listing-19-29/src/main.rs:here}}
@@ -340,7 +340,7 @@ _at_ 運算子（`@`）允許我們在建立一個存放值的變數的同時測
 
 <span class="caption">示例 19-29: 使用 `@` 在模式中繫結值的同時測試它</span>
 
-上例會打印出 `Found an id in range: 5`。透過在 `3..=7` 之前指定 `id_variable @`，我們捕獲了任何匹配此範圍的值並同時測試其值匹配這個範圍模式。
+上例會打印出 `Found an id in range: 5`。透過在 `3..=7` 之前指定 `id @`，我們捕獲了任何匹配此範圍的值並同時測試其值匹配這個範圍模式。
 
 第二個分支只在模式中指定了一個範圍，分支相關程式碼沒有一個包含 `id` 欄位實際值的變數。`id` 欄位的值可以是 10、11 或 12，不過這個模式的程式碼並不知情也不能使用 `id` 欄位中的值，因為沒有將 `id` 值儲存進一個變數。
 

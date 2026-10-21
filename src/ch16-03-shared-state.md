@@ -1,6 +1,6 @@
 ## 共享狀態併發
 
-[ch16-03-shared-state.md](https://github.com/rust-lang/book/blob/9bd32402af8d3103302650895ec9d129ebfa47e1/src/ch16-03-shared-state.md)
+[ch16-03-shared-state.md](https://github.com/rust-lang/book/blob/1500248d8f230566e4ec9f27fcbb8fe9e2898ab1/src/ch16-03-shared-state.md)
 
 訊息傳遞是一個很好的處理併發的方式，但並不是唯一一個。另一種方式是讓多個執行緒訪問相同的共享資料。再考慮一下 Go 語言文件中的這句口號：“不要透過共享記憶體來通訊”。（“do not communicate by sharing memory.”）
 
@@ -39,7 +39,7 @@
 
 一旦獲取了鎖，就可以將返回值（命名為 `num`）視為一個其內部資料的可變引用了。型別系統確保了我們在使用 `m` 中的值之前獲取鎖。`m` 的型別是 `Mutex<i32>` 而不是 `i32`，所以**必須**呼叫 `lock` 才能使用這個 `i32` 值。我們不能忘記這麼做，因為如果沒有獲取鎖，型別系統就不允許訪問內部的 `i32` 值。
 
-正如你所猜想的，`Mutex<T>` 是一個智慧指標。更準確的說，`lock` 呼叫會**返回**一個叫做 `MutexGuard` 的智慧指標。`MutexGuard` 智慧指標實現了 `Deref` 來指向其內部資料；它也實現了 `Drop`，當 `MutexGuard` 離開作用域時，自動釋放鎖（發生在示例 16-12 內部作用域的結尾）。這樣一來，就不會有忘記釋放鎖從而導致互斥器阻塞無法被其他執行緒使用的潛在風險，因為鎖的釋放是自動發生的。
+`lock` 呼叫返回一個包裹在 `LockResult` 中的 `MutexGuard`，我們透過呼叫 `unwrap` 處理了這個 `LockResult`。`MutexGuard` 智慧指標實現了 `Deref` 來指向其內部資料；它也實現了 `Drop`，當 `MutexGuard` 離開作用域時，自動釋放鎖（發生在示例 16-12 內部作用域的結尾）。這樣一來，就不會有忘記釋放鎖從而導致互斥器阻塞無法被其他執行緒使用的潛在風險，因為鎖的釋放是自動發生的。
 
 釋放鎖之後，我們可以打印出互斥器內部的 `i32` 值，並發現我們剛剛已經將其值改為 6。
 

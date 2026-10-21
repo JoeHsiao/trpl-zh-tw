@@ -1,4 +1,3 @@
-use rand::Rng;
 // ANCHOR: here
 // --snip--
 use std::cmp::Ordering;
@@ -6,10 +5,12 @@ use std::io;
 // --snip--
 // ANCHOR_END: here
 
+use rand::prelude::*;
+
 fn main() {
     println!("Guess the number!");
 
-    let secret_number = rand::thread_rng().gen_range(1..=100);
+    let secret_number = rand::rng().random_range(1..=100);
 
     println!("The secret number is: {secret_number}");
 
@@ -20,6 +21,9 @@ fn main() {
     io::stdin()
         .read_line(&mut guess)
         .expect("Failed to read line");
+
+    // 譯者注：官方 rustbook 這裡錯誤延用了第二章有意報錯版本的程式碼，無法編譯。需要加上下面這行以修復
+    let guess: u32 = guess.trim().parse().expect("Please type a number!");
 
     println!("You guessed: {guess}");
 

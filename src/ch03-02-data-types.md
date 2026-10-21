@@ -1,6 +1,6 @@
 ## 資料型別
 
-[ch03-02-data-types.md](https://github.com/rust-lang/book/blob/9cc190796f28505c7a9a9cacea42f50d895ff3bd/src/ch03-02-data-types.md)
+[ch03-02-data-types.md](https://github.com/rust-lang/book/blob/1500248d8f230566e4ec9f27fcbb8fe9e2898ab1/src/ch03-02-data-types.md)
 
 在 Rust 中，每個值都屬於某種特定的 **資料型別**（*data type*），這會告訴 Rust 當前指定的是什麼種類的資料，從而知道該如何處理這些資料。我們將看到兩類資料型別的子集：標量（scalar）和複合（compound）。
 
@@ -64,7 +64,7 @@ let guess: u32 = "42".parse().expect("Not a number!");
 > 當你使用 `--release` flag 在 release 模式下編譯時，Rust **不會**加入會導致 panic 的整型溢位檢查。相反，如果發生溢位，Rust 會執行一種叫做 *two’s complement wrapping* 的行為。簡而言之，超過該型別最大值的數會“迴繞”到該型別所能表示的最小值。對於 `u8` 來說，`256` 會變成 `0`，`257` 會變成 `1`，依此類推。程式不會 panic，但變數得到的值很可能不是你原本期望的值。依賴整型溢位的迴繞行為通常被認為是一種錯誤。
 >
 > 為了顯式地處理溢位的可能性，可以使用這幾類標準庫提供的原始數字型別方法：
-> * 所有模式下都可以使用 `wrapping_*` 方法進行 wrapping，如 `wrapping_add`
+> * 所有編譯模式下都可以使用 `wrapping_*` 方法進行 wrapping，如 `wrapping_add`
 > * 如果 `checked_*` 方法發生溢位，則返回 `None` 值
 > * 用 `overflowing_*` 方法返回值和一個布林值，表示是否出現溢位
 > * 用 `saturating_*` 方法在值的最小值或最大值處進行飽和處理

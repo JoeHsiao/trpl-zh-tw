@@ -1,6 +1,6 @@
 ## 所有可以使用模式的位置
 
-[ch19-01-all-the-places-for-patterns.md](https://github.com/rust-lang/book/blob/f8f5adae0982518b8b37a6b8cbfced399d12fc3a/src/ch19-01-all-the-places-for-patterns.md)
+[ch19-01-all-the-places-for-patterns.md](https://github.com/rust-lang/book/blob/1500248d8f230566e4ec9f27fcbb8fe9e2898ab1/src/ch19-01-all-the-places-for-patterns.md)
 
 模式會出現在 Rust 的很多地方，而你可能已經在不知不覺中用了很多次！本節會討論所有可以合法使用模式的位置。
 
@@ -8,13 +8,11 @@
 
 正如第六章討論過的，我們會在 `match` 表示式的分支中使用模式。從形式上看，`match` 表示式由 `match` 關鍵字、要匹配的值，以及一個或多個 `match` 分支組成；這些分支包含一個模式，以及當值匹配該分支模式時要執行的表示式，就像這樣：
 
-```text
-match VALUE {
-    PATTERN => EXPRESSION,
-    PATTERN => EXPRESSION,
-    PATTERN => EXPRESSION,
-}
-```
+<pre><code>match <em>VALUE</em> {
+    <em>PATTERN</em> => <em>EXPRESSION</em>,
+    <em>PATTERN</em> => <em>EXPRESSION</em>,
+    <em>PATTERN</em> => <em>EXPRESSION</em>,
+}</code></pre>
 
 例如，下面是示例 6-5 中那個匹配變數 `x` 內 `Option<i32>` 值的 `match` 表示式：
 
@@ -41,9 +39,9 @@ let x = 5;
 
 每次你寫出像這樣的 `let` 語句時，其實都在使用模式，只是你可能沒有意識到！更正式地說，`let` 語句看起來像這樣：
 
-```text
-let PATTERN = EXPRESSION;
-```
+<pre>
+<code>let <em>PATTERN</em> = <em>EXPRESSION</em>;</code>
+</pre>
 
 在像 `let x = 5;` 這樣的語句中，位於 `PATTERN` 位置的變數名只是模式的一種特別簡單的形式。Rust 會拿表示式與模式進行比較，並將它找到的任何名字賦值。所以，在 `let x = 5;` 這個例子中，`x` 是一個模式，表示“把這裡匹配到的內容繫結到變數 `x`”。因為名字 `x` 本身就是整個模式，所以這個模式實際上等於“無論值是什麼，都把它繫結到變數 `x`”。
 
@@ -94,6 +92,8 @@ let PATTERN = EXPRESSION;
 這種條件結構讓我們能夠支援複雜的需求。使用這裡的硬編碼值，這個例子會列印 `Using purple as the background color`。
 
 你還可以看到，`if let` 也能像 `match` 分支一樣引入新變數，並遮蔽已有變數：`if let Ok(age) = age` 這一行引入了一個新的 `age` 變數，它儲存 `Ok` 變體中的值，並遮蔽了原來的 `age` 變數。這意味著我們必須把 `if age > 30` 這個條件放在該程式碼塊內部：不能把這兩個條件合併成 `if let Ok(age) = age && age > 30`。因為我們想拿來和 `30` 比較的那個新 `age`，在由大括號開啟的新作用域開始之前是無效的。
+
+> 譯者注：英文原文這裡仍沿用了舊版限制。在本書使用的 Rust 1.98 和 2024 Edition 中，let 鏈已經允許寫出 `if let Ok(age) = age && age > 30`，前一個條件引入的 `age` 繫結可用於後續條件。上面的巢狀寫法仍然有效，但不再是唯一的寫法。
 
 使用 `if let` 表示式的缺點是，編譯器不會像檢查 `match` 那樣檢查它的窮盡性。如果我們省略最後一個 `else` 塊，從而漏掉對某些情況的處理，編譯器也不會提醒我們這裡可能存在邏輯錯誤。
 

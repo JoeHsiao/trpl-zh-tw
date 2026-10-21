@@ -1,6 +1,6 @@
 # 編寫一個猜數字遊戲
 
-[ch02-00-guessing-game-tutorial.md](https://github.com/rust-lang/book/blob/95dd8a023b2c736d12377a713bb6b8ed77e48678/src/ch02-00-guessing-game-tutorial.md)
+[ch02-00-guessing-game-tutorial.md](https://github.com/rust-lang/book/blob/1500248d8f230566e4ec9f27fcbb8fe9e2898ab1/src/ch02-00-guessing-game-tutorial.md)
 
 讓我們一起動手完成一個專案來快速上手 Rust！本章將介紹一些 Rust 中常見的概念，並透過真實的程式來展示如何運用它們。你將會學到 `let`、`match`、方法（methods）、關聯函式（associated functions）、外部 crate 等知識！後續章節會深入探討這些概念的細節。在這一章，我們將主要練習基礎內容。
 
@@ -152,7 +152,7 @@ io::stdin().read_line(&mut guess).expect("Failed to read line");
 
 `Result` 的成員是 `Ok` 和 `Err`，`Ok` 成員表示操作成功，內部包含成功時產生的值。`Err` 成員則意味著操作失敗，並且 `Err` 中包含有關操作失敗的原因或方式的資訊。
 
-`Result` 型別的值，像其他型別一樣，擁有定義於其例項上的方法。`Result` 的例項擁有 [`expect` 方法][expect]<!-- ignore -->。如果 `io::Result` 例項的值是 `Err`，`expect` 會導致程式崩潰，並輸出當做引數傳遞給 `expect` 的資訊。所以當 `read_line` 方法返回 `Err`，則可能是來源於底層作業系統錯誤的結果。如果 `Result` 例項的值是 `Ok`，`expect` 會獲取 `Ok` 中的值並原樣返回。在本例中，這個值是使用者輸入到標準輸入中的位元組數。
+`Result` 型別的值，像其他型別一樣，擁有定義於其例項上的方法。`Result` 的例項擁有 [`expect` 方法][expect]<!-- ignore -->。如果 `Result` 例項的值是 `Err`，`expect` 會導致程式崩潰，並輸出當做引數傳遞給 `expect` 的資訊。所以當 `read_line` 方法返回 `Err`，則可能是來源於底層作業系統錯誤的結果。如果 `Result` 例項的值是 `Ok`，`expect` 會獲取 `Ok` 中的值並原樣返回。在本例中，這個值是使用者輸入到標準輸入中的位元組數。
 
 如果不呼叫 `expect`，程式也能編譯，不過會出現一個警告：
 
@@ -218,9 +218,9 @@ Cargo 在管理外部 crate 方面的能力正是其真正大放異彩的地方�
 {{#include ../listings/ch02-guessing-game-tutorial/listing-02-02/Cargo.toml:8:}}
 ```
 
-在 _Cargo.toml_ 檔案中，一個標題以及其後的內容都屬於同一個 section，直到出現下一個標題才會開始新的 section。`[dependencies]` section 用來告訴 Cargo：這個專案依賴哪些外部 crate，以及它們的版本要求。在本例中，我們使用語義化版本 `0.8.5` 來指定 `rand` crate。Cargo 理解 [語義化版本（Semantic Versioning）][semver]<!-- ignore -->，也常簡稱為 _SemVer_，它是一種編寫版本號的標準。`0.8.5` 實際上是 `^0.8.5` 的簡寫，表示任何至少為 `0.8.5` 但小於 `0.9.0` 的版本。
+在 _Cargo.toml_ 檔案中，一個標題以及其後的內容都屬於同一個 section，直到出現下一個標題才會開始新的 section。`[dependencies]` section 用來告訴 Cargo：這個專案依賴哪些外部 crate，以及它們的版本要求。在本例中，我們使用語義化版本 `0.10.1` 來指定 `rand` crate。Cargo 理解 [語義化版本（Semantic Versioning）][semver]<!-- ignore -->，也常簡稱為 _SemVer_，它是一種編寫版本號的標準。`0.10.1` 實際上是 `^0.10.1` 的簡寫，表示任何至少為 `0.10.1` 但小於 `0.11.0` 的版本。
 
-Cargo 認為這些版本與 `0.8.5` 的公開 API 相容，因此這樣的版本約束可以確保我們獲得仍能編譯本章程式碼的最新補丁（patch）版本。任何大於等於 `0.9.0` 的版本，都不能保證仍然使用與後續示例相同的 API。
+Cargo 認為這些版本與 `0.10.1` 的公開 API 相容，因此這樣的版本約束可以確保我們獲得仍能編譯本章程式碼的最新補丁（patch）版本。任何大於等於 `0.11.0` 的版本，都不能保證仍然使用與後續示例相同的 API。
 
 現在，不修改任何程式碼，構建專案，如示例 2-2 所示。
 
@@ -228,25 +228,20 @@ Cargo 認為這些版本與 `0.8.5` 的公開 API 相容，因此這樣的版本
 
 ```console
 $ cargo build
-  Updating crates.io index
-   Locking 15 packages to latest Rust 1.85.0 compatible versions
-    Adding rand v0.8.5 (available: v0.9.0)
- Compiling proc-macro2 v1.0.93
- Compiling unicode-ident v1.0.17
- Compiling libc v0.2.170
- Compiling cfg-if v1.0.0
- Compiling byteorder v1.5.0
- Compiling getrandom v0.2.15
- Compiling rand_core v0.6.4
- Compiling quote v1.0.38
- Compiling syn v2.0.98
- Compiling zerocopy-derive v0.7.35
- Compiling zerocopy v0.7.35
- Compiling ppv-lite86 v0.2.20
- Compiling rand_chacha v0.3.1
- Compiling rand v0.8.5
- Compiling guessing_game v0.1.0 (file:///projects/guessing_game)
-  Finished `dev` profile [unoptimized + debuginfo] target(s) in 2.48s
+    Updating crates.io index
+     Locking 8 packages to latest Rust 1.96.0 compatible versions
+  Downloaded rand_core v0.10.1
+  Downloaded chacha20 v0.10.1
+  Downloaded rand v0.10.1
+  Downloaded 3 crates (162.9KiB) in 0.59s
+   Compiling libc v0.2.186
+   Compiling rand_core v0.10.1
+   Compiling getrandom v0.4.3
+   Compiling cfg-if v1.0.4
+   Compiling chacha20 v0.10.1
+   Compiling rand v0.10.1
+   Compiling guessing_game v0.1.0 (file:///projects/guessing_game)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 2.03s
 ```
 
 <figcaption>示例 2-2：將 rand crate 新增為依賴之後執行 `cargo build` 的輸出</figcaption>
@@ -275,22 +270,22 @@ $ cargo build
 
 #### _Cargo.lock_ 檔案確保可重現構建
 
-Cargo 有一個機制，可以確保無論是你還是其他人在任何時候重新構建程式碼，都會得到相同的構建產物：Cargo 只會使用已經確定下來的依賴版本，除非你明確要求它更新。例如，假設下週 `rand` crate 釋出了 `0.8.6` 版本，其中修復了一個重要 bug，但同時也引入了一個會破壞你程式碼的迴歸問題。為了解決這類問題，Cargo 會在你第一次執行 `cargo build` 時建立 *Cargo.lock* 檔案，我們現在就能在 *guessing_game* 目錄中看到它。
+Cargo 有一個機制，可以確保無論是你還是其他人在任何時候重新構建程式碼，都會得到相同的構建產物：Cargo 只會使用已經確定下來的依賴版本，除非你明確要求它更新。例如，假設下週 `rand` crate 釋出了 `0.10.2` 版本，其中修復了一個重要 bug，但同時也引入了一個會破壞你程式碼的迴歸問題。為了解決這類問題，Cargo 會在你第一次執行 `cargo build` 時建立 *Cargo.lock* 檔案，我們現在就能在 *guessing_game* 目錄中看到它。
 
-當你第一次構建專案時，Cargo 會計算出所有符合要求的依賴版本，並把它們寫入 *Cargo.lock* 檔案。之後再次構建專案時，Cargo 會發現 *Cargo.lock* 已經存在，於是直接使用其中記錄的版本，而不是重新計算一遍。這就讓你自動擁有了可重現構建（reproducible build）。換句話說，專案會一直停留在 `0.8.5`，直到你顯式升級它，這都要歸功於 *Cargo.lock* 檔案。由於 *Cargo.lock* 對可重現構建非常重要，所以它通常會和專案中的其餘程式碼一起提交到版本控制系統中。
+當你第一次構建專案時，Cargo 會計算出所有符合要求的依賴版本，並把它們寫入 *Cargo.lock* 檔案。之後再次構建專案時，Cargo 會發現 *Cargo.lock* 已經存在，於是直接使用其中記錄的版本，而不是重新計算一遍。這就讓你自動擁有了可重現構建（reproducible build）。換句話說，專案會一直停留在 `0.10.1`，直到你顯式升級它，這都要歸功於 *Cargo.lock* 檔案。由於 *Cargo.lock* 對可重現構建非常重要，所以它通常會和專案中的其餘程式碼一起提交到版本控制系統中。
 
 #### 更新 crate 到一個新版本
 
-當你 **確實** 想更新某個 crate 時，Cargo 提供了 `update` 命令，它會忽略 *Cargo.lock* 檔案，並重新計算所有符合 *Cargo.toml* 中宣告要求的最新版本。然後，Cargo 會把這些版本寫回 *Cargo.lock* 檔案。不過，預設情況下，Cargo 只會查詢大於 `0.8.5` 且小於 `0.9.0` 的版本。如果 `rand` crate 釋出了兩個新版本：`0.8.6` 和 `0.999.0`，那麼執行 `cargo update` 時你會看到如下輸出：
+當你 **確實** 想更新某個 crate 時，Cargo 提供了 `update` 命令，它會忽略 *Cargo.lock* 檔案，並重新計算所有符合 *Cargo.toml* 中宣告要求的最新版本。然後，Cargo 會把這些版本寫回 *Cargo.lock* 檔案。不過，預設情況下，Cargo 只會查詢大於 `0.10.1` 且小於 `0.11.0` 的版本。如果 `rand` crate 釋出了兩個新版本：`0.10.2` 和 `0.999.0`，那麼執行 `cargo update` 時你會看到如下輸出：
 
 ```console
 $ cargo update
     Updating crates.io index
-     Locking 1 package to latest Rust 1.85.0 compatible version
-    Updating rand v0.8.5 -> v0.8.6 (available: v0.999.0)
+     Locking 1 package to latest Rust 1.96.0 compatible version
+    Updating rand v0.10.1 -> v0.10.2 (available: v0.999.0)
 ```
 
-Cargo 會忽略 `0.999.0` 這個版本。這時，你也會注意到 *Cargo.lock* 檔案發生了變化：你現在使用的 `rand` crate 版本變成了 `0.8.6`。如果你想使用 `rand` 的 `0.999.0` 版本，或者 `0.999.x` 系列中的任何版本，就必須像下面這樣更新 *Cargo.toml* 檔案：
+Cargo 會忽略 `0.999.0` 這個版本。這時，你也會注意到 *Cargo.lock* 檔案發生了變化：你現在使用的 `rand` crate 版本變成了 `0.10.2`。如果你想使用 `rand` 的 `0.999.0` 版本，或者 `0.999.x` 系列中的任何版本，就必須像下面這樣更新 *Cargo.toml* 檔案（不要實際進行這項修改，因為後續示例假設你使用的是 `rand` 0.10）：
 
 ```toml
 [dependencies]
@@ -317,11 +312,11 @@ rand = "0.999.0"
 
 </figure>
 
-首先，我們新增了一行 `use rand::Rng;`。`Rng` 是一個 trait，它定義了隨機數生成器應實現的方法，想使用這些方法的話，此 trait 必須在作用域中。第十章會詳細介紹 trait。
+首先，我們新增了一行 `use rand::prelude::*;`。`prelude` 模組包含 `rand` crate 中最常用的部分，`use` 將這些項引入程式的作用域。
 
-接下來，我們又在中間加了兩行。第一行呼叫 `rand::thread_rng` 函式，得到我們將要使用的那個特定隨機數生成器：它與當前執行執行緒區域性相關，並由作業系統提供種子（seed）。然後，我們在這個隨機數生成器上呼叫 `gen_range` 方法。這個方法由透過 `use rand::Rng` 語句引入作用域的 `Rng` trait 定義。`gen_range` 方法接收一個範圍表示式（range expression）作為引數，並在該範圍內生成一個隨機數。這裡我們使用的範圍表示式形式是 `start..=end`，它在上下邊界上都是閉區間，所以我們需要寫 `1..=100`，來請求一個 1 到 100 之間的數。
+接下來，我們又在中間加了兩行。第一行呼叫 `rand::rng` 函式，得到我們將要使用的隨機數生成器：它與當前執行執行緒區域性相關，並由作業系統提供種子（seed）。然後，我們在這個隨機數生成器上呼叫 `random_range` 方法。這個方法由 `RngExt` trait 定義，該 trait 屬於透過 `use rand::prelude::*;` 語句引入作用域的 `rand::prelude` 模組。`random_range` 方法接收一個範圍表示式（range expression）作為引數，並在該範圍內生成一個隨機數。這裡使用的範圍表示式形式是 `start..=end`，包含上下邊界，所以我們需要寫 `1..=100`，來請求一個 1 到 100 之間的數。
 
-> 注意：你不可能憑空知道應該 `use` 哪個 trait，或者應該從 crate 中呼叫哪些方法和函式，因此每個 crate 都帶有使用說明文件。Cargo 的另一個很棒的功能是，執行 `cargo doc --open` 命令會在本地構建所有依賴提供的文件，並在瀏覽器中開啟。例如，假設你對 `rand` crate 的其他功能感興趣，你可以執行 `cargo doc --open`，然後點選左側邊欄中的 `rand`。
+> 注意：你不可能憑空知道應該將哪些項引入作用域，或者應該從 crate 中呼叫哪些方法和函式，因此每個 crate 都帶有使用說明文件。Cargo 的另一個很棒的功能是，執行 `cargo doc --open` 命令會在本地構建所有依賴提供的文件，並在瀏覽器中開啟。例如，假設你對 `rand` crate 的其他功能感興趣，你可以執行 `cargo doc --open`，然後點選左側邊欄中的 `rand`。
 
 新增加的第二行程式碼打印出了秘密數字。這在開發程式時很有用，因為可以測試它，不過在最終版本中會刪掉它。如果遊戲一開始就打印出結果就沒什麼可玩的了！
 
@@ -348,7 +343,7 @@ Please input your guess.
 You guessed: 5
 ```
 
-你應該能得到不同的隨機數，同時它們應該都是在 1 和 100 之間的。幹得漂亮！
+你應該能得到不同的隨機數，同時它們應該都是在 1 和 100 之間的。如果看到警告，可以放心忽略。如果遇到錯誤，請檢查 *Cargo.toml* 中是否寫的是 `rand = "0.10.1"`，因為 `rand` 未來的版本可能使用不同的 API，但 `0.10` 系列中的任何版本都應該適用於本章程式碼。
 
 ## 比較猜測的數字和秘密數字
 
@@ -382,7 +377,7 @@ You guessed: 5
 {{#include ../listings/ch02-guessing-game-tutorial/listing-02-04/output.txt}}
 ```
 
-錯誤的核心表明這裡有 **不匹配的型別**（_mismatched types_）。Rust 有一個靜態強型別系統，同時也有型別推斷。當我們寫出 `let guess = String::new()` 時，Rust 推斷出 `guess` 應該是 `String` 型別，並不需要我們寫出型別。另一方面，`secret_number`，是數字型別。幾個數字型別擁有 1 到 100 之間的值：32 位數字 `i32`；32 位無符號數字 `u32`；64 位數字 `i64` 等等。Rust 預設使用 `i32`，所以它是 `secret_number` 的型別，除非增加型別資訊，或任何能讓 Rust 推斷出不同數值型別的資訊。這裡錯誤的原因在於 Rust 不會比較字串型別和數字型別。
+錯誤的核心表明這裡有 **不匹配的型別**（_mismatched types_）。Rust 有一個靜態強型別系統，同時也有型別推斷。當我們寫出 `let mut guess = String::new()` 時，Rust 推斷出 `guess` 應該是 `String` 型別，並不需要我們寫出型別。另一方面，`secret_number`，是數字型別。幾個數字型別擁有 1 到 100 之間的值：32 位數字 `i32`；32 位無符號數字 `u32`；64 位數字 `i64` 等等。Rust 預設使用 `i32`，所以它是 `secret_number` 的型別，除非增加型別資訊，或任何能讓 Rust 推斷出不同數值型別的資訊。這裡錯誤的原因在於 Rust 不會比較字串型別和數字型別。
 
 所以我們必須把從輸入中讀取到的 `String` 轉換為一個數字型別，才好與秘密數字進行比較。這可以透過在 `main` 函式體中增加如下程式碼來實現：
 
@@ -463,7 +458,7 @@ You win!
 Please input your guess.
 quit
 
-thread 'main' panicked at src/main.rs:28:47:
+thread 'main' (6694925) panicked at src/main.rs:28:47:
 Please type a number!: ParseIntError { kind: InvalidDigit }
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 ```
@@ -562,8 +557,8 @@ You win!
 [randcrate]: https://crates.io/crates/rand
 [semver]: http://semver.org
 [cratesio]: https://crates.io/
-[doccargo]: http://doc.crates.io
-[doccratesio]: http://doc.crates.io/crates-io.html
+[doccargo]: https://doc.rust-lang.org/cargo/
+[doccratesio]: https://doc.rust-lang.org/cargo/reference/publishing.html
 [match]: ch06-02-match.html
 [shadowing]: ch03-01-variables-and-mutability.html#遮蔽
 [parse]: https://doc.rust-lang.org/std/primitive.str.html#method.parse

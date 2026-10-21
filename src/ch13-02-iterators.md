@@ -1,6 +1,6 @@
 ## 使用迭代器處理元素序列
 
-[ch13-02-iterators.md](https://github.com/rust-lang/book/blob/4b71f17f7daba738a1363862dacb818d9b12fb81/src/ch13-02-iterators.md)
+[ch13-02-iterators.md](https://github.com/rust-lang/book/blob/1500248d8f230566e4ec9f27fcbb8fe9e2898ab1/src/ch13-02-iterators.md)
 
 迭代器模式允許你依次對一個序列中的項執行某些操作。**迭代器**（*iterator*）負責遍歷序列中的每一項並確定序列何時結束的邏輯。使用迭代器時，你無需自己重新實現這些邏輯。
 
@@ -118,7 +118,7 @@ pub trait Iterator {
 
 很多迭代器介面卡接受閉包作為引數，而我們通常會指定捕獲其環境的閉包作為迭代器介面卡的引數。
 
-作為一個例子，我們使用 `filter` 方法來獲取一個閉包。該閉包從迭代器中獲取一項並返回一個 `bool`。如果閉包返回 `true`，其值將會包含在 `filter` 提供的新迭代器中。如果閉包返回 `false`，其值不會被包含。
+作為一個例子，我們使用接受閉包作為引數的 `filter` 方法。該閉包從迭代器中獲取一項並返回一個 `bool`。如果閉包返回 `true`，其值將會包含在 `filter` 提供的新迭代器中。如果閉包返回 `false`，其值不會被包含。
 
 示例 13-16 中使用 `filter` 和一個捕獲環境中變數 `shoe_size` 的閉包來遍歷一個 `Shoe` 結構體集合。它只會返回指定鞋碼的鞋子。
 

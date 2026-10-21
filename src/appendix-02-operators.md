@@ -1,6 +1,6 @@
 ## 附錄 B：運算子與符號
 
-[appendix-02-operators.md](https://github.com/rust-lang/book/blob/799aa759e03d36dff11e920cf35ac38f496815ea/src/appendix-02-operators.md)
+[appendix-02-operators.md](https://github.com/rust-lang/book/blob/1500248d8f230566e4ec9f27fcbb8fe9e2898ab1/src/appendix-02-operators.md)
 
 該附錄包含了 Rust 語法的詞彙表，包括運算子以及其它符號，這些符號單獨出現或出現在路徑、泛型、trait 約束、宏、屬性、註釋、元組以及大括號上下文中。
 
@@ -80,7 +80,7 @@
 | 符號 | 解釋 |
 |--------|-------------|
 | `'ident` | 命名生命週期或迴圈標籤 |
-| `...u8`, `...i32`, `...f64`, `...usize` 等 | 指定型別的數值常量 |
+| 數字後緊跟的 `u8`、`i32`、`f64`、`usize` 等字尾 | 指定型別的數值字面值 |
 | `"..."` | 字串字面值 |
 | `r"..."`, `r#"..."#`, `r##"..."##`, etc. | 原始字串字面值，未處理的跳脫字元 |
 | `b"..."` | 位元組字串字面值; 構造一個位元組陣列型別而非字串 |
@@ -146,7 +146,7 @@
 | `#![meta]` | 內部屬性 |
 | `$ident` | 宏替換 |
 | `$ident:kind` | 宏捕獲 |
-| `$(…)…` | 宏重複 |
+| `$(...)...` | 宏重複 |
 | `ident!(...)`, `ident!{...}`, `ident![...]` | 宏呼叫 |
 
 表 B-7 展示了建立註釋的符號。

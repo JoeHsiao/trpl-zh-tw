@@ -1,6 +1,6 @@
 ## 結構體示例程式
 
-[ch05-02-example-structs.md](https://github.com/rust-lang/book/blob/8a6130451b0817ead5c2522ce641dcb0f11a8571/src/ch05-02-example-structs.md)
+[ch05-02-example-structs.md](https://github.com/rust-lang/book/blob/1500248d8f230566e4ec9f27fcbb8fe9e2898ab1/src/ch05-02-example-structs.md)
 
 為了理解何時會需要使用結構體，讓我們編寫一個計算長方形面積的程式。我們會從單獨的變數開始，接著重構程式直到使用結構體替代它們為止。
 
@@ -91,7 +91,7 @@
 但是如果我們繼續閱讀錯誤，將會發現這個有幫助的資訊：
 
 ```text
-{{#include ../listings/ch05-using-structs-to-structure-related-data/listing-05-11/output.txt:12:13}}
+{{#include ../listings/ch05-using-structs-to-structure-related-data/listing-05-11/output.txt:9:10}}
 ```
 
 讓我們來試試！現在 `println!` 宏呼叫看起來會像 `println!("rect1 is {rect1:?}");`。在大括號中加入 `:?` 指示符，告訴 `println!` 我們想使用一種叫做 `Debug` 的輸出格式。`Debug` 是一個 trait，它允許我們以一種對開發者有幫助的方式列印結構體，這樣在除錯程式碼時就能看到它的值。
@@ -105,7 +105,7 @@
 不過編譯器又一次給出了一個有幫助的資訊：
 
 ```text
-{{#include ../listings/ch05-using-structs-to-structure-related-data/output-only-01-debug/output.txt:11:12}}
+{{#include ../listings/ch05-using-structs-to-structure-related-data/output-only-01-debug/output.txt:9:10}}
 ```
 
 Rust **確實** 包含了打印出除錯資訊的功能，不過我們必須為結構體顯式選擇這個功能。為此，在結構體定義之前加上外部屬性 `#[derive(Debug)]`，如示例 5-12 所示：
